@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './base/reset.css';
+@import './base/typography.css';
+@import './utilities/index.css';
+
+/* Custom CSS variables */
+:root {
+  --header-height: 4rem;
+  --footer-height: 3rem;
+  --max-width: 1280px;
+}
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+} 
