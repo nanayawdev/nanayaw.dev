@@ -8,6 +8,9 @@ import Portfolio from '../pages/Portfolio';
 import Resume from '../pages/Resume';
 import Services from '../pages/Services';
 import Testimonial from '../pages/Testimonial';
+import Terms from '../pages/Terms';
+import Privacy from '../pages/Privacy';
+import Cookies from '../pages/Cookies';
 
 export const navigationConfig = [
   { path: '/', label: 'Home', icon: <House className="w-5 h-5" />, component: Home },
@@ -19,4 +22,7 @@ export const navigationConfig = [
   { path: '/blog', label: 'Blog', icon: <BookOpen className="w-5 h-5" />, component: Blog },
   { path: '/testimonial', label: 'Testimonial', icon: <Star className="w-5 h-5" />, component: Testimonial },
   { path: '/contact', label: 'Contact', icon: <Mail className="w-5 h-5" />, component: Contact },
+  { path: '/terms', label: 'Terms', component: Terms, hideFromNav: true },
+  { path: '/privacy', label: 'Privacy', component: Privacy, hideFromNav: true },
+  { path: '/cookies', label: 'Cookies', component: Cookies, hideFromNav: true },
 ]; 
