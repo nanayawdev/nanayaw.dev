@@ -20,7 +20,7 @@ export default {
   			}
   		},
   		fontFamily: {
-  			sans: ['Livvic', 'system-ui', 'sans-serif']
+  			sans: ['Manrope', 'system-ui', 'sans-serif']
   		},
   		maxWidth: {
   			container: 'var(--max-width)'
