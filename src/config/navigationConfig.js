@@ -7,6 +7,9 @@ import Portfolio from '../pages/Portfolio';
 import Resume from '../pages/Resume';
 import Services from '../pages/Services';
 import Testimonial from '../pages/Testimonial';
+import Terms from '../pages/Terms';
+import Privacy from '../pages/Privacy';
+import Cookies from '../pages/Cookies';
 
 export const navigationConfig = [
   {
@@ -44,5 +47,17 @@ export const navigationConfig = [
   {
     path: '/testimonial',
     component: Testimonial,
+  },
+  {
+    path: '/terms',
+    component: Terms,
+  },
+  {
+    path: '/privacy',
+    component: Privacy,
+  },
+  {
+    path: '/cookies',
+    component: Cookies,
   },
 ];
