@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom';
+import { footerConfig } from '../../config/footerConfig';
 
 const Footer = () => {
   return (
-    <div className="flex justify-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-      <Link to="/terms" className="hover:text-gray-700 dark:hover:text-gray-300">Terms</Link>
-      <Link to="/privacy" className="hover:text-gray-700 dark:hover:text-gray-300">Privacy</Link>
-      <Link to="/cookies" className="hover:text-gray-700 dark:hover:text-gray-300">Cookies</Link>
+    <div className="flex justify-center space-x-4 text-sm text-gray-500 dark:text-gray-400 mt-16 pb-4">
+      {footerConfig.map(({ path, label }) => (
+        <Link 
+          key={path}
+          to={path} 
+          className="hover:text-gray-700 dark:hover:text-gray-300"
+        >
+          {label}
+        </Link>
+      ))}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import MobileNavbar from '../components/Navbar/MobileNavbar';
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle';
 import ProfileCard from '../components/ProfileCard/ProfileCard';
 import { navigationConfig } from '../config/navigationConfig';
+import { footerConfig } from '../config/footerConfig';
 import Footer from '../components/Footer/Footer';
 
 const MainLayout = () => {
@@ -32,7 +33,7 @@ const MainLayout = () => {
             {/* Right Side - Page Content */}
             <div className="flex-1 md:ml-4">
               <Routes>
-                {navigationConfig.map(({ path, component: Component }) => (
+                {[...navigationConfig, ...footerConfig].map(({ path, component: Component }) => (
                   <Route key={path} path={path} element={<Component />} />
                 ))}
               </Routes>
