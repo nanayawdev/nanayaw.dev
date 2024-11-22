@@ -6,6 +6,7 @@ import MobileNavbar from '../components/Navbar/MobileNavbar';
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle';
 import ProfileCard from '../components/ProfileCard/ProfileCard';
 import { navigationConfig } from '../config/navigationConfig';
+import Footer from '../components/Footer/Footer';
 
 const MainLayout = () => {
   return (
@@ -22,6 +23,9 @@ const MainLayout = () => {
             <div className="md:w-[420px] shrink-0">
               <div className="sticky top-20 transition-all duration-300">
                 <ProfileCard />
+                <div className="mt-4">
+                  <Footer />
+                </div>
               </div>
             </div>
             
