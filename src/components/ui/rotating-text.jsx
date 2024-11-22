@@ -4,10 +4,26 @@ import React from 'react';
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 export function RotatingText({ className }) {
+  const navigate = useNavigate();
+
+  const scrollToPortfolio = () => {
+    navigate('/portfolio');
+    setTimeout(() => {
+      const portfolioSection = document.getElementById('portfolio');
+      if (portfolioSection) {
+        portfolioSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
-    <div className={cn("relative w-40 h-40 select-none", className)}>
+    <div 
+      className={cn("relative w-40 h-40 select-none cursor-pointer", className)}
+      onClick={scrollToPortfolio}
+    >
       {/* Outer circle with rotating text */}
       <motion.div
         className="absolute w-full h-full border-dashed border border-gray-900 dark:border-gray-100 rounded-full p-1"
