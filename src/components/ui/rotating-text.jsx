@@ -1,13 +1,23 @@
 "use client"
 
 import React from 'react';
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { ArrowDown } from "lucide-react";
 
 export function RotatingText({ className }) {
   return (
     <div className={cn("relative w-40 h-40 select-none", className)}>
       {/* Outer circle with rotating text */}
-      <div className="absolute w-full h-full animate-spin-slow">
+      <motion.div
+        className="absolute w-full h-full border-dashed border border-gray-900 dark:border-gray-100 rounded-full p-1"
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      >
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <path 
             id="textPath"
@@ -17,23 +27,15 @@ export function RotatingText({ className }) {
           />
           <text className="text-[8px] uppercase tracking-[0.3em] fill-current">
             <textPath href="#textPath">
-              My Projects • My Projects •
+              My Projects • My Latest Projects •
             </textPath>
           </text>
         </svg>
-      </div>
+      </motion.div>
 
       {/* Down arrow in center */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <svg 
-          className="w-6 h-6 text-gray-900 dark:text-gray-100" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2"
-        >
-          <path d="M12 5v14M5 12l7 7 7-7" />
-        </svg>
+        <ArrowDown className="w-6 h-6 text-gray-900 dark:text-gray-100" />
       </div>
     </div>
   );
