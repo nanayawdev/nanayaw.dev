@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, Code, Users, Palette, Building2 } from "lucide-react";
+import ScrollingBanner from "@/components/ui/ScrollingBanner";
 
 const Resume = () => {
   const experiences = [
@@ -51,6 +52,12 @@ const Resume = () => {
       <h1 className="text-6xl font-normal leading-tight mb-12">
         Work & <span className="text-riptide-500">Experience</span>
       </h1>
+      
+      <ScrollingBanner 
+        items={["UI/UX DESIGN", "FRONT-END DEVELOPMENT", "GRAPHIC DESIGN", "PHOTOGRAPHY"]}
+        speed={25}
+        className="mb-12 -mx-4"
+      />
       
       <div className="relative w-full max-w-2xl">
         {experiences.map((exp) => (

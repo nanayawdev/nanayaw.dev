@@ -7,8 +7,8 @@ import { motion } from "framer-motion"
 export default function ScrollingBanner({
   items = ["UI/UX DESIGN", "DEVELOPMENT", "ICON DESIGN", "LOGO BRANDING"],
   speed = 30,
-  bgColor = "#39FF14", // Neon green color
-  textColor = "#000000",
+  bgColor = "#000000", // Neon green color
+  textColor = "#ffffff",
   className = "",
 }) {
   // Duplicate items to create seamless loop

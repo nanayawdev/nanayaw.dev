@@ -103,11 +103,11 @@ const MainLayout = () => {
                 <section id="services">
                   <Services />
                 </section>
-                <section id="blog">
-                  <Blog />
-                </section>
                 <section id="testimonial">
                   <Testimonial />
+                </section>
+                <section id="blog">
+                  <Blog />
                 </section>
                 <section id="contact">
                   <Contact />
