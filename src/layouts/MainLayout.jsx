@@ -64,7 +64,7 @@ const MainLayout = () => {
 
   return (
     <ThemeProvider>
-      <div className="h-screen overflow-hidden flex flex-col dark:bg-gray-900 dark:text-white">
+      <div className="h-screen overflow-hidden flex flex-col bg-white dark:bg-gray-900 dark:text-white">
         <div className="fixed top-4 right-4 z-50">
           <ThemeToggle />
         </div>
@@ -73,7 +73,7 @@ const MainLayout = () => {
         <main className="flex-1 w-full mx-auto px-4 py-24 md:py-16">
           <div className="flex flex-col md:flex-row gap-4 h-full">
             {/* Left Side - Static Profile Card */}
-            <aside className="md:w-[420px] shrink-0 overflow-hidden">
+            <aside className="md:w-[420px] shrink-0">
               <div className="h-full">
                 <ProfileCard />
                 <div className="mt-4">
@@ -83,33 +83,35 @@ const MainLayout = () => {
             </aside>
             
             {/* Right Side - Scrollable Content */}
-            <div className="flex-1 md:ml-4 overflow-y-auto max-h-[calc(100vh-12rem)]">
-              <div id="home">
-                <Home />
-              </div>
-              <div id="about">
-                <About />
-              </div>
-              <div id="resume">
-                <Resume />
-              </div>
-              <div id="portfolio">
-                <Portfolio />
-              </div>
-              <div id="expertise">
-                <Expertise />
-              </div>
-              <div id="services">
-                <Services />
-              </div>
-              <div id="blog">
-                <Blog />
-              </div>
-              <div id="testimonial">
-                <Testimonial />
-              </div>
-              <div id="contact">
-                <Contact />
+            <div className="flex-1 md:ml-4 overflow-y-auto max-h-[calc(100vh-8rem)] bg-white dark:bg-gray-900">
+              <div className="space-y-20">
+                <section id="home">
+                  <Home />
+                </section>
+                <section id="about">
+                  <About />
+                </section>
+                <section id="portfolio">
+                  <Portfolio />
+                </section>
+                <section id="expertise">
+                  <Expertise />
+                </section>
+                <section id="resume">
+                  <Resume />
+                </section>
+                <section id="services">
+                  <Services />
+                </section>
+                <section id="blog">
+                  <Blog />
+                </section>
+                <section id="testimonial">
+                  <Testimonial />
+                </section>
+                <section id="contact">
+                  <Contact />
+                </section>
               </div>
             </div>
           </div>
