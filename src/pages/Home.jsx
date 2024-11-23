@@ -10,7 +10,7 @@ const Home = () => {
           PERSONALITY
         </Badge>
         
-        <h1 className="text-6xl font-normal leading-tight mb-6">
+        <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-normal leading-tight mb-6">
           Hi, folks I'm <span className="text-riptide-500">NY</span>,{' '}
           <br />
           UI/UX Designer

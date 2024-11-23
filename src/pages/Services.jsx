@@ -39,7 +39,7 @@ const Services = () => {
         SERVICES
       </Badge>
       
-      <h1 className="text-6xl font-normal leading-tight mb-8">
+      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-normal leading-tight mb-8">
         What I offer as<br />
         <span className="text-riptide-500">services</span>
       </h1>
@@ -50,12 +50,12 @@ const Services = () => {
           return (
             <div 
               key={service.id}
-              className="p-6 border-l-2 border-riptide-500"
+              className="p-6 border-b-2 border-riptide-500 even:border-gray-500"
             >
               <div className="mb-4">
                 <Icon className="w-6 h-6 text-riptide-500" />
               </div>
-              <h3 className="text-2xl font-semibold mb-3">{service.title}</h3>
+              <h3 className="text-2xl text-gray-900 dark:text-gray-100 font-semibold mb-3">{service.title}</h3>
               <p className="text-gray-400">{service.description}</p>
             </div>
           );

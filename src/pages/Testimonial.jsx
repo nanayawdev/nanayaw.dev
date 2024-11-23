@@ -12,16 +12,16 @@ const Testimonial = () => {
     {
       id: 1,
       name: "Mary Arthur",
-      role: "Director of Krontiva Africa",
+      role: "Krontiva Africa",
       image: mary, // Add actual image path
-      text: "Working with NY was an absolute pleasure! Their innovative approach and technical prowess turned our vision into reality. The end result exceeded our expectations, both in terms of functionality and aesthetics.",
+      text: "Working with NY was an absolute pleasure! His innovative approach and technical prowess turned our vision into reality. The end result exceeded our expectations, both in terms of functionality and aesthetics.",
       project: "PROJECT"
     },
     // Add more testimonials here
     {
       id: 2,
       name: "Debby Adu",
-      role: "Director of Milss Animation Studios",
+      role: "Mills Animation Studios",
       image: shito, // Add actual image path
       text: "A true professional with exceptional skills! NY transformed our outdated website into a sleek, modern platform that perfectly represents our brand. The attention to detail and commitment to excellence were evident throughout the entire process.",
       project: "PROJECT"
@@ -29,7 +29,7 @@ const Testimonial = () => {
     {
       id: 3,
       name: "Fidelia Senam",
-      role: "Director of Imagine Media",
+      role: "Imagine Media",
       image: banku, // Add actual image path
       text: "NY's expertise in React.js and Vue.js brought our project to life in ways we never imagined. Not only was the final product stunning, but the process was also seamless, thanks to clear communication and thoughtful design decisions.",
       project: "PROJECT"
@@ -52,7 +52,7 @@ const Testimonial = () => {
         TESTIMONIAL
       </Badge>
       
-      <h1 className="text-6xl font-normal leading-tight mb-12">
+      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-normal leading-tight mb-12">
         Trusted by <span className="text-riptide-500">Hundered Clients</span>
       </h1>
 
@@ -64,7 +64,7 @@ const Testimonial = () => {
             className="w-12 h-12 rounded-full object-cover"
           />
           <div>
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-xl text-gray-900 dark:text-gray-100 font-semibold">
               {testimonials[currentSlide].name}
             </h3>
             <p className="text-sm text-gray-400">
@@ -75,7 +75,7 @@ const Testimonial = () => {
           </div>
         </div>
 
-        <p className="text-xl leading-relaxed mb-8">
+        <p className="text-md text-gray-900 dark:text-gray-100 leading-relaxed mb-8">
           {testimonials[currentSlide].text}
         </p>
 
@@ -89,10 +89,10 @@ const Testimonial = () => {
               onClick={prevSlide}
               className="p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-5 h-5 text-gray-900 dark:text-gray-100" />
             </button>
             
-            <span className="text-sm">
+            <span className="text-sm text-gray-900 dark:text-gray-100">
               {currentSlide + 1} / {totalSlides}
             </span>
             
@@ -100,7 +100,7 @@ const Testimonial = () => {
               onClick={nextSlide}
               className="p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-5 h-5 text-gray-900 dark:text-gray-100" />
             </button>
           </div>
         </div>

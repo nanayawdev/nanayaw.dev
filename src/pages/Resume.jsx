@@ -11,12 +11,12 @@ const Resume = () => {
         {
           title: "UI/UX Designer & Developer",
           company: "Krontiva Africa",
-          icon: <Code className="w-5 h-5 text-gray-900" />
+          icon: <Code className="w-5 h-5 text-gray-900 dark:text-gray-100" />
         },
         {
           title: "Front-End Developer",
           company: "Krontiva Africa",
-          icon: <Briefcase className="w-5 h-5 text-gray-900" />
+          icon: <Briefcase className="w-5 h-5 text-gray-900 dark:text-gray-100" />
         }
       ]
     },
@@ -27,17 +27,17 @@ const Resume = () => {
         {
           title: "Graphic Designer",
           company: "Freelance",
-          icon: <Building2 className="w-5 h-5 text-gray-900" />
+          icon: <Building2 className="w-5 h-5 text-gray-900 dark:text-gray-100" />
         },
         {
           title: "Photographer",
           company: "Freelance",
-          icon: <Palette className="w-5 h-5 text-gray-900" />
+          icon: <Palette className="w-5 h-5 text-gray-900 dark:text-gray-100" />
         },
         {
           title: "Front-End Developer",
           company: "ABS Digital Agency",
-          icon: <Users className="w-5 h-5 text-gray-900" />
+          icon: <Users className="w-5 h-5 text-gray-900 dark:text-gray-100" />
         }
       ]
     }
@@ -49,7 +49,7 @@ const Resume = () => {
         RESUME
       </Badge>
       
-      <h1 className="text-6xl font-normal leading-tight mb-12">
+      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-normal leading-tight mb-12">
         Work & <span className="text-riptide-500">Experience</span>
       </h1>
       
@@ -70,7 +70,7 @@ const Resume = () => {
                 <div key={roleIndex} className="flex items-start gap-4">
                   <div className="mt-1">{role.icon}</div>
                   <div className="space-y-1">
-                    <h3 className="text-xl font-medium">{role.title}</h3>
+                    <h3 className="text-xl text-gray-900 dark:text-gray-100 font-medium">{role.title}</h3>
                     <p className="text-gray-400">{role.company}</p>
                   </div>
                 </div>

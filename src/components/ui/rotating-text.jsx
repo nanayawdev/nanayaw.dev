@@ -26,7 +26,7 @@ export function RotatingText({ className }) {
     >
       {/* Outer circle with rotating text */}
       <motion.div
-        className="absolute w-full h-full border-dashed border border-gray-900 dark:border-gray-100 rounded-full p-1"
+        className="absolute w-full h-full border-dashed border border-gray-900 dark:border-riptide-300 rounded-full p-1"
         animate={{ rotate: 360 }}
         transition={{
           duration: 10,
@@ -41,7 +41,7 @@ export function RotatingText({ className }) {
             fill="none"
             className="text-gray-900 dark:text-gray-100"
           />
-          <text className="text-[8px] uppercase tracking-[0.3em] fill-current">
+          <text className="text-[8px] uppercase tracking-[0.3em] fill-current text-gray-900 dark:text-riptide-300">
             <textPath href="#textPath">
               My Projects • My Latest Projects •
             </textPath>
@@ -51,7 +51,7 @@ export function RotatingText({ className }) {
 
       {/* Down arrow in center */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <ArrowDown className="w-6 h-6 text-gray-900 dark:text-gray-100" />
+        <ArrowDown className="w-6 h-6 text-gray-900 dark:text-riptide-300" />
       </div>
     </div>
   );

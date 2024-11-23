@@ -8,7 +8,7 @@ export function LetsTalkButton() {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      <Button className="bg-gray-900 text-gray-50 rounded-lg hover:bg-gray-300">
+      <Button className="bg-gray-900 text-gray-50 rounded-lg hover:bg-gray-800">
         <MessageCircle className="w-4 h-4 mr-2" />
         Let's Chat
       </Button>

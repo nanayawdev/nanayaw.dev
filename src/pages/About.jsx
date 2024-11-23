@@ -7,7 +7,7 @@ const About = () => {
         ABOUT ME
       </Badge>
       
-      <h1 className="text-4xl font-normal leading-tight mb-8">
+      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-normal leading-tight mb-8">
         Crafting digital experiences that blend{' '}
         <span className="text-riptide-500">creativity</span>, innovation, and code
       </h1>

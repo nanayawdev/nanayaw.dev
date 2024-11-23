@@ -16,8 +16,7 @@ export default function ScrollingBanner({
 
   return (
     <div 
-      className={`relative w-full h-16 overflow-hidden ${className}`}
-      style={{ backgroundColor: bgColor }}
+      className={`relative w-full h-12 overflow-hidden bg-riptide-400 ${className}`}
     >
       <motion.div
         className="absolute whitespace-nowrap flex items-center h-full"

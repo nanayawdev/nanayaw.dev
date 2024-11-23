@@ -16,7 +16,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-full bg-riptide-950 shadow-md z-50">
+    <nav className="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-md bg-gray-900 dark:bg-gray-800 shadow-md z-50">
       <div className="flex items-center gap-8">
         <button onClick={() => scrollToSection('home')} className="flex items-center">
           <img src={logo} alt="Logo" className="h-8 w-auto" />
@@ -29,13 +29,13 @@ export default function Navbar() {
                 <button
                   onClick={() => scrollToSection(sectionId)}
                   className={`relative flex items-center transition-colors ${
-                    location.pathname === item.path ? 'text-riptide-400' : 'text-white hover:text-riptide-400'
+                    location.pathname === item.path ? 'text-riptide-200 dark:text-riptide-200' : 'text-white hover:text-riptide-200'
                   }`}
                   onMouseEnter={() => setHoveredItem(item.path)}
                   onMouseLeave={() => setHoveredItem(null)}
                 >
                   <motion.div
-                    className="relative flex items-center gap-2 px-3 py-2 rounded-full"
+                    className="relative flex items-center gap-2 px-3 py-2 rounded-md"
                     animate={{
                       backgroundColor: hoveredItem === item.path || location.pathname === item.path
                         ? 'rgba(51, 206, 201, 0.1)'
@@ -45,7 +45,7 @@ export default function Navbar() {
                   >
                     {item.icon}
                     <motion.span
-                      className="text-sm font-medium"
+                      className="text-sm font-normal"
                       initial={false}
                       animate={{
                         width: hoveredItem === item.path || location.pathname === item.path ? 'auto' : 0,
