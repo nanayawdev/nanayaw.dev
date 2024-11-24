@@ -18,7 +18,7 @@ const Home = () => {
           and Web Developer
         </h1>
         
-        <p className="text-gray-400 text-lg mb-12">
+        <p className="text-gray-400 mb-12">
           I design and code beautifully simple things and i love what i do.
           <br />
           Just simple like that!

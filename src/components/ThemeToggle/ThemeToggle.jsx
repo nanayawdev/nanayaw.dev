@@ -15,14 +15,14 @@ const ThemeToggle = () => {
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+      className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
       onClick={toggleTheme}
       aria-label="Toggle dark mode"
     >
       {darkMode ? (
-        <Sun className="w-5 h-5 text-riptide-400" />
+        <Sun className="w-4 h-4 text-gray-200" />
       ) : (
-        <Moon className="w-5 h-5 text-riptide-600" />
+        <Moon className="w-4 h-4 text-gray-600" />
       )}
     </motion.button>
   );
