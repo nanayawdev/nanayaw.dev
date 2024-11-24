@@ -28,7 +28,7 @@ const Portfolio = () => {
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transition-colors duration-300 group-hover:from-riptide-900/80 group-hover:via-riptide-800/50" />
               
               {/* Content overlay */}
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
