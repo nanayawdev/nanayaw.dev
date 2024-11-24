@@ -1,13 +1,22 @@
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import mary from "../assets/images/mary.jpg";
 import shito from "../assets/images/shito.jpg";
 import banku from "../assets/images/banku.jpeg";
 
 const Testimonial = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const testimonials = [
     {
       id: 1,
@@ -39,11 +48,19 @@ const Testimonial = () => {
   const totalSlides = testimonials.length;
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      setIsAnimating(false);
+    }, 300);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+      setIsAnimating(false);
+    }, 300);
   };
 
   return (
@@ -57,51 +74,53 @@ const Testimonial = () => {
       </h1>
 
       <div className="w-full rounded-2xl border border-gray-800 p-8 relative">
-        <div className="flex items-start gap-4 mb-8">
-          <img 
-            src={testimonials[currentSlide].image} 
-            alt={testimonials[currentSlide].name}
-            className="w-12 h-12 rounded-full object-cover"
-          />
-          <div>
-            <h3 className="text-xl text-gray-900 dark:text-gray-100 font-semibold">
-              {testimonials[currentSlide].name}
-            </h3>
-            <p className="text-sm text-gray-400">
-              Director of <span className="text-riptide-500">
-                {testimonials[currentSlide].role}
-              </span>
-            </p>
+        <div className={`transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+          <div className="flex items-start gap-4 mb-8">
+            <img 
+              src={testimonials[currentSlide].image} 
+              alt={testimonials[currentSlide].name}
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            <div>
+              <h3 className="text-xl text-gray-900 dark:text-gray-100 font-semibold">
+                {testimonials[currentSlide].name}
+              </h3>
+              <p className="text-sm text-gray-400">
+                Director of <span className="text-riptide-500">
+                  {testimonials[currentSlide].role}
+                </span>
+              </p>
+            </div>
           </div>
-        </div>
 
-        <p className="text-md text-gray-900 dark:text-gray-100 leading-relaxed mb-8">
-          {testimonials[currentSlide].text}
-        </p>
+          <p className="text-md text-gray-900 dark:text-gray-100 leading-relaxed mb-8">
+            {testimonials[currentSlide].text}
+          </p>
 
-        <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-500">
-            {testimonials[currentSlide].project}
-          </span>
-          
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={prevSlide}
-              className="p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5 text-gray-900 dark:text-gray-100" />
-            </button>
-            
-            <span className="text-sm text-gray-900 dark:text-gray-100">
-              {currentSlide + 1} / {totalSlides}
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">
+              {testimonials[currentSlide].project}
             </span>
             
-            <button 
-              onClick={nextSlide}
-              className="p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
-            >
-              <ChevronRight className="w-5 h-5 text-gray-900 dark:text-gray-100" />
-            </button>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={prevSlide}
+                className="p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-900 dark:text-gray-100" />
+              </button>
+              
+              <span className="text-sm text-gray-900 dark:text-gray-100">
+                {currentSlide + 1} / {totalSlides}
+              </span>
+              
+              <button 
+                onClick={nextSlide}
+                className="p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-900 dark:text-gray-100" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
