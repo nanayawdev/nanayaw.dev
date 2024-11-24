@@ -11,7 +11,7 @@ const Home = () => {
         </Badge>
         
         <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-6">
-          Hi, folks I'm <span className="text-riptide-500">NY</span>,{' '}
+          Hi, folks I'm <span className="text-riptide-400 dark:text-[#2bfd5f]">NY</span>,{' '}
           <br />
           UI/UX Designer
           <br />
