@@ -25,7 +25,7 @@ const Expertise = () => {
       
       <div className="space-y-12 w-full">
         <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight">
-          Softwares I'm <span className="text-riptide-500">Good At</span>
+          Tech Stack I <span className="text-riptide-500">Work With</span>
         </h1>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
