@@ -1,35 +1,34 @@
-// Add these imports at the top
-import blb from "../../assets/brands/card.png"; // You'll need to add your brand images
-import christopher from "../../assets/brands/apple-pay.png";
-import serenity from "../../assets/brands/cc-visa.png";
-import artchive from "../../assets/brands/discord.svg";
-import neuton from "../../assets/brands/google-pay.png";
-import papillon from "../../assets/brands/nike.png";
-import goodhabits from "../../assets/brands/stripexl.png";
-import creative from "../../assets/brands/visaxl.png";
+// Update these imports with tech stack icons
+import react from "../../assets/tech/react.svg";
+import typescript from "../../assets/tech/typescript.svg";
+import javascript from "../../assets/tech/javascript.svg";
+import nodejs from "../../assets/tech/nodejs.svg";
+import tailwind from "../../assets/tech/tailwind.svg";
+import mongodb from "../../assets/tech/mongodb.svg";
+import git from "../../assets/tech/git.svg";
+import firebase from "../../assets/tech/firebase.svg";
 
 const Brands = () => {
   return (
     <div className="mt-20">
-      {/* Heading stays within testimonial width */}
       <div className="max-w-4xl mx-auto">
         <h2 className="text-center text-gray-900 dark:text-gray-100 mb-12">
-          WORK WITH 60+ BRANDS WORLDWIDE
+          TECH STACK & TOOLS
         </h2>
       </div>
       
-      {/* Brand grid starts from the left edge and extends right */}
+      {/* Rest of the structure remains the same, just update the image sources and alt text */}
       <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
         <div className="max-w-4xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 items-center">
-            <img src={blb} alt="BLB" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
-            <img src={christopher} alt="Christopher Willis" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
-            <img src={serenity} alt="Serenity Hotel" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
-            <img src={artchive} alt="Artchive" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
-            <img src={neuton} alt="Neuton Interactive" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
-            <img src={papillon} alt="Papillon" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
-            <img src={goodhabits} alt="Good Habits" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
-            <img src={creative} alt="Creative Space" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
+            <img src={react} alt="React" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
+            <img src={typescript} alt="TypeScript" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
+            <img src={javascript} alt="JavaScript" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
+            <img src={nodejs} alt="Node.js" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
+            <img src={tailwind} alt="Tailwind CSS" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
+            <img src={mongodb} alt="MongoDB" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
+            <img src={git} alt="Git" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
+            <img src={firebase} alt="Firebase" className="w-auto h-12 md:h-16 opacity-50 hover:opacity-100 transition-opacity" />
           </div>
         </div>
       </div>

@@ -4,14 +4,9 @@ import { useState, useEffect } from "react";
 import mary from "../assets/images/mary.jpg";
 import shito from "../assets/images/shito.jpg";
 import banku from "../assets/images/banku.jpeg";
-import blb from "../assets/brands/apple-pay.png";
-import christopher from "../assets/brands/card.png";
-import serenity from "../assets/brands/cc-visa.png";
-import artchive from "../assets/brands/discord.svg";
-import neuton from "../assets/brands/google-pay.png";
-import papillon from "../assets/brands/nike.png";
-import goodhabits from "../assets/brands/stripexl.png";
-import creative from "../assets/brands/visaxl.png";
+import { SiReact, SiVuedotjs, SiTailwindcss, SiTypescript } from "react-icons/si";
+import { FaNodeJs, FaGitAlt, FaDocker } from "react-icons/fa";
+import { TbBrandNextjs } from "react-icons/tb";
 
 const Testimonial = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -139,18 +134,18 @@ const Testimonial = () => {
       </div>
       <div className="w-full mt-20">
         <h2 className="text-left text-gray-900 dark:text-gray-100 mb-12">
-          60+ BRANDS I'VE WORKED WITH
+          BRANDS I'VE WORKED WITH
         </h2>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center">
-          <img src={blb} alt="BLB" className="w-auto h-12 opacity-50 hover:opacity-100 transition-opacity" />
-          <img src={christopher} alt="Christopher Willis" className="w-auto h-12 opacity-50 hover:opacity-100 transition-opacity" />
-          <img src={serenity} alt="Serenity Hotel" className="w-auto h-12 opacity-50 hover:opacity-100 transition-opacity" />
-          <img src={artchive} alt="Artchive" className="w-auto h-12 opacity-50 hover:opacity-100 transition-opacity" />
-          <img src={neuton} alt="Neuton Interactive" className="w-auto h-12 opacity-50 hover:opacity-100 transition-opacity" />
-          <img src={papillon} alt="Papillon" className="w-auto h-12 opacity-50 hover:opacity-100 transition-opacity" />
-          <img src={goodhabits} alt="Good Habits" className="w-auto h-12 opacity-50 hover:opacity-100 transition-opacity" />
-          <img src={creative} alt="Creative Space" className="w-auto h-12 opacity-50 hover:opacity-100 transition-opacity" />
+          <SiReact className="w-12 h-12 text-[#61DAFB]" />
+          <SiVuedotjs className="w-12 h-12 text-[#4FC08D]" />
+          <SiTailwindcss className="w-12 h-12 text-[#38B2AC]" />
+          <TbBrandNextjs className="w-12 h-12 dark:text-white text-black" />
+          <FaNodeJs className="w-12 h-12 text-[#339933]" />
+          <FaGitAlt className="w-12 h-12 text-[#F05032]" />
+          <FaDocker className="w-12 h-12 text-[#2496ED]" />
+          <SiTypescript className="w-12 h-12 text-[#3178C6]" />
         </div>
       </div>
     </div>
