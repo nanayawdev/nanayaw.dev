@@ -74,7 +74,12 @@ const Testimonial = () => {
       </h1>
 
       <div className="w-full rounded-2xl border border-gray-800 p-8 relative">
-        <div className={`transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+        <div 
+          className={`
+            transition-all duration-500 ease-in-out
+            ${isAnimating ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'}
+          `}
+        >
           <div className="flex items-start gap-4 mb-8">
             <img 
               src={testimonials[currentSlide].image} 
