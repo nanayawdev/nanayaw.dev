@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import logo from '../../assets/logos/logogreen.png';
+import logo from '../../assets/logos/nylogo.png';
 import { navigationConfig } from '../../config/navigation.jsx';
 
 export default function Navbar() {
@@ -34,7 +34,7 @@ export default function Navbar() {
                 <button
                   onClick={() => scrollToSection(sectionId)}
                   className={`relative flex items-center transition-colors ${
-                    location.pathname === item.path ? 'text-[#00d72c] dark:text-[#00d72c]' : 'text-white hover:text-[#00d72c]'
+                    location.pathname === item.path ? 'text-riptide-700 dark:text-riptide-300' : 'text-gray-950 dark:text-gray-50 hover:text-riptide-500 dark:hover:text-riptide-300'
                   }`}
                   onMouseEnter={() => setHoveredItem(item.path)}
                   onMouseLeave={() => setHoveredItem(null)}
