@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import logo from '../../assets/logos/logo.png';
+import logo from '../../assets/logos/logogreen.png';
 import { navigationConfig } from '../../config/navigation.jsx';
 
 export default function Navbar() {
@@ -19,7 +19,7 @@ export default function Navbar() {
     <nav className="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-md bg-gray-900 dark:bg-gray-800 shadow-md z-50">
       <div className="flex items-center gap-8">
         <button onClick={() => scrollToSection('home')} className="flex items-center">
-          <img src={logo} alt="Logo" className="h-8 w-auto" />
+          <img src={logo} alt="Logo" className="h-6 w-auto" />
         </button>
         <ul className="flex space-x-6">
           {navigationConfig.map((item) => {
@@ -29,7 +29,7 @@ export default function Navbar() {
                 <button
                   onClick={() => scrollToSection(sectionId)}
                   className={`relative flex items-center transition-colors ${
-                    location.pathname === item.path ? 'text-riptide-200 dark:text-riptide-200' : 'text-white hover:text-riptide-200'
+                    location.pathname === item.path ? 'text-[#00d72c] dark:text-[#00d72c]' : 'text-white hover:text-[#00d72c]'
                   }`}
                   onMouseEnter={() => setHoveredItem(item.path)}
                   onMouseLeave={() => setHoveredItem(null)}
