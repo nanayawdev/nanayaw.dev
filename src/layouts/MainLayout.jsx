@@ -83,7 +83,7 @@ const MainLayout = () => {
             </aside>
             
             {/* Right Side - Scrollable Content */}
-            <div className="flex-1 md:ml-4 overflow-y-auto h-screen pt-16 pb-32">
+            <div className="flex-1 md:ml-4 overflow-y-auto h-screen pt-16 pb-32 scrollbar-hide">
               <div className="space-y-20">
                 <section id="home">
                   <Home />
