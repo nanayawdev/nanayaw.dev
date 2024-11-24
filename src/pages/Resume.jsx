@@ -49,7 +49,7 @@ const Resume = () => {
         RESUME
       </Badge>
       
-      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-normal leading-tight mb-12">
+      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-12">
         Work & <span className="text-riptide-500">Experience</span>
       </h1>
       
