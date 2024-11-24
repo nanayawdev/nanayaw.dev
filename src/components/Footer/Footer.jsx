@@ -9,7 +9,7 @@ const Footer = () => {
           <Link 
             key={path}
             to={path} 
-            className="hover:text-gray-700 dark:hover:text-gray-300"
+            className="hover:text-gray-700 dark:hover:text-riptide-300"
           >
             {label}
           </Link>
