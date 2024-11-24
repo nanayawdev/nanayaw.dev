@@ -28,8 +28,8 @@ const socialLinks = [
 
 export default function ProfileCard() {
   return (
-    <div className="flex-1 flex items-center justify-center px-4">
-      <div className="max-w-[320px] w-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-8 rounded-xl">
+    <div className="flex-grow flex items-center justify-center px-4 py-8">
+      <div className="max-w-[320px] w-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-6 rounded-xl">
         <div className="flex items-center justify-between w-60 mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
             NY Dev

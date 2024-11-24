@@ -70,18 +70,20 @@ const MainLayout = () => {
         </div>
         <Navbar />
         <MobileNavbar />
-        <main className="flex-1 w-full mx-auto px-4 py-24 md:py-16">
+        <main className="flex-1 w-full mx-auto px-4 overflow-hidden">
           <div className="flex flex-col md:flex-row gap-4 h-full">
             {/* Left Side - Static Profile Card */}
-            <aside className="md:w-[420px] shrink-0 md:sticky md:top-0 h-screen">
-              <div className="flex flex-col h-full justify-between">
-                <ProfileCard />
-                <Footer />
+            <aside className="md:w-[420px] shrink-0">
+              <div className="fixed w-[380px]">
+                <div className="flex flex-col h-screen">
+                  <ProfileCard />
+                  <Footer />
+                </div>
               </div>
             </aside>
             
             {/* Right Side - Scrollable Content */}
-            <div className="flex-1 md:ml-4 overflow-y-auto max-h-[calc(100vh-8rem)]">
+            <div className="flex-1 md:ml-4 overflow-y-auto h-screen pt-16 pb-32">
               <div className="space-y-20">
                 <section id="home">
                   <Home />

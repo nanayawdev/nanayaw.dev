@@ -3,8 +3,8 @@ import { footerConfig } from '../../config/footerConfig';
 
 const Footer = () => {
   return (
-    <footer className="w-full py-4">
-      <div className="flex justify-center space-x-4 text-sm text-gray-500 dark:text-gray-400 pb-20 pt-20">
+    <footer className="w-full py-4 shrink-0">
+      <div className="flex justify-center space-x-4 text-sm text-gray-500 dark:text-gray-400 py-4">
         {footerConfig.map(({ path, label }) => (
           <Link 
             key={path}
