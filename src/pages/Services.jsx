@@ -39,7 +39,7 @@ const Services = () => {
         SERVICES
       </Badge>
       
-      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-normal leading-tight mb-8">
+      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-8">
         What I offer as<br />
         <span className="text-riptide-500">services</span>
       </h1>
