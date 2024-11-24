@@ -1,26 +1,39 @@
-const BlogPost = () => {
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
+import PropTypes from 'prop-types';
+
+const BlogPost = ({ category, title, excerpt, slug, date }) => {
   return (
-    <article className="max-w-md bg-black text-white rounded-lg overflow-hidden">
-      <div className="relative">
-        <img 
-          src="/path-to-your-image.jpg" 
-          alt="Glucose monitoring" 
-          className="w-full h-48 object-cover"
-        />
-        <div className="p-6">
-          <h2 className="text-xl font-bold mb-2">
-            How Monitoring Glucose Levels Can Improve Skin Health
-          </h2>
-          <p className="text-gray-300 mb-4">
-            Real-time glucose monitoring shows deeper insight into metabolic signals monitoring and provides data into the underlying physiology of overall skin and health.
-          </p>
-          <button className="bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition">
-            Read more
-          </button>
-        </div>
+    <article className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 p-6 hover:border-riptide-400 dark:hover:border-riptide-600 transition-colors">
+      <Badge variant="outline" className="mb-4">
+        {category}
+      </Badge>
+      <h2 className="text-xl font-bold mb-3 text-gray-900 dark:text-gray-100">
+        {title}
+      </h2>
+      <p className="text-gray-400 mb-4">
+        {excerpt}
+      </p>
+      <div className="flex items-center justify-between">
+        <button 
+          className="text-riptide-500 hover:text-riptide-600 transition-colors font-medium inline-flex items-center gap-2"
+          onClick={() => window.location.href = `/blog/${slug}`}
+        >
+          Read more
+          <ArrowRight className="w-4 h-4" />
+        </button>
+        <span className="text-sm text-gray-400">{date}</span>
       </div>
     </article>
   );
+};
+
+BlogPost.propTypes = {
+  category: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  excerpt: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired
 };
 
 export default BlogPost; 
