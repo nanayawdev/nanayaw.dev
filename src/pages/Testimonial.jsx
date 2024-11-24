@@ -139,7 +139,7 @@ const Testimonial = () => {
       </div>
       <div className="w-full mt-20">
         <h2 className="text-left text-gray-900 dark:text-gray-100 mb-12">
-          WORK WITH 60+ BRANDS WORLDWIDE
+          60+ BRANDS I'VE WORKED WITH
         </h2>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center">
