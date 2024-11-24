@@ -1,6 +1,6 @@
 import project1 from "../assets/images/banku.jpeg";
 import project2 from "../assets/images/vrsimulation.jpg";
-import project3 from "../assets/images/vrglasses.jpg";
+import project3 from "../assets/images/shawarma.jpg";
 import project4 from "../assets/images/shito.jpg";
 
 export const portfolioData = [
