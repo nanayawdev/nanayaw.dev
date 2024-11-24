@@ -3,8 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { blogPosts } from '@/data/blog-posts';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MessageCircle, Bookmark, AudioLines, Share } from "lucide-react";
-import { PiHandsClapping } from "react-icons/pi"
+import { ArrowLeft, ThumbsUp, MessageCircle, Bookmark, AudioLines, Share } from "lucide-react";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -52,7 +51,7 @@ const BlogPostPage = () => {
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-6">
               <button className="flex items-center gap-2 text-gray-700 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-200">
-                <PiHandsClapping className="h-5 w-5" />
+                <ThumbsUp className="h-5 w-5" />
                 <span className="text-sm">313</span>
               </button>
               
