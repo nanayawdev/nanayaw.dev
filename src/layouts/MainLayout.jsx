@@ -73,17 +73,15 @@ const MainLayout = () => {
         <main className="flex-1 w-full mx-auto px-4 py-24 md:py-16">
           <div className="flex flex-col md:flex-row gap-4 h-full">
             {/* Left Side - Static Profile Card */}
-            <aside className="md:w-[420px] shrink-0">
-              <div className="h-full">
+            <aside className="md:w-[420px] shrink-0 md:sticky md:top-0 h-screen">
+              <div className="flex flex-col h-full justify-between">
                 <ProfileCard />
-                <div className="mt-4">
-                  <Footer />
-                </div>
+                <Footer />
               </div>
             </aside>
             
             {/* Right Side - Scrollable Content */}
-            <div className="flex-1 md:ml-4 overflow-y-auto max-h-[calc(100vh-8rem)] bg-white dark:bg-gray-900">
+            <div className="flex-1 md:ml-4 overflow-y-auto max-h-[calc(100vh-8rem)]">
               <div className="space-y-20">
                 <section id="home">
                   <Home />

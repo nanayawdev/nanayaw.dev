@@ -28,14 +28,14 @@ const socialLinks = [
 
 export default function ProfileCard() {
   return (
-    <div className="pt-20 pb-8 px-4">
-      <div className="max-w-[320px] mx-auto dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-8 rounded-xl">
+    <div className="flex-1 flex items-center justify-center px-4">
+      <div className="max-w-[320px] w-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-8 rounded-xl">
         <div className="flex items-center justify-between w-60 mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
             NY Dev
           </h1>
           <span className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-300">
-            v.1
+            v 1.0
           </span>
         </div>
 
