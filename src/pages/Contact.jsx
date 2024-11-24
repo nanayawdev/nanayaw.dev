@@ -15,7 +15,7 @@ const Contact = () => {
         <p className="text-gray-400">
           Let us help you become even greater at what you do.
           <br />
-          Fill out the following form and we will get back to you in the next 24 hours.
+          Fill out the following form and we will get back to you in the next minute.
         </p>
 
         <form className="grid grid-cols-1 gap-6 w-full mt-12">
@@ -25,7 +25,7 @@ const Contact = () => {
               type="text" 
               id="name" 
               placeholder="Type your full name" 
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
             />
           </div>
 
@@ -35,7 +35,7 @@ const Contact = () => {
               type="email" 
               id="email" 
               placeholder="example@email.com" 
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
             />
           </div>
 
@@ -45,7 +45,7 @@ const Contact = () => {
               type="tel" 
               id="phone" 
               placeholder="+1 2222 333344" 
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
             />
           </div>
 
@@ -55,7 +55,7 @@ const Contact = () => {
               type="text" 
               id="company" 
               placeholder="Type your company/organization name" 
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
             />
           </div>
 
@@ -64,7 +64,7 @@ const Contact = () => {
             <div className="relative">
               <select 
                 id="services" 
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none appearance-none"
+                className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none appearance-none"
               >
                 <option value="">Choose from a list here</option>
                 <option value="ui-ux">UI/UX</option>
@@ -83,7 +83,7 @@ const Contact = () => {
               id="project" 
               placeholder="Please type your project description"
               rows="4"
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
             ></textarea>
           </div>
 
