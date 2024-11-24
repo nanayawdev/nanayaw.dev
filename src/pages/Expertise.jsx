@@ -19,14 +19,14 @@ const Expertise = () => {
       
       <div className="space-y-12 w-full">
         <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight">
-          My <span className="text-riptide-500">Advantages</span>
+          Softwares I'm <span className="text-riptide-500">Good At</span>
         </h1>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
           {skills.map((skill) => (
             <div 
               key={skill.name} 
-              className="relative rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 p-6 flex flex-col items-center gap-4 hover:border-riptide-500/50 transition-colors"
+              className="relative rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 p-6 flex flex-col items-center gap-4 hover:border-riptide-400 dark:hover:border-riptide-600 transition-colors"
             >
               <div className="text-gray-900 dark:text-gray-200">{skill.icon}</div>
               <div className="text-3xl font-bold text-riptide-500">{skill.percentage}%</div>
