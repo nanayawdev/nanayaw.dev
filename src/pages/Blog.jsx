@@ -11,7 +11,7 @@ const Blog = () => {
       
       <div className="space-y-12 w-full">
         <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight">
-          Latest <span className="text-riptide-500">Articles</span>
+          My Recent <span className="text-riptide-500">Thoughts</span>
         </h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
