@@ -1,14 +1,20 @@
-import { Figma, Framer, Code2, Globe, Database } from 'lucide-react';
+import { 
+  SiTailwindcss, 
+  SiReact, 
+  SiNextdotjs, 
+  SiAstro
+} from "react-icons/si";
+import { Figma, Framer } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const Expertise = () => {
   const skills = [
-    { name: 'Figma', percentage: 92, icon: <Figma className="w-8 h-8" /> },
-    { name: 'Framer', percentage: 85, icon: <Framer className="w-8 h-8" /> },
-    { name: 'Webflow', percentage: 80, icon: <Globe className="w-8 h-8" /> },
-    { name: 'React', percentage: 90, icon: <Code2 className="w-8 h-8" /> },
-    { name: 'WordPress', percentage: 86, icon: <Globe className="w-8 h-8" /> },
-    { name: 'Laravel/PHP', percentage: 70, icon: <Database className="w-8 h-8" /> },
+    { name: 'React', percentage: 92, icon: <SiReact className="w-8 h-8" /> },
+    { name: 'Next', percentage: 85, icon: <SiNextdotjs className="w-8 h-8" /> },
+    { name: 'Figma', percentage: 80, icon: <Figma className="w-8 h-8" /> },
+    { name: 'Vue', percentage: 81, icon: <Framer className="w-8 h-8" /> },
+    { name: 'Remix/Astro', percentage: 76, icon: <SiAstro className="w-8 h-8" /> },
+    { name: 'Tailwind', percentage: 90, icon: <SiTailwindcss className="w-8 h-8" /> },
   ];
 
   return (
