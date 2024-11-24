@@ -31,10 +31,10 @@ export default function ProfileCard() {
     <div className="flex-grow flex items-center justify-center px-4 py-8">
       <div className="max-w-[320px] w-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-6 rounded-xl">
         <div className="flex items-center justify-between w-60 mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+          <h1 className="text-3xl font-medium text-gray-900 dark:text-gray-100">
             NY Dev
           </h1>
-          <span className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-300">
+          <span className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-bodyfont-medium text-blue-800 dark:text-blue-300">
             v 1.0
           </span>
         </div>
@@ -71,7 +71,7 @@ export default function ProfileCard() {
           <LetsTalkButton />
         </div>
 
-        <div className="text-center text-xs mt-6 text-gray-400">
+        <div className="text-center text-xs mt-6 text-gray-500 dark:text-gray-400">
           <p>© {new Date().getFullYear()} All Rights Reserved</p>
         </div>
       </div>

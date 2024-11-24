@@ -20,7 +20,17 @@ export default {
   			}
   		},
   		fontFamily: {
-  			sans: ['Space Grotesk', 'system-ui', 'sans-serif']
+  			heading: ['Lufga', 'sans-serif'],
+  			body: ['Satoshi', 'sans-serif'],
+  		},
+  		fontSize: {
+  			'h1': ['2.5rem', { lineHeight: '1.2', fontWeight: '700' }],
+  			'h2': ['2rem', { lineHeight: '1.25', fontWeight: '700' }],
+  			'h3': ['1.75rem', { lineHeight: '1.3', fontWeight: '600' }],
+  			'h4': ['1.5rem', { lineHeight: '1.35', fontWeight: '600' }],
+  			'body-lg': ['1.125rem', { lineHeight: '1.5', fontWeight: '400' }],
+  			'body': ['1rem', { lineHeight: '1.5', fontWeight: '400' }],
+  			'body-sm': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
   		},
   		maxWidth: {
   			container: 'var(--max-width)'
@@ -37,6 +47,11 @@ export default {
   		animation: {
   			'spin-slow': 'spin 8s linear infinite',
   		},
+  		fontWeight: {
+  			normal: 400,
+  			medium: 500,
+  			bold: 700,
+  		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

@@ -10,7 +10,7 @@ const Home = () => {
           PERSONALITY
         </Badge>
         
-        <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-normal leading-tight mb-6">
+        <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-6">
           Hi, folks I'm <span className="text-riptide-500">NY</span>,{' '}
           <br />
           UI/UX Designer
@@ -27,11 +27,11 @@ const Home = () => {
         <div className="flex items-center justify-between w-full">
           <div className="flex gap-12">
             <div>
-              <h2 className="text-5xl font-semibold text-riptide-500">10+</h2>
+              <h2 className="text-5xl font-medium text-riptide-500">10+</h2>
               <p className="text-gray-400 mt-2">YEARS OF<br />EXPERIENCE</p>
             </div>
             <div>
-              <h2 className="text-5xl font-semibold text-riptide-500">182+</h2>
+              <h2 className="text-5xl font-medium text-riptide-500">182+</h2>
               <p className="text-gray-400 mt-2">PROJECTS COMPLETED ON<br />15 COUNTRIES</p>
             </div>
           </div>
