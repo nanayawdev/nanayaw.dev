@@ -16,7 +16,7 @@ export default function ScrollingBanner({
 
   return (
     <div 
-      className={`relative w-full h-12 overflow-hidden bg-riptide-400 ${className}`}
+      className={`relative w-full h-12 overflow-hidden ${className}`}
     >
       <motion.div
         className="absolute whitespace-nowrap flex items-center h-full"
@@ -34,8 +34,7 @@ export default function ScrollingBanner({
         {duplicatedItems.map((item, idx) => (
           <span
             key={idx}
-            className="text-2xl font-bold mx-4 uppercase"
-            style={{ color: textColor }}
+            className="text-2xl font-bold mx-4 uppercase text-riptide-400"
           >
             {item} ·
           </span>
