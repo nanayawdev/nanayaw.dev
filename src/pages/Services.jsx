@@ -50,7 +50,7 @@ const Services = () => {
           return (
             <div 
               key={service.id}
-              className="p-6 border-b-2 border-riptide-500 even:border-gray-500"
+              className="p-6 border-b-2 border-gray-800 dark:border-gray-800"
             >
               <div className="mb-4">
                 <Icon className="w-6 h-6 text-riptide-500" />
