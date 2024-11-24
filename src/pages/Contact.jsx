@@ -94,28 +94,6 @@ const Contact = () => {
             SEND MESSAGE
           </button>
         </form>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <div className="space-y-2">
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">CALL US</h3>
-            <p className="text-gray-400">+11 2158 973727</p>
-            <p className="text-gray-400">+11 4845 996738</p>
-          </div>
-
-          <div className="space-y-2">
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">ADDRESS</h3>
-            <p className="text-gray-400">2154 Glen Falls Road</p>
-            <p className="text-gray-400">Plymouth Meeting,</p>
-            <p className="text-gray-400">Pennsylvania PA 19462</p>
-          </div>
-
-          <div className="space-y-2">
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">SOCIAL</h3>
-            <div className="flex gap-4">
-              {/* Add your social media icons here */}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
