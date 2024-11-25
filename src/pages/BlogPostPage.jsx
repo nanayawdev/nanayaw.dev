@@ -8,6 +8,7 @@ import { ArrowLeft, ThumbsUp, MessageCircle, Bookmark, AudioLines, Share } from 
 import { BlogContent } from '@/components/BlogContent/BlogContent';
 import { toast } from 'sonner';
 import { CommentDrawer } from '@/components/Comments/CommentDrawer';
+import { Skeleton } from "@/components/ui/skeleton";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -106,7 +107,43 @@ const BlogPostPage = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-3xl mx-auto">
+        <div className="w-full space-y-8">
+          <Skeleton className="h-10 w-32" />
+          
+          <Skeleton className="h-6 w-24" />
+          
+          <Skeleton className="h-12 w-3/4" />
+          
+          <Skeleton className="h-4 w-32" />
+          
+          <div className="border-t border-b border-gray-200 dark:border-gray-800 py-4 my-8">
+            <div className="flex justify-between">
+              <div className="flex gap-4">
+                <Skeleton className="h-8 w-16" />
+                <Skeleton className="h-8 w-24" />
+              </div>
+              <div className="flex gap-4">
+                <Skeleton className="h-8 w-8" />
+                <Skeleton className="h-8 w-8" />
+                <Skeleton className="h-8 w-8" />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-40 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-2/3" />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
