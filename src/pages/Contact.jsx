@@ -1,6 +1,9 @@
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { User, Mail, Phone, Building2, Wrench, MessageSquare } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 const SERVICES = [
   { value: "ui-ux", label: "UI/UX" },
@@ -13,6 +16,79 @@ const SERVICES = [
 const inputClasses = "w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none h-[46px] pl-10";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    service: "",
+    project: ""
+  });
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleServiceChange = (value) => {
+    setFormData({
+      ...formData,
+      service: value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    console.log('Attempting submission with data:', formData);
+
+    try {
+      const { data, error: supabaseError } = await supabase
+        .from('contact_submissions')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || null,
+            company: formData.company || null,
+            service: formData.service,
+            project: formData.project || null,
+            status: 'new'
+          }
+        ]);
+
+      console.log('Supabase response:', { data, supabaseError });
+
+      if (supabaseError) {
+        console.error('Supabase error details:', supabaseError);
+        throw new Error(supabaseError.message);
+      }
+
+      setShowSuccess(true);
+      
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "",
+        project: ""
+      });
+    } catch (error) {
+      console.error('Full error object:', error);
+      setError(error.message || 'Failed to submit form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-4xl mx-auto">
       <Badge variant="outline" className="mb-6">
@@ -29,7 +105,7 @@ const Contact = () => {
           Fill out the following form and we will get back to you in the next minute.
         </p>
 
-        <form className="grid grid-cols-1 gap-6 w-full mt-12">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 w-full mt-12">
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <label htmlFor="name" className="text-gray-400">What's your name?</label>
@@ -40,6 +116,8 @@ const Contact = () => {
                   id="name" 
                   placeholder="Type your full name" 
                   className={inputClasses}
+                  value={formData.name}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -53,6 +131,8 @@ const Contact = () => {
                   id="email" 
                   placeholder="example@email.com" 
                   className={inputClasses}
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -68,6 +148,8 @@ const Contact = () => {
                   id="phone" 
                   placeholder="+1 2222 333344" 
                   className={inputClasses}
+                  value={formData.phone}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -81,6 +163,8 @@ const Contact = () => {
                   id="company" 
                   placeholder="Type your company/organization name" 
                   className={inputClasses}
+                  value={formData.company}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -91,7 +175,7 @@ const Contact = () => {
               <label className="text-gray-400">What services are you looking for?</label>
               <div className="relative">
                 <Wrench className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" />
-                <Select>
+                <Select value={formData.service} onValueChange={handleServiceChange}>
                   <SelectTrigger className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none h-[46px] pl-10">
                     <SelectValue placeholder="Choose from a list here" />
                   </SelectTrigger>
@@ -118,19 +202,37 @@ const Contact = () => {
                   placeholder="Please type your project description"
                   rows="1"
                   className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none resize-none min-h-[46px] pl-10"
+                  value={formData.project}
+                  onChange={handleChange}
                 ></textarea>
               </div>
             </div>
           </div>
 
+          {error && (
+            <p className="text-red-500 text-sm">{error}</p>
+          )}
+
           <button 
             type="submit" 
-            className="px-8 py-3 bg-riptide-500 hover:bg-riptide-600 text-white rounded-lg font-medium transition-colors h-[46px]"
+            disabled={isSubmitting}
+            className="px-8 py-3 bg-riptide-500 hover:bg-riptide-600 text-white rounded-lg font-medium transition-colors h-[46px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            SEND MESSAGE
+            {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
           </button>
         </form>
       </div>
+
+      <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Message Sent Successfully!</DialogTitle>
+          </DialogHeader>
+          <p className="text-gray-600 dark:text-gray-300">
+            Thank you for reaching out. We'll get back to you shortly!
+          </p>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

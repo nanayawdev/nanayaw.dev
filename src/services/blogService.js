@@ -158,11 +158,12 @@ export const blogService = {
         .from('posts')
         .update({
           title: postData.title,
-          content: postData.content,
-          category: postData.category,
           slug: postData.slug,
-          status: postData.published ? 'published' : 'draft',
-          published_at: postData.published ? new Date().toISOString() : null,
+          content: postData.content,
+          excerpt: postData.excerpt,
+          category: postData.category,
+          status: postData.status,
+          published_at: postData.published_at,
           updated_at: new Date().toISOString()
         })
         .eq('id', id)
@@ -181,16 +182,16 @@ export const blogService = {
     try {
       const { data, error } = await supabase
         .from('posts')
-        .insert([
-          {
-            title: postData.title,
-            content: postData.content,
-            category: postData.category,
-            slug: postData.slug,
-            status: postData.published ? 'published' : 'draft',
-            published_at: postData.published ? new Date().toISOString() : null
-          }
-        ])
+        .insert([{
+          title: postData.title,
+          slug: postData.slug,
+          content: postData.content,
+          excerpt: postData.excerpt,
+          category: postData.category,
+          status: postData.status,
+          published_at: postData.published_at,
+          created_at: new Date().toISOString()
+        }])
         .select()
         .single();
 
@@ -203,16 +204,17 @@ export const blogService = {
   },
 
   async getAllPostsAdmin() {
-    const { data, error } = await supabase
-      .from('posts')
-      .select('*')
-      .order('created_at', { ascending: false });
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (error) {
+      if (error) throw error;
+      return data;
+    } catch (error) {
       console.error('Error fetching posts:', error);
       throw error;
     }
-
-    return data;
   }
 } 

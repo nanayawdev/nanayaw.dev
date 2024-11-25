@@ -235,8 +235,12 @@ export const AdminPage = () => {
 
   const handleEdit = (post) => {
     setSelectedPost(post);
-    setFormData(post);
-    editor?.commands.setContent(post.content);
+    setFormData({
+      ...post,
+      published: post.status === 'published',
+      content: post.content || ''
+    });
+    editor?.commands.setContent(post.content || '');
   };
 
   const handleChange = (e) => {
@@ -250,7 +254,8 @@ export const AdminPage = () => {
   const handleSwitchChange = (checked) => {
     setFormData(prev => ({
       ...prev,
-      published: checked
+      published: checked,
+      status: checked ? 'published' : 'draft'
     }));
   };
 
@@ -276,35 +281,29 @@ export const AdminPage = () => {
     try {
       const postData = {
         ...formData,
+        status: formData.published ? 'published' : 'draft',
         published_at: formData.published ? new Date().toISOString() : null,
-        status: formData.published ? 'published' : 'draft'
       };
 
       let result;
       if (selectedPost) {
         result = await blogService.updatePost(selectedPost.id, postData);
-        toast.success(formData.published 
-          ? 'Post updated and published!' 
-          : 'Draft updated successfully!');
       } else {
         result = await blogService.createPost(postData);
-        toast.success(formData.published 
-          ? 'New post published!' 
-          : 'New draft saved!');
       }
 
-      // Update local posts list
-      setPosts(prev => {
-        if (selectedPost) {
-          return prev.map(p => p.id === selectedPost.id ? result : p);
-        }
-        return [result, ...prev];
-      });
+      // Refresh the posts list
+      await loadPosts();
+      
+      toast.success(
+        selectedPost
+          ? (formData.published ? 'Post updated and published!' : 'Draft updated successfully!')
+          : (formData.published ? 'New post published!' : 'New draft saved!')
+      );
 
       if (formData.published) {
         navigate(`/blog/${formData.slug}`);
       } else if (!selectedPost) {
-        // Clear form only for new posts
         handleCancelEdit();
       }
     } catch (error) {
@@ -356,6 +355,11 @@ export const AdminPage = () => {
     });
     editor?.commands.setContent('');
   };
+
+  const filteredPosts = posts.filter(post => {
+    if (statusFilter === 'all') return true;
+    return post.status === statusFilter.toLowerCase();
+  });
 
   return (
     <div className="flex h-screen">
@@ -493,59 +497,59 @@ export const AdminPage = () => {
             </Select>
           </div>
           <div className="space-y-2">
-            {posts
-              .filter(post => {
-                console.log('Filtering post:', post.status, statusFilter);
-                return statusFilter === 'all' || post.status === statusFilter.toLowerCase();
-              })
-              .map(post => (
-                <div 
-                  key={post.id} 
-                  className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
-                >
-                  <div className="flex justify-between items-start mb-1">
-                    <h3 className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
-                      {post.title}
-                    </h3>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      post.status === 'published' 
-                        ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                        : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                    }`}>
-                      {post.status === 'published' ? 'Published' : 'Draft'}
-                    </span>
-                  </div>
-                  <div className="flex items-center text-xs text-gray-500 mb-2">
-                    <Calendar className="w-3 h-3 mr-1" />
-                    {post.published_at 
-                      ? format(new Date(post.published_at), 'MMM d, yyyy')
-                      : format(new Date(post.created_at), 'MMM d, yyyy') + ' (Draft)'}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => handleEdit(post)}
-                      className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
-                      title="Edit"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setPostToDelete(post)}
-                      className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
-                      title="Delete"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                    <RouterLink
-                      to={`/blog/${post.slug}`}
-                      className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
-                      title="View"
-                    >
-                      <Eye className="w-4 h-4" />
-                    </RouterLink>
-                  </div>
+            {filteredPosts.map(post => (
+              <div 
+                key={post.id} 
+                className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
+              >
+                <div className="flex justify-between items-start mb-1">
+                  <h3 className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
+                    {post.title}
+                  </h3>
+                  <span className={`text-xs px-2 py-1 rounded-full ${
+                    post.status === 'published' 
+                      ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                      : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                  }`}>
+                    {post.status === 'published' ? 'Published' : 'Draft'}
+                  </span>
                 </div>
-              ))}
+                <div className="flex items-center text-xs text-gray-500 mb-2">
+                  <Calendar className="w-3 h-3 mr-1" />
+                  {post.published_at 
+                    ? format(new Date(post.published_at), 'MMM d, yyyy')
+                    : format(new Date(post.created_at), 'MMM d, yyyy') + ' (Draft)'}
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleEdit(post)}
+                    className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
+                    title="Edit"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setPostToDelete(post)}
+                    className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
+                    title="Delete"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                  <RouterLink
+                    to={`/blog/${post.slug}`}
+                    className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
+                    title="View"
+                  >
+                    <Eye className="w-4 h-4" />
+                  </RouterLink>
+                </div>
+              </div>
+            ))}
+            {filteredPosts.length === 0 && (
+              <p className="text-gray-500 text-center py-4">
+                No posts found for the selected filter.
+              </p>
+            )}
           </div>
         </div>
       </div>
