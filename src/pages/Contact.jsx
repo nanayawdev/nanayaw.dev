@@ -44,10 +44,40 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setError(null);
 
-    console.log('Attempting submission with data:', formData);
+    // Validate required fields
+    const requiredFields = {
+      name: 'Name',
+      email: 'Email',
+      phone: 'Phone',
+      service: 'Service'
+    };
+
+    const emptyFields = Object.entries(requiredFields)
+      .filter(([key]) => !formData[key])
+      .map(([_, label]) => label);
+
+    if (emptyFields.length > 0) {
+      setError(`Please fill in the required fields: ${emptyFields.join(', ')}`);
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    // Validate phone number format
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    if (!phoneRegex.test(formData.phone.replace(/\s+/g, ''))) {
+      setError('Please enter a valid phone number');
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       const { data, error: supabaseError } = await supabase
@@ -56,15 +86,13 @@ const Contact = () => {
           {
             name: formData.name,
             email: formData.email,
-            phone: formData.phone || null,
+            phone: formData.phone,
             company: formData.company || null,
             service: formData.service,
             project: formData.project || null,
             status: 'new'
           }
         ]);
-
-      console.log('Supabase response:', { data, supabaseError });
 
       if (supabaseError) {
         console.error('Supabase error details:', supabaseError);
@@ -108,7 +136,9 @@ const Contact = () => {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 w-full mt-12">
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label htmlFor="name" className="text-gray-400">What's your name?</label>
+              <label htmlFor="name" className="text-gray-400">
+                What's your name? <span className="text-red-500">*</span>
+              </label>
               <div className="relative">
                 <User className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
@@ -123,7 +153,9 @@ const Contact = () => {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="email" className="text-gray-400">What's your email address?</label>
+              <label htmlFor="email" className="text-gray-400">
+                What's your email address? <span className="text-red-500">*</span>
+              </label>
               <div className="relative">
                 <Mail className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
@@ -140,7 +172,9 @@ const Contact = () => {
 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label htmlFor="phone" className="text-gray-400">What's your phone number?</label>
+              <label htmlFor="phone" className="text-gray-400">
+                What's your phone number? <span className="text-red-500">*</span>
+              </label>
               <div className="relative">
                 <Phone className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
@@ -150,6 +184,7 @@ const Contact = () => {
                   className={inputClasses}
                   value={formData.phone}
                   onChange={handleChange}
+                  required
                 />
               </div>
             </div>
@@ -172,7 +207,9 @@ const Contact = () => {
 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-gray-400">What services are you looking for?</label>
+              <label className="text-gray-400">
+                What services are you looking for? <span className="text-red-500">*</span>
+              </label>
               <div className="relative">
                 <Wrench className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" />
                 <Select value={formData.service} onValueChange={handleServiceChange}>

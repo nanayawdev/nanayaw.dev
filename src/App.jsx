@@ -6,6 +6,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import BlogPostPage from './pages/BlogPostPage';
 import AdminPage from '@/pages/AdminPage';
 import SignInPage from '@/pages/SignInPage';
+import AllBlogPostsPage from './pages/AllBlogPostsPage';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +18,7 @@ function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/signin" element={<SignInPage />} />
+          <Route path="/allposts" element={<AllBlogPostsPage />} />
           <Route
             path="/*"
             element={

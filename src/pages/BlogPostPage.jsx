@@ -162,10 +162,10 @@ const BlogPostPage = () => {
 
   return (
     <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-3xl mx-auto">
-      <Link to="/">
+      <Link to="/allposts">
         <Button variant="ghost" className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
+          All Blog Posts
         </Button>
       </Link>
 

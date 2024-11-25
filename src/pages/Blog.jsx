@@ -12,11 +12,11 @@ const Blog = () => {
     const loadPosts = async () => {
       try {
         setIsLoading(true);
-        const data = await blogService.getAllPosts();
-        console.log('Blog posts loaded:', data); // Debug log
-        setPosts(data || []); // Ensure we always set an array
+        const data = await blogService.getRecentPosts();
+        console.log('Blog posts loaded:', data);
+        setPosts(data || []);
       } catch (err) {
-        console.error('Error loading posts:', err); // Debug log
+        console.error('Error loading posts:', err);
         setError(err.message);
       } finally {
         setIsLoading(false);

@@ -4,7 +4,11 @@ export const blogService = {
   async getAllPosts() {
     const { data, error } = await supabase
       .from('posts')
-      .select('*')
+      .select(`
+        *,
+        like_count:post_likes(count),
+        comment_count:post_comments(count)
+      `)
       .eq('status', 'published')
       .order('created_at', { ascending: false })
       .limit(10)
@@ -14,8 +18,14 @@ export const blogService = {
       throw error
     }
 
-    console.log('Fetched posts:', data)
-    return data
+    const transformedData = data.map(post => ({
+      ...post,
+      like_count: post.like_count[0]?.count || 0,
+      comment_count: post.comment_count[0]?.count || 0
+    }))
+
+    console.log('Fetched posts:', transformedData)
+    return transformedData
   },
 
   async getPostBySlug(slug) {
@@ -216,5 +226,32 @@ export const blogService = {
       console.error('Error fetching posts:', error);
       throw error;
     }
+  },
+
+  async getRecentPosts() {
+    const { data, error } = await supabase
+      .from('posts')
+      .select(`
+        *,
+        like_count:post_likes(count),
+        comment_count:post_comments(count)
+      `)
+      .eq('status', 'published')
+      .order('created_at', { ascending: false })
+      .limit(4)
+
+    if (error) {
+      console.error('Error fetching posts:', error)
+      throw error
+    }
+
+    const transformedData = data.map(post => ({
+      ...post,
+      like_count: post.like_count[0]?.count || 0,
+      comment_count: post.comment_count[0]?.count || 0
+    }))
+
+    console.log('Fetched recent posts:', transformedData)
+    return transformedData
   }
 } 
