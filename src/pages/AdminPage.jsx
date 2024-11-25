@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { ArrowLeft, Bold, Italic, Code, List, ListOrdered, Link as LinkIcon, Image as ImageIcon, AlignLeft, AlignCenter, AlignRight, Trash2, Edit, Eye, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
+import { DeletePostModal } from "@/components/DeletePostModal";
 
 const EditorMenuBar = ({ editor }) => {
   if (!editor) return null;
@@ -147,6 +148,7 @@ export const AdminPage = () => {
     created_at: new Date().toISOString()
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
 
   const editor = useEditor({
     extensions: [
@@ -274,6 +276,23 @@ export const AdminPage = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!postToDelete) return;
+    
+    const { error } = await supabase
+      .from('posts')
+      .delete()
+      .eq('id', postToDelete.id);
+    
+    if (error) {
+      alert('Error deleting post');
+      return;
+    }
+    
+    setPostToDelete(null);
+    loadPosts();
   };
 
   return (
@@ -410,6 +429,13 @@ export const AdminPage = () => {
           </form>
         </div>
       </div>
+
+      <DeletePostModal
+        isOpen={!!postToDelete}
+        onClose={() => setPostToDelete(null)}
+        onConfirm={handleDeleteConfirm}
+        postTitle={postToDelete?.title}
+      />
     </div>
   );
 };
