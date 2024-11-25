@@ -13,6 +13,126 @@ import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { ArrowLeft, Bold, Italic, Code, List, ListOrdered, Link as LinkIcon, Image as ImageIcon, AlignLeft, AlignCenter, AlignRight, Trash2, Edit, Eye, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 
+const EditorMenuBar = ({ editor }) => {
+  if (!editor) return null;
+
+  return (
+    <div className="border-b border-gray-200 dark:border-gray-800 p-2 flex items-center gap-2 flex-wrap">
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleBold().run()}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive('bold') ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Bold"
+      >
+        <Bold className="w-4 h-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive('italic') ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Italic"
+      >
+        <Italic className="w-4 h-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive('codeBlock') ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Code Block"
+      >
+        <Code className="w-4 h-4" />
+      </button>
+      <div className="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-2" />
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive('bulletList') ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Bullet List"
+      >
+        <List className="w-4 h-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive('orderedList') ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Numbered List"
+      >
+        <ListOrdered className="w-4 h-4" />
+      </button>
+      <div className="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-2" />
+      <button
+        type="button"
+        onClick={() => {
+          const url = window.prompt('Enter the URL:');
+          if (url) {
+            editor.chain().focus().setLink({ href: url }).run();
+          }
+        }}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive('link') ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Add Link"
+      >
+        <LinkIcon className="w-4 h-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          const url = window.prompt('Enter the image URL:');
+          if (url) {
+            editor.chain().focus().setImage({ src: url }).run();
+          }
+        }}
+        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+        title="Add Image"
+      >
+        <ImageIcon className="w-4 h-4" />
+      </button>
+      <div className="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-2" />
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().setTextAlign('left').run()}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive({ textAlign: 'left' }) ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Align Left"
+      >
+        <AlignLeft className="w-4 h-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().setTextAlign('center').run()}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive({ textAlign: 'center' }) ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Align Center"
+      >
+        <AlignCenter className="w-4 h-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().setTextAlign('right').run()}
+        className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
+          editor.isActive({ textAlign: 'right' }) ? 'bg-gray-100 dark:bg-gray-800' : ''
+        }`}
+        title="Align Right"
+      >
+        <AlignRight className="w-4 h-4" />
+      </button>
+    </div>
+  );
+};
+
 export const AdminPage = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
@@ -264,36 +384,7 @@ export const AdminPage = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Content</label>
               <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
-                <div className="border-b border-gray-200 dark:border-gray-800 p-2 flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => editor?.chain().focus().toggleBold().run()}
-                    className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
-                      editor?.isActive('bold') ? 'bg-gray-100 dark:bg-gray-800' : ''
-                    }`}
-                  >
-                    <Bold className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => editor?.chain().focus().toggleItalic().run()}
-                    className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
-                      editor?.isActive('italic') ? 'bg-gray-100 dark:bg-gray-800' : ''
-                    }`}
-                  >
-                    <Italic className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
-                    className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 ${
-                      editor?.isActive('codeBlock') ? 'bg-gray-100 dark:bg-gray-800' : ''
-                    }`}
-                  >
-                    <Code className="w-4 h-4" />
-                  </button>
-                  {/* Add more formatting buttons */}
-                </div>
+                <EditorMenuBar editor={editor} />
                 <EditorContent editor={editor} className="p-4 min-h-[300px]" />
               </div>
             </div>
