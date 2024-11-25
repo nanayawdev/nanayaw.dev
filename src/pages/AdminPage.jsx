@@ -279,16 +279,16 @@ export const AdminPage = () => {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-64 border-r border-gray-200 dark:border-gray-800 overflow-y-auto">
+      <div className="w-80 border-r border-gray-200 dark:border-gray-800 overflow-y-auto bg-gray-50 dark:bg-gray-900">
         <div className="p-4">
-          <h2 className="text-lg font-semibold mb-4">Posts</h2>
+          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Posts</h2>
           <div className="space-y-2">
             {posts.map(post => (
               <div 
                 key={post.id} 
-                className="p-3 rounded-lg border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900"
+                className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
               >
-                <h3 className="font-medium text-sm mb-1 truncate">
+                <h3 className="font-medium text-sm mb-1 truncate text-gray-900 dark:text-gray-100">
                   {post.title}
                 </h3>
                 <div className="flex items-center text-xs text-gray-500 mb-2">
@@ -298,19 +298,22 @@ export const AdminPage = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleEdit(post)}
-                    className="p-1 hover:text-blue-500"
+                    className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
+                    title="Edit"
                   >
                     <Edit className="w-4 h-4" />
                   </button>
                   <button
-                    onClick={() => handleDelete(post.id)}
-                    className="p-1 hover:text-red-500"
+                    onClick={() => setPostToDelete(post)}
+                    className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
+                    title="Delete"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                   <RouterLink
                     to={`/blog/${post.slug}`}
-                    className="p-1 hover:text-green-500 ml-auto"
+                    className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
+                    title="View"
                   >
                     <Eye className="w-4 h-4" />
                   </RouterLink>
