@@ -1,7 +1,10 @@
 import React from 'react';
 import { Mail, Instagram, Twitter, Dribbble, Github } from "lucide-react";
+import { Link } from 'react-router-dom';
 import profileImage from '@/assets/images/ny.jpg';
 import { LetsTalkButton } from '@/components/ui/lets-talk-button';
+import { supabase } from '@/lib/supabase';
+import { useNavigate } from 'react-router-dom';
 
 const socialLinks = [
   {
@@ -27,6 +30,8 @@ const socialLinks = [
 ];
 
 export default function ProfileCard() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex-grow flex items-center justify-center px-4 py-8">
       <div className="max-w-[320px] w-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-6 rounded-xl">
@@ -34,9 +39,19 @@ export default function ProfileCard() {
           <h1 className="text-3xl font-medium text-gray-900 dark:text-gray-100">
             NY Dev
           </h1>
-          <span className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-bodyfont-medium text-blue-800 dark:text-blue-300">
-            v 1.0
-          </span>
+          <Link 
+            to="/admin" 
+            className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
+            onClick={async (e) => {
+              const { data: { session } } = await supabase.auth.getSession();
+              if (!session) {
+                e.preventDefault();
+                navigate('/signin');
+              }
+            }}
+          >
+            Admin
+          </Link>
         </div>
 
         <div className="my-6">

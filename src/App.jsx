@@ -4,6 +4,8 @@ import MainLayout from './layouts/MainLayout';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import { ThemeProvider } from './contexts/ThemeContext';
 import BlogPostPage from './pages/BlogPostPage';
+import AdminPage from '@/pages/AdminPage';
+import SignInPage from '@/pages/SignInPage';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +15,8 @@ function App() {
       <ThemeProvider>
         <Routes>
           <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/signin" element={<SignInPage />} />
           <Route
             path="/*"
             element={
