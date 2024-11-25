@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ThumbsUp, MessageCircle, Bookmark, AudioLines, Share } from "lucide-react";
 import { BlogContent } from '@/components/BlogContent/BlogContent';
+import { toast } from 'sonner';
+import { Comments } from '@/components/Comments/Comments';
+import { CommentDrawer } from '@/components/Comments/CommentDrawer';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -13,6 +16,12 @@ const BlogPostPage = () => {
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [likeCount, setLikeCount] = useState(0);
+  const [hasLiked, setHasLiked] = useState(false);
+  const [isLiking, setIsLiking] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [commentCount, setCommentCount] = useState(0);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     const loadPost = async () => {
@@ -20,6 +29,7 @@ const BlogPostPage = () => {
         setIsLoading(true);
         const postData = await blogService.getPostBySlug(slug);
         setPost(postData);
+        setLikeCount(postData.like_count || 0);
         
         if (postData) {
           const relatedPostsData = await blogService.getRelatedPosts(
@@ -29,6 +39,10 @@ const BlogPostPage = () => {
           console.log('Related Posts:', relatedPostsData);
           setRelatedPosts(relatedPostsData);
         }
+        
+        // Check if user has liked this post
+        const liked = await blogService.hasUserLikedPost(postData.id);
+        setHasLiked(liked);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -38,6 +52,59 @@ const BlogPostPage = () => {
 
     loadPost();
   }, [slug]);
+
+  useEffect(() => {
+    const loadComments = async () => {
+      try {
+        const count = await blogService.getCommentCount(post.id);
+        setCommentCount(count);
+      } catch (err) {
+        console.error('Error loading comment count:', err);
+      }
+    };
+
+    if (post) {
+      loadComments();
+    }
+  }, [post]);
+
+  const handleLike = async () => {
+    if (isLiking || hasLiked) return;
+
+    try {
+      setIsLiking(true);
+      const { success, newCount } = await blogService.likePost(post.id);
+      
+      if (success) {
+        setLikeCount(newCount);
+        setHasLiked(true);
+        toast.success('Thanks for liking!');
+      }
+    } catch (err) {
+      console.error('Error liking post:', err);
+      toast.error('Unable to like post. Please try again.');
+    } finally {
+      setIsLiking(false);
+    }
+  };
+
+  const handleCommentClick = async () => {
+    if (!isDrawerOpen && comments.length === 0) {
+      try {
+        const postComments = await blogService.getComments(post.id);
+        setComments(postComments);
+      } catch (err) {
+        console.error('Error loading comments:', err);
+        toast.error('Unable to load comments');
+      }
+    }
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
+  const handleCommentAdded = (newComment) => {
+    setComments([newComment, ...comments]);
+    setCommentCount(prev => prev + 1);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -82,14 +149,25 @@ const BlogPostPage = () => {
         <div className="border-t border-b border-gray-200 dark:border-gray-800 py-4 my-8">
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-6">
-              <button className="flex items-center gap-2 text-gray-700 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-200">
-                <ThumbsUp className="h-5 w-5" />
-                <span className="text-sm">313</span>
+              <button 
+                onClick={handleLike}
+                disabled={isLiking || hasLiked}
+                className={`flex items-center gap-2 text-gray-700 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-200 transition-colors ${
+                  hasLiked ? 'text-gray-500 hover:text-riptide-600' : ''
+                } ${isLiking ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                <ThumbsUp className={`h-5 w-5 ${hasLiked ? 'fill-current' : ''}`} />
+                <span className="text-sm">{likeCount}</span>
               </button>
               
-              <button className="flex items-center gap-2 text-gray-700 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-200">
+              <button 
+                onClick={handleCommentClick}
+                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              >
                 <MessageCircle className="h-5 w-5" />
-                <span className="text-sm">4</span>
+                <span className="text-sm font-medium">
+                  {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
+                </span>
               </button>
             </div>
 
@@ -143,7 +221,22 @@ const BlogPostPage = () => {
             </div>
           </div>
         )}
+
+        <Comments 
+          postId={post?.id} 
+          comments={comments} 
+          onCommentAdded={handleCommentAdded} 
+        />
       </article>
+
+      <CommentDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        postId={post?.id}
+        comments={comments}
+        onCommentAdded={handleCommentAdded}
+        commentCount={commentCount}
+      />
     </div>
   );
 };
