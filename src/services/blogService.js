@@ -5,7 +5,7 @@ export const blogService = {
     const { data, error } = await supabase
       .from('posts')
       .select('*')
-      .eq('published', true)
+      .eq('status', 'published')
       .order('created_at', { ascending: false })
       .limit(10)
 
@@ -23,7 +23,7 @@ export const blogService = {
       .from('posts')
       .select('*')
       .eq('slug', slug)
-      .eq('published', true)
+      .eq('status', 'published')
       .single()
 
     if (error) throw error
@@ -35,7 +35,7 @@ export const blogService = {
       .from('posts')
       .select('*')
       .eq('category', category)
-      .eq('published', true)
+      .eq('status', 'published')
       .neq('slug', currentSlug)
       .order('created_at', { ascending: false })
       .limit(2)
@@ -161,9 +161,11 @@ export const blogService = {
           content: postData.content,
           category: postData.category,
           slug: postData.slug,
+          status: postData.published ? 'published' : 'draft',
+          published_at: postData.published ? new Date().toISOString() : null,
           updated_at: new Date().toISOString()
         })
-        .eq('id', id) // This ensures we update the existing post
+        .eq('id', id)
         .select()
         .single();
 
@@ -185,7 +187,8 @@ export const blogService = {
             content: postData.content,
             category: postData.category,
             slug: postData.slug,
-            published: true
+            status: postData.published ? 'published' : 'draft',
+            published_at: postData.published ? new Date().toISOString() : null
           }
         ])
         .select()
@@ -197,5 +200,19 @@ export const blogService = {
       console.error('Error creating post:', error);
       throw error;
     }
+  },
+
+  async getAllPostsAdmin() {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching posts:', error);
+      throw error;
+    }
+
+    return data;
   }
 } 

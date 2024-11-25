@@ -15,6 +15,7 @@ import { format } from 'date-fns';
 import { DeletePostModal } from "@/components/DeletePostModal";
 import { toast } from 'sonner';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { blogService } from '@/services/blogService';
 
 const EditorMenuBar = ({ editor }) => {
   if (!editor) return null;
@@ -139,6 +140,7 @@ const EditorMenuBar = ({ editor }) => {
 const CATEGORIES = [
   "REACT.JS",
   "NEXT.JS",
+  "VUE.JS",
   "HTML",
   "CSS",
   "JAVASCRIPT",
@@ -158,10 +160,12 @@ export const AdminPage = () => {
     category: '',
     excerpt: '',
     published: false,
+    status: 'draft',
     created_at: new Date().toISOString()
   });
   const [isLoading, setIsLoading] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const editor = useEditor({
     extensions: [
@@ -185,24 +189,32 @@ export const AdminPage = () => {
   }, []);
 
   const checkAuth = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    
+    if (error || !session) {
+      toast.error('Your session has expired. Please sign in again.');
+      navigate('/signin');
+      return;
+    }
+    
+    // Optional: Refresh session if it's close to expiring
+    const { data: { session: refreshedSession }, error: refreshError } = 
+      await supabase.auth.refreshSession();
+    
+    if (refreshError) {
+      toast.error('Unable to refresh session. Please sign in again.');
       navigate('/signin');
     }
   };
 
   const loadPosts = async () => {
-    const { data, error } = await supabase
-      .from('posts')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) {
-      alert('Error loading posts');
-      return;
+    try {
+      const data = await blogService.getAllPostsAdmin();
+      console.log('Loaded posts:', data);
+      setPosts(data);
+    } catch (error) {
+      toast.error('Error loading posts: ' + error.message);
     }
-    
-    setPosts(data);
   };
 
   const handleDelete = async (id) => {
@@ -262,30 +274,42 @@ export const AdminPage = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase
-        .from('posts')
-        .insert([formData]);
-      
-      if (error) throw error;
-      
-      // Redirect to the new post if published
+      const postData = {
+        ...formData,
+        published_at: formData.published ? new Date().toISOString() : null,
+        status: formData.published ? 'published' : 'draft'
+      };
+
+      let result;
+      if (selectedPost) {
+        result = await blogService.updatePost(selectedPost.id, postData);
+        toast.success(formData.published 
+          ? 'Post updated and published!' 
+          : 'Draft updated successfully!');
+      } else {
+        result = await blogService.createPost(postData);
+        toast.success(formData.published 
+          ? 'New post published!' 
+          : 'New draft saved!');
+      }
+
+      // Update local posts list
+      setPosts(prev => {
+        if (selectedPost) {
+          return prev.map(p => p.id === selectedPost.id ? result : p);
+        }
+        return [result, ...prev];
+      });
+
       if (formData.published) {
         navigate(`/blog/${formData.slug}`);
-      } else {
-        // Clear form
-        setFormData({
-          title: '',
-          slug: '',
-          content: '',
-          category: '',
-          excerpt: '',
-          published: false,
-          created_at: new Date().toISOString()
-        });
-        alert('Draft saved successfully!');
+      } else if (!selectedPost) {
+        // Clear form only for new posts
+        handleCancelEdit();
       }
     } catch (error) {
-      alert('Error creating post: ' + error.message);
+      console.error('Save error:', error);
+      toast.error(`Error saving post: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -318,21 +342,37 @@ export const AdminPage = () => {
     }
   };
 
+  const handleCancelEdit = () => {
+    setSelectedPost(null);
+    setFormData({
+      title: '',
+      slug: '',
+      content: '',
+      category: '',
+      excerpt: '',
+      published: false,
+      status: 'draft',
+      created_at: new Date().toISOString()
+    });
+    editor?.commands.setContent('');
+  };
+
   return (
     <div className="flex h-screen">
       {/* Main Content - Now on the left */}
       <div className="flex-1 overflow-y-auto border-r border-gray-200 dark:border-gray-800">
         <div className="max-w-3xl mx-auto p-6">
-          <RouterLink to="/">
-            <Button variant="ghost" className="mb-6">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Button>
-          </RouterLink>
-
-          <h1 className="text-3xl font-bold mb-8">
-            {selectedPost ? 'Edit Post' : 'Create New Post'}
-          </h1>
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold">
+              {selectedPost ? 'Edit Post' : 'Create New Post'}
+            </h1>
+            <RouterLink to="/">
+              <Button variant="ghost">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Home
+              </Button>
+            </RouterLink>
+          </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -346,36 +386,38 @@ export const AdminPage = () => {
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Slug</label>
-              <Input
-                name="slug"
-                value={formData.slug}
-                onChange={handleChange}
-                required
-                placeholder="post-url-slug"
-              />
-            </div>
+            <div className="flex gap-4">
+              <div className="space-y-2 flex-1">
+                <label className="text-sm font-medium">Slug</label>
+                <Input
+                  name="slug"
+                  value={formData.slug}
+                  onChange={handleChange}
+                  required
+                  placeholder="post-url-slug"
+                />
+              </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Category</label>
-              <Select
-                value={formData.category}
-                onValueChange={(value) => 
-                  setFormData(prev => ({ ...prev, category: value }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {CATEGORIES.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="space-y-2 flex-1">
+                <label className="text-sm font-medium">Category</label>
+                <Select
+                  value={formData.category}
+                  onValueChange={(value) => 
+                    setFormData(prev => ({ ...prev, category: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CATEGORIES.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -403,16 +445,30 @@ export const AdminPage = () => {
                 checked={formData.published}
                 onCheckedChange={handleSwitchChange}
               />
-              <label className="text-sm font-medium">Publish immediately</label>
+              <label className="text-sm font-medium">
+                {formData.published ? 'Publish immediately' : 'Save as draft'}
+              </label>
             </div>
 
-            <Button 
-              type="submit" 
-              disabled={isLoading}
-              className="w-full"
-            >
-              {isLoading ? 'Saving...' : (selectedPost ? 'Update Post' : 'Create Post')}
-            </Button>
+            <div className="flex gap-4">
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+                className="flex-1"
+              >
+                {isLoading ? 'Saving...' : (selectedPost ? 'Update Post' : 'Create Post')}
+              </Button>
+              
+              {selectedPost && (
+                <Button 
+                  type="button" 
+                  variant="outline"
+                  onClick={handleCancelEdit}
+                >
+                  Cancel Edit
+                </Button>
+              )}
+            </div>
           </form>
         </div>
       </div>
@@ -421,44 +477,75 @@ export const AdminPage = () => {
       <div className="w-80 overflow-y-auto bg-gray-50 dark:bg-gray-900">
         <div className="p-4">
           <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Posts</h2>
+          <div className="mb-4">
+            <Select
+              value={statusFilter}
+              onValueChange={setStatusFilter}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Filter by status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Posts</SelectItem>
+                <SelectItem value="published">Published</SelectItem>
+                <SelectItem value="draft">Draft</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="space-y-2">
-            {posts.map(post => (
-              <div 
-                key={post.id} 
-                className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
-              >
-                <h3 className="font-medium text-sm mb-1 truncate text-gray-900 dark:text-gray-100">
-                  {post.title}
-                </h3>
-                <div className="flex items-center text-xs text-gray-500 mb-2">
-                  <Calendar className="w-3 h-3 mr-1" />
-                  {format(new Date(post.created_at), 'MMM d, yyyy')}
+            {posts
+              .filter(post => {
+                console.log('Filtering post:', post.status, statusFilter);
+                return statusFilter === 'all' || post.status === statusFilter.toLowerCase();
+              })
+              .map(post => (
+                <div 
+                  key={post.id} 
+                  className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
+                >
+                  <div className="flex justify-between items-start mb-1">
+                    <h3 className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
+                      {post.title}
+                    </h3>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      post.status === 'published' 
+                        ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                        : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                    }`}>
+                      {post.status === 'published' ? 'Published' : 'Draft'}
+                    </span>
+                  </div>
+                  <div className="flex items-center text-xs text-gray-500 mb-2">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    {post.published_at 
+                      ? format(new Date(post.published_at), 'MMM d, yyyy')
+                      : format(new Date(post.created_at), 'MMM d, yyyy') + ' (Draft)'}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleEdit(post)}
+                      className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
+                      title="Edit"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setPostToDelete(post)}
+                      className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                    <RouterLink
+                      to={`/blog/${post.slug}`}
+                      className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
+                      title="View"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </RouterLink>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleEdit(post)}
-                    className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
-                    title="Edit"
-                  >
-                    <Edit className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setPostToDelete(post)}
-                    className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
-                    title="Delete"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                  <RouterLink
-                    to={`/blog/${post.slug}`}
-                    className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
-                    title="View"
-                  >
-                    <Eye className="w-4 h-4" />
-                  </RouterLink>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
