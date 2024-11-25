@@ -51,6 +51,42 @@ export default {
   			normal: 400,
   			medium: 500,
   			bold: 700,
+  		},
+  		typography: {
+  			DEFAULT: {
+  				css: {
+  					'code::before': {
+  						content: '""'
+  					},
+  					'code::after': {
+  						content: '""'
+  					},
+  					'blockquote p:first-of-type::before': {
+  						content: '""'
+  					},
+  					'blockquote p:last-of-type::after': {
+  						content: '""'
+  					},
+  					pre: {
+  						backgroundColor: '#f3f4f6',
+  						color: '#1f2937',
+  						padding: '1rem',
+  						borderRadius: '0.5rem',
+  						margin: '1rem 0'
+  					},
+  					code: {
+  						backgroundColor: '#f3f4f6',
+  						color: '#1f2937',
+  						padding: '0.25rem',
+  						borderRadius: '0.25rem',
+  						fontWeight: '400'
+  					},
+  					'pre code': {
+  						backgroundColor: 'transparent',
+  						padding: '0'
+  					}
+  				}
+  			}
   		}
   	}
   },

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ThumbsUp, MessageCircle, Bookmark, AudioLines, Share } from "lucide-react";
+import { BlogContent } from '@/components/BlogContent/BlogContent';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -108,9 +109,7 @@ const BlogPostPage = () => {
           </div>
         </div>
 
-        <div className="prose-p:text-gray-800 dark:prose-p:text-gray-100">
-          {post.content}
-        </div>
+        <BlogContent content={post.content} />
 
         {relatedPosts.length > 0 && (
           <div className="mt-16 w-full not-prose">
