@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ThumbsUp, MessageCircle, Bookmark, AudioLines, Share } from "lucide-react";
 import { BlogContent } from '@/components/BlogContent/BlogContent';
 import { toast } from 'sonner';
-import { Comments } from '@/components/Comments/Comments';
 import { CommentDrawer } from '@/components/Comments/CommentDrawer';
 
 const BlogPostPage = () => {
@@ -221,12 +220,6 @@ const BlogPostPage = () => {
             </div>
           </div>
         )}
-
-        <Comments 
-          postId={post?.id} 
-          comments={comments} 
-          onCommentAdded={handleCommentAdded} 
-        />
       </article>
 
       <CommentDrawer
