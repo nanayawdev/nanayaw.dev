@@ -1,5 +1,16 @@
 import { Badge } from "@/components/ui/badge";
-import { ChevronDown } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { User, Mail, Phone, Building2, Wrench, MessageSquare } from "lucide-react";
+
+const SERVICES = [
+  { value: "ui-ux", label: "UI/UX" },
+  { value: "web", label: "Web Design/Development" },
+  { value: "mentorship", label: "Mentorship" },
+  { value: "tutorials", label: "Tutorials/PDF" },
+  { value: "collaboration", label: "Collaboration" }
+];
+
+const inputClasses = "w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none h-[46px] pl-10";
 
 const Contact = () => {
   return (
@@ -22,80 +33,99 @@ const Contact = () => {
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <label htmlFor="name" className="text-gray-400">What's your name?</label>
-              <input 
-                type="text" 
-                id="name" 
-                placeholder="Type your full name" 
-                className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
-              />
+              <div className="relative">
+                <User className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input 
+                  type="text" 
+                  id="name" 
+                  placeholder="Type your full name" 
+                  className={inputClasses}
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
               <label htmlFor="email" className="text-gray-400">What's your email address?</label>
-              <input 
-                type="email" 
-                id="email" 
-                placeholder="example@email.com" 
-                className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
-              />
+              <div className="relative">
+                <Mail className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input 
+                  type="email" 
+                  id="email" 
+                  placeholder="example@email.com" 
+                  className={inputClasses}
+                />
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <label htmlFor="phone" className="text-gray-400">What's your phone number?</label>
-              <input 
-                type="tel" 
-                id="phone" 
-                placeholder="+1 2222 333344" 
-                className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
-              />
+              <div className="relative">
+                <Phone className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  placeholder="+1 2222 333344" 
+                  className={inputClasses}
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
               <label htmlFor="company" className="text-gray-400">What's your company/organization name?</label>
-              <input 
-                type="text" 
-                id="company" 
-                placeholder="Type your company/organization name" 
-                className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none"
-              />
+              <div className="relative">
+                <Building2 className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input 
+                  type="text" 
+                  id="company" 
+                  placeholder="Type your company/organization name" 
+                  className={inputClasses}
+                />
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label htmlFor="services" className="text-gray-400">What services are you looking for?</label>
+              <label className="text-gray-400">What services are you looking for?</label>
               <div className="relative">
-                <select 
-                  id="services" 
-                  className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none appearance-none"
-                >
-                  <option value="">Choose from a list here</option>
-                  <option value="ui-ux">UI/UX</option>
-                  <option value="web">Web Design/Development</option>
-                  <option value="mentorship">Mentorship</option>
-                  <option value="tutorials">Tutorials/PDF</option>
-                  <option value="collaboration">Collaboration</option>
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                <Wrench className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" />
+                <Select>
+                  <SelectTrigger className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none h-[46px] pl-10">
+                    <SelectValue placeholder="Choose from a list here" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SERVICES.map(service => (
+                      <SelectItem 
+                        key={service.value} 
+                        value={service.value}
+                      >
+                        {service.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
             <div className="space-y-2">
               <label htmlFor="project" className="text-gray-400">Tell us about your project</label>
-              <textarea 
-                id="project" 
-                placeholder="Please type your project description"
-                rows="1"
-                className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none resize-none min-h-[46px] overflow-hidden"
-              ></textarea>
+              <div className="relative">
+                <MessageSquare className="w-5 h-5 absolute left-3 top-[14px] text-gray-400" />
+                <textarea 
+                  id="project" 
+                  placeholder="Please type your project description"
+                  rows="1"
+                  className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none resize-none min-h-[46px] pl-10"
+                ></textarea>
+              </div>
             </div>
           </div>
 
           <button 
             type="submit" 
-            className="px-8 py-3 bg-riptide-500 hover:bg-riptide-600 text-white rounded-lg font-medium transition-colors"
+            className="px-8 py-3 bg-riptide-500 hover:bg-riptide-600 text-white rounded-lg font-medium transition-colors h-[46px]"
           >
             SEND MESSAGE
           </button>
