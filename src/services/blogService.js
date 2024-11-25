@@ -9,7 +9,12 @@ export const blogService = {
       .order('created_at', { ascending: false })
       .limit(10)
 
-    if (error) throw error
+    if (error) {
+      console.error('Error fetching posts:', error)
+      throw error
+    }
+
+    console.log('Fetched posts:', data)
     return data
   },
 

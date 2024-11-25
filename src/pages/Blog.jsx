@@ -11,9 +11,12 @@ const Blog = () => {
   useEffect(() => {
     const loadPosts = async () => {
       try {
+        setIsLoading(true);
         const data = await blogService.getAllPosts();
-        setPosts(data);
+        console.log('Blog posts loaded:', data); // Debug log
+        setPosts(data || []); // Ensure we always set an array
       } catch (err) {
+        console.error('Error loading posts:', err); // Debug log
         setError(err.message);
       } finally {
         setIsLoading(false);
@@ -23,8 +26,34 @@ const Blog = () => {
     loadPosts();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg">Loading posts...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg text-red-500">Error: {error}</div>
+      </div>
+    );
+  }
+
+  if (!posts.length) {
+    return (
+      <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-4xl mx-auto">
+        <Badge variant="outline" className="mb-6">
+          BLOG
+        </Badge>
+        <div className="text-lg text-gray-600 dark:text-gray-400">
+          No posts available yet.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-4xl mx-auto">

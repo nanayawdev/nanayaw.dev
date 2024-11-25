@@ -13,6 +13,8 @@ import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { ArrowLeft, Bold, Italic, Code, List, ListOrdered, Link as LinkIcon, Image as ImageIcon, AlignLeft, AlignCenter, AlignRight, Trash2, Edit, Eye, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { DeletePostModal } from "@/components/DeletePostModal";
+import { toast } from 'sonner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const EditorMenuBar = ({ editor }) => {
   if (!editor) return null;
@@ -133,6 +135,17 @@ const EditorMenuBar = ({ editor }) => {
     </div>
   );
 };
+
+const CATEGORIES = [
+  "REACT.JS",
+  "NEXT.JS",
+  "HTML",
+  "CSS",
+  "JAVASCRIPT",
+  "TAILWIND CSS",
+  "WEB DEV",
+  "UI/UX"
+];
 
 export const AdminPage = () => {
   const navigate = useNavigate();
@@ -281,24 +294,131 @@ export const AdminPage = () => {
   const handleDeleteConfirm = async () => {
     if (!postToDelete) return;
     
-    const { error } = await supabase
-      .from('posts')
-      .delete()
-      .eq('id', postToDelete.id);
-    
-    if (error) {
-      alert('Error deleting post');
-      return;
+    try {
+      setIsLoading(true);
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postToDelete.id);
+      
+      if (error) throw error;
+      
+      // Remove the post from local state
+      setPosts(posts.filter(post => post.id !== postToDelete.id));
+      setPostToDelete(null);
+      
+      // Replace alert with toast
+      toast.success('Post deleted successfully!');
+      
+    } catch (err) {
+      console.error('Delete error:', err);
+      toast.error('Error deleting post: ' + err.message);
+    } finally {
+      setIsLoading(false);
     }
-    
-    setPostToDelete(null);
-    loadPosts();
   };
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
-      <div className="w-80 border-r border-gray-200 dark:border-gray-800 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+      {/* Main Content - Now on the left */}
+      <div className="flex-1 overflow-y-auto border-r border-gray-200 dark:border-gray-800">
+        <div className="max-w-3xl mx-auto p-6">
+          <RouterLink to="/">
+            <Button variant="ghost" className="mb-6">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+          </RouterLink>
+
+          <h1 className="text-3xl font-bold mb-8">
+            {selectedPost ? 'Edit Post' : 'Create New Post'}
+          </h1>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Title</label>
+              <Input
+                name="title"
+                value={formData.title}
+                onChange={handleTitleChange}
+                required
+                placeholder="Post title"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Slug</label>
+              <Input
+                name="slug"
+                value={formData.slug}
+                onChange={handleChange}
+                required
+                placeholder="post-url-slug"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Category</label>
+              <Select
+                value={formData.category}
+                onValueChange={(value) => 
+                  setFormData(prev => ({ ...prev, category: value }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {CATEGORIES.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Excerpt</label>
+              <Textarea
+                name="excerpt"
+                value={formData.excerpt}
+                onChange={handleChange}
+                required
+                placeholder="Brief description of the post"
+                rows={3}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Content</label>
+              <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+                <EditorMenuBar editor={editor} />
+                <EditorContent editor={editor} className="p-4 min-h-[300px]" />
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Switch
+                checked={formData.published}
+                onCheckedChange={handleSwitchChange}
+              />
+              <label className="text-sm font-medium">Publish immediately</label>
+            </div>
+
+            <Button 
+              type="submit" 
+              disabled={isLoading}
+              className="w-full"
+            >
+              {isLoading ? 'Saving...' : (selectedPost ? 'Update Post' : 'Create Post')}
+            </Button>
+          </form>
+        </div>
+      </div>
+
+      {/* Sidebar - Now on the right */}
+      <div className="w-80 overflow-y-auto bg-gray-50 dark:bg-gray-900">
         <div className="p-4">
           <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Posts</h2>
           <div className="space-y-2">
@@ -343,98 +463,13 @@ export const AdminPage = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto p-6">
-          <RouterLink to="/">
-            <Button variant="ghost" className="mb-6">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Button>
-          </RouterLink>
-
-          <h1 className="text-3xl font-bold mb-8">
-            {selectedPost ? 'Edit Post' : 'Create New Post'}
-          </h1>
-          
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Title</label>
-              <Input
-                name="title"
-                value={formData.title}
-                onChange={handleTitleChange}
-                required
-                placeholder="Post title"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Slug</label>
-              <Input
-                name="slug"
-                value={formData.slug}
-                onChange={handleChange}
-                required
-                placeholder="post-url-slug"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Category</label>
-              <Input
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                required
-                placeholder="NEXT.JS"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Excerpt</label>
-              <Textarea
-                name="excerpt"
-                value={formData.excerpt}
-                onChange={handleChange}
-                required
-                placeholder="Brief description of the post"
-                rows={3}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Content</label>
-              <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
-                <EditorMenuBar editor={editor} />
-                <EditorContent editor={editor} className="p-4 min-h-[300px]" />
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Switch
-                checked={formData.published}
-                onCheckedChange={handleSwitchChange}
-              />
-              <label className="text-sm font-medium">Publish immediately</label>
-            </div>
-
-            <Button 
-              type="submit" 
-              disabled={isLoading}
-              className="w-full"
-            >
-              {isLoading ? 'Saving...' : (selectedPost ? 'Update Post' : 'Create Post')}
-            </Button>
-          </form>
-        </div>
-      </div>
-
+      {/* Delete Modal */}
       <DeletePostModal
         isOpen={!!postToDelete}
         onClose={() => setPostToDelete(null)}
         onConfirm={handleDeleteConfirm}
         postTitle={postToDelete?.title}
+        isLoading={isLoading}
       />
     </div>
   );
