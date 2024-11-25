@@ -150,5 +150,52 @@ export const blogService = {
 
     if (error) throw error;
     return count || 0;
+  },
+
+  async updatePost(id, postData) {
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .update({
+          title: postData.title,
+          content: postData.content,
+          category: postData.category,
+          slug: postData.slug,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id) // This ensures we update the existing post
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error updating post:', error);
+      throw error;
+    }
+  },
+
+  async createPost(postData) {
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .insert([
+          {
+            title: postData.title,
+            content: postData.content,
+            category: postData.category,
+            slug: postData.slug,
+            published: true
+          }
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error creating post:', error);
+      throw error;
+    }
   }
 } 
