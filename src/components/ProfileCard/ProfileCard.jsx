@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Instagram, Twitter, Dribbble, Github } from "lucide-react";
+import { Mail, Instagram, Twitter, Dribbble, Github, FolderPlus } from "lucide-react";
 import { Link } from 'react-router-dom';
 import profileImage from '@/assets/images/ny.jpg';
 import { LetsTalkButton } from '@/components/ui/lets-talk-button';
@@ -32,6 +32,16 @@ const socialLinks = [
 export default function ProfileCard() {
   const navigate = useNavigate();
 
+  const checkAuth = async (e, path) => {
+    e.preventDefault();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      navigate('/signin');
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <div className="flex-grow flex items-center justify-center px-4 py-8">
       <div className="max-w-[320px] w-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-6 rounded-xl">
@@ -39,19 +49,23 @@ export default function ProfileCard() {
           <h1 className="text-3xl font-medium text-gray-900 dark:text-gray-100">
             NY Dev
           </h1>
-          <Link 
-            to="/admin" 
-            className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
-            onClick={async (e) => {
-              const { data: { session } } = await supabase.auth.getSession();
-              if (!session) {
-                e.preventDefault();
-                navigate('/signin');
-              }
-            }}
-          >
-            Admin
-          </Link>
+          <div className="flex space-x-2">
+            <Link 
+              to="/admin" 
+              className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
+              onClick={(e) => checkAuth(e, '/admin')}
+            >
+              Admin
+            </Link>
+            <Link 
+              to="/portfolio-admin" 
+              className="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800 transition-colors duration-200"
+              onClick={(e) => checkAuth(e, '/portfolio-admin')}
+            >
+              <FolderPlus className="w-3 h-3 mr-1" />
+              Add Project
+            </Link>
+          </div>
         </div>
 
         <div className="my-6">

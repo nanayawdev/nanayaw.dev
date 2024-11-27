@@ -7,6 +7,8 @@ import BlogPostPage from './pages/BlogPostPage';
 import AdminPage from '@/pages/AdminPage';
 import SignInPage from '@/pages/SignInPage';
 import AllBlogPostsPage from './pages/AllBlogPostsPage';
+import PortfolioView from './pages/PortfolioView';
+import PortfolioAdminPage from '@/pages/PortfolioAdminPage';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +21,8 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/allposts" element={<AllBlogPostsPage />} />
+          <Route path="/portfolio/:slug" element={<PortfolioView />} />
+          <Route path="/portfolio-admin" element={<PortfolioAdminPage />} />
           <Route
             path="/*"
             element={

@@ -1,7 +1,28 @@
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { portfolioData } from "../data/portfolioData";
+import { Link } from "react-router-dom";
+import { supabase } from '@/lib/supabase';
 
 const Portfolio = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const { data, error } = await supabase
+        .from('portfolio_projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching projects:', error);
+      } else {
+        setProjects(data);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   return (
     <div id="portfolio" className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-4xl mx-auto">
       <Badge variant="outline" className="mb-6">
@@ -13,12 +34,10 @@ const Portfolio = () => {
       </h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-        {portfolioData.map((project) => (
-          <a
+        {projects.map((project) => (
+          <Link
             key={project.id}
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
+            to={`/portfolio/${project.slug}`}
             className="relative group overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]"
           >
             <div className="relative w-full h-80">
@@ -47,7 +66,7 @@ const Portfolio = () => {
                 </div>
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </div>
