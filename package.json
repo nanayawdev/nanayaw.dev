@@ -26,6 +26,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.11.17",
+    "gsap": "^3.12.5",
     "lucide-react": "^0.460.0",
     "prosemirror-commands": "^1.6.2",
     "prosemirror-state": "^1.4.3",
