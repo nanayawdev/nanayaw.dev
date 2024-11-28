@@ -12,8 +12,8 @@ const Expertise = () => {
     { name: 'React', percentage: 92, icon: <SiReact className="w-6 sm:w-8 h-6 sm:h-8" /> },
     { name: 'Next', percentage: 85, icon: <SiNextdotjs className="w-6 sm:w-8 h-6 sm:h-8" /> },
     { name: 'Figma', percentage: 80, icon: <Figma className="w-6 sm:w-8 h-6 sm:h-8" /> },
-    { name: 'Vue', percentage: 81, icon: <Framer className="w-6 sm:w-8 h-6 sm:h-8" /> },
-    { name: 'Remix/Astro', percentage: 76, icon: <SiAstro className="w-6 sm:w-8 h-6 sm:h-8" /> },
+    { name: 'Framer', percentage: 81, icon: <Framer className="w-6 sm:w-8 h-6 sm:h-8" /> },
+    { name: 'Astro', percentage: 76, icon: <SiAstro className="w-6 sm:w-8 h-6 sm:h-8" /> },
     { name: 'Tailwind', percentage: 90, icon: <SiTailwindcss className="w-6 sm:w-8 h-6 sm:h-8" /> },
   ];
 
