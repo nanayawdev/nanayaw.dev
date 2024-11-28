@@ -1,10 +1,19 @@
-import React from 'react';
-import { Mail, Instagram, Twitter, Dribbble, Github, FolderPlus } from "lucide-react";
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Mail, Instagram, Twitter, Dribbble, Github, PenSquare, FolderPlus, LogOut, LogIn } from "lucide-react";
+import { Link, useNavigate } from 'react-router-dom';
 import profileImage from '@/assets/images/ny.jpg';
 import { LetsTalkButton } from '@/components/ui/lets-talk-button';
 import { supabase } from '@/lib/supabase';
-import { useNavigate } from 'react-router-dom';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { LogoutWarningModal } from "@/components/LogoutWarningModal";
+import { toast } from "sonner";
 
 const socialLinks = [
   {
@@ -31,6 +40,40 @@ const socialLinks = [
 
 export default function ProfileCard() {
   const navigate = useNavigate();
+  const [showLogoutWarning, setShowLogoutWarning] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogoutClick = () => {
+    setShowLogoutWarning(true);
+  };
+
+  const handleLogoutConfirm = async () => {
+    setIsLoading(true);
+    try {
+      await supabase.auth.signOut();
+      toast.success("Logged out successfully");
+      // Stay on the current page
+    } catch (error) {
+      console.error('Error logging out:', error);
+      toast.error("Error logging out");
+    } finally {
+      setIsLoading(false);
+      setShowLogoutWarning(false);
+    }
+  };
 
   const checkAuth = async (e, path) => {
     e.preventDefault();
@@ -49,23 +92,51 @@ export default function ProfileCard() {
           <h1 className="text-3xl font-medium text-gray-900 dark:text-gray-100">
             NY Dev
           </h1>
-          <div className="flex space-x-2">
-            <Link 
-              to="/admin" 
-              className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
-              onClick={(e) => checkAuth(e, '/admin')}
-            >
-              Admin
-            </Link>
-            <Link 
-              to="/portfolio-admin" 
-              className="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800 transition-colors duration-200"
-              onClick={(e) => checkAuth(e, '/portfolio-admin')}
-            >
-              <FolderPlus className="w-3 h-3 mr-1" />
-              Add Project
-            </Link>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="focus:outline-none">
+              <Avatar className="h-8 w-8">
+                <AvatarFallback 
+                  className={
+                    session 
+                      ? "bg-rose-600 text-white text-sm" 
+                      : "bg-rose-500 text-white text-xs font-medium"
+                  }
+                >
+                  {session ? "NY" : "v1.0"}
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              {session ? (
+                <>
+                  <DropdownMenuItem onClick={(e) => checkAuth(e, '/admin')} className="cursor-pointer">
+                    <PenSquare className="w-4 h-4 mr-2" />
+                    Add Post
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={(e) => checkAuth(e, '/portfolio-admin')} className="cursor-pointer">
+                    <FolderPlus className="w-4 h-4 mr-2" />
+                    Add Project
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    onClick={handleLogoutClick} 
+                    className="cursor-pointer text-red-600 dark:text-red-400"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <DropdownMenuItem 
+                  onClick={() => navigate('/signin')} 
+                  className="cursor-pointer text-blue-600 dark:text-blue-400"
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Login
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         <div className="my-6">
@@ -77,7 +148,7 @@ export default function ProfileCard() {
         </div>
 
         <div className="text-center space-y-1">
-          <p className="text-gray-500 dark:text-gray-400">nana@yawdev.com</p>
+          <p className="text-gray-500 dark:text-gray-400">me@nanayaw.dev</p>
           <p className="text-gray-500 dark:text-gray-400 text-xs">Based in Accra, GH</p>
         </div>
 
@@ -88,7 +159,7 @@ export default function ProfileCard() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
+              className="text-gray-600 dark:text-gray-400 hover:text-rose-500 dark:hover:text-blue-400 transition-colors duration-200"
               aria-label={link.label}
             >
               {link.icon}
@@ -104,6 +175,13 @@ export default function ProfileCard() {
           <p>© {new Date().getFullYear()} All Rights Reserved</p>
         </div>
       </div>
+
+      <LogoutWarningModal
+        isOpen={showLogoutWarning}
+        onClose={() => setShowLogoutWarning(false)}
+        onConfirm={handleLogoutConfirm}
+        isLoading={isLoading}
+      />
     </div>
   );
 }
