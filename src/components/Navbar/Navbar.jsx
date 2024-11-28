@@ -40,10 +40,8 @@ export default function Navbar() {
 
   return (
     <nav className="hidden lg:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-md 
-      bg-slate-50/80 dark:bg-slate-950/80 
-      backdrop-blur-md 
-      shadow-[0_4px_6px_-1px_rgba(51,65,85,0.1),0_2px_4px_-2px_rgba(51,65,85,0.1)]
-      border border-slate-200/20 dark:border-slate-800/20
+      bg-gray-800
+      shadow-lg
       z-50">
       <div className="flex items-center gap-8">
         <button onClick={() => scrollToSection('home')} className="flex items-center">
@@ -60,8 +58,8 @@ export default function Navbar() {
                   onClick={() => scrollToSection(sectionId)}
                   className={`relative flex items-center transition-colors ${
                     isActive 
-                      ? 'text-rose-500 dark:text-rose-400' 
-                      : 'text-slate-950 dark:text-slate-50 hover:text-rose-500 dark:hover:text-rose-400'
+                      ? 'text-rose-500' 
+                      : 'text-gray-200 hover:text-rose-500'
                   }`}
                   onMouseEnter={() => setHoveredItem(item.path)}
                   onMouseLeave={() => setHoveredItem(null)}
