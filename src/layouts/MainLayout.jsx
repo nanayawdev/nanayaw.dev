@@ -5,8 +5,6 @@ import Navbar from '../components/Navbar/Navbar';
 import MobileNavbar from '../components/Navbar/MobileNavbar';
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle';
 import ProfileCard from '../components/ProfileCard/ProfileCard';
-import { navigationConfig } from '../config/navigationConfig';
-import { footerConfig } from '../config/footerConfig';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import Resume from '../pages/Resume';
