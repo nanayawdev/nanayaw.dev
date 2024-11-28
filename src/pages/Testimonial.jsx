@@ -23,7 +23,7 @@ const Testimonial = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Mary Arthur",
+      name: "Mrs. Gertrude Dzifa",
       role: "Krontiva Africa",
       image: mary, // Add actual image path
       text: "Working with NY was an absolute pleasure! His innovative approach and technical prowess turned our vision into reality. The end result exceeded our expectations, both in terms of functionality and aesthetics.",
@@ -40,7 +40,7 @@ const Testimonial = () => {
     },
     {
       id: 3,
-      name: "Fidelia Senam",
+      name: "Ronald Osei Kuffour",
       role: "Imagine Media",
       image: banku, // Add actual image path
       text: "NY's expertise in React.js and Vue.js brought our project to life in ways we never imagined. Not only was the final product stunning, but the process was also seamless, thanks to clear communication and thoughtful design decisions.",
