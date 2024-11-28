@@ -34,7 +34,9 @@ export default function Navbar() {
                 <button
                   onClick={() => scrollToSection(sectionId)}
                   className={`relative flex items-center transition-colors ${
-                    location.pathname === item.path ? 'text-riptide-700 dark:text-riptide-300' : 'text-gray-950 dark:text-gray-50 hover:text-riptide-500 dark:hover:text-riptide-300'
+                    location.pathname === item.path 
+                      ? 'text-rose-500 dark:text-rose-400' 
+                      : 'text-gray-950 dark:text-gray-50 hover:text-rose-500 dark:hover:text-rose-400'
                   }`}
                   onMouseEnter={() => setHoveredItem(item.path)}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -43,7 +45,7 @@ export default function Navbar() {
                     className="relative flex items-center gap-2 px-3 py-2 rounded-md"
                     animate={{
                       backgroundColor: hoveredItem === item.path || location.pathname === item.path
-                        ? 'rgba(51, 206, 201, 0.1)'
+                        ? 'rgba(244, 63, 94, 0.1)' // rose-500 with opacity
                         : 'rgba(0, 0, 0, 0)',
                     }}
                     transition={{ duration: 0.2 }}
