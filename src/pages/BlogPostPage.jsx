@@ -108,7 +108,7 @@ const BlogPostPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-3xl mx-auto">
+      <div className="flex flex-col items-start justify-start pt-12 sm:pt-16 md:pt-20 pb-4 sm:pb-6 md:pb-8 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
         <div className="w-full space-y-8">
           <Skeleton className="h-10 w-32" />
           
@@ -161,7 +161,7 @@ const BlogPostPage = () => {
   });
 
   return (
-    <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-3xl mx-auto">
+    <div className="flex flex-col items-start justify-start pt-12 sm:pt-16 md:pt-20 pb-4 sm:pb-6 md:pb-8 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
       <Link to="/allposts">
         <Button variant="ghost" className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -169,7 +169,7 @@ const BlogPostPage = () => {
         </Button>
       </Link>
 
-      <article className="prose prose-lg dark:prose-invert w-full">
+      <article className="prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert w-full">
         <Badge variant="outline" className="mb-6">
           {post.category}
         </Badge>
@@ -182,9 +182,9 @@ const BlogPostPage = () => {
           {formattedDate}
         </div>
 
-        <div className="border-t border-b border-gray-200 dark:border-gray-800 py-4 my-8">
-          <div className="flex items-center justify-between w-full">
-            <div className="flex items-center gap-6">
+        <div className="border-t border-b border-gray-200 dark:border-gray-800 py-3 sm:py-4 my-6 sm:my-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4 sm:gap-0">
+            <div className="flex items-center gap-4 sm:gap-6">
               <button 
                 onClick={handleLike}
                 disabled={isLiking || hasLiked}
@@ -207,7 +207,7 @@ const BlogPostPage = () => {
               </button>
             </div>
 
-            <div className="flex items-center gap-6 ml-auto">
+            <div className="hidden sm:flex items-center gap-4 sm:gap-6">
               <button className="text-gray-700 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-200">
                 <Bookmark className="h-5 w-5" />
               </button>
@@ -226,22 +226,22 @@ const BlogPostPage = () => {
         <BlogContent content={post.content} />
 
         {relatedPosts.length > 0 && (
-          <div className="mt-16 w-full not-prose">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
+          <div className="mt-12 sm:mt-16 w-full not-prose">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gray-900 dark:text-gray-100">
               Related Articles
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {relatedPosts.map((relatedPost) => (
                 <Link 
                   key={relatedPost.slug}
                   to={`/blog/${relatedPost.slug}`}
                   className="group block"
                 >
-                  <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 transition-colors hover:border-riptide-500 dark:hover:border-riptide-500 h-[150px] flex flex-col">
+                  <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 sm:p-6 transition-colors hover:border-riptide-500 dark:hover:border-riptide-500 h-[120px] sm:h-[150px] flex flex-col">
                     <Badge variant="outline" className="w-fit mb-2">
                       {relatedPost.category}
                     </Badge>
-                    <h3 className="text-[20px] font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 mb-2">
+                    <h3 className="text-base sm:text-[20px] font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 mb-2">
                       {relatedPost.title}
                     </h3>
                     <span className="text-sm text-gray-500 dark:text-gray-400 mt-auto">
