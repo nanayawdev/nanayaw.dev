@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  PenSquare, 
+  NotebookPen, 
   FolderPlus, 
   LogOut, 
   LogIn, 
@@ -119,7 +119,7 @@ export default function ProfileCard() {
               {session ? (
                 <>
                   <DropdownMenuItem onClick={(e) => checkAuth(e, '/admin')} className="cursor-pointer">
-                    <PenSquare className="w-4 h-4 mr-2" />
+                    <NotebookPen className="w-4 h-4 mr-2" />
                     Add Post
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={(e) => checkAuth(e, '/portfolio-admin')} className="cursor-pointer">
