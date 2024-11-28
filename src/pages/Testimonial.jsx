@@ -73,7 +73,7 @@ const Testimonial = () => {
       </Badge>
       
       <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-12">
-        Trusted by <span className="text-riptide-500">Hundered Clients</span>
+        Trusted by <span className="text-riptide-500">13+ Clients</span>
       </h1>
 
       <div className="w-full rounded-2xl border border-gray-800 p-8 relative">
@@ -130,22 +130,6 @@ const Testimonial = () => {
               </button>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="w-full mt-20">
-        <h2 className="text-left text-gray-900 dark:text-gray-100 mb-12">
-          BRANDS I'VE WORKED WITH
-        </h2>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center">
-          <SiReact className="w-12 h-12 text-[#61DAFB]" />
-          <SiVuedotjs className="w-12 h-12 text-[#4FC08D]" />
-          <SiTailwindcss className="w-12 h-12 text-[#38B2AC]" />
-          <TbBrandNextjs className="w-12 h-12 dark:text-white text-black" />
-          <FaNodeJs className="w-12 h-12 text-[#339933]" />
-          <FaGitAlt className="w-12 h-12 text-[#F05032]" />
-          <FaDocker className="w-12 h-12 text-[#2496ED]" />
-          <SiTypescript className="w-12 h-12 text-[#3178C6]" />
         </div>
       </div>
     </div>
