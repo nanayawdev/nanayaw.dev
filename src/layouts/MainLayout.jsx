@@ -40,7 +40,7 @@ const MainLayout = () => {
             
             {/* Right Side - Content */}
             <div className="flex-1 max-w-3xl lg:ml-24 xl:ml-32 2xl:ml-48">
-              <div className="space-y-20 pb-32">
+              <div className="space-y-12 sm:space-y-16 pb-32">
                 <section id="home"><Home /></section>
                 <section id="about"><About /></section>
                 <section id="portfolio"><Portfolio /></section>
