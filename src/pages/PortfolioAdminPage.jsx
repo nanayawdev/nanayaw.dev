@@ -208,75 +208,70 @@ export const PortfolioAdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Form Section */}
-          <div className="flex-1">
-            <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {selectedProject ? 'Edit Project' : 'Create New Project'}
-              </h1>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate(-1)}
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
+    <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
+      {/* Main Content */}
+      <div className="flex-1 h-screen overflow-y-auto border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
+        <div className="max-w-3xl mx-auto p-4 md:p-6 pb-24 md:pb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold">
+              {selectedProject ? 'Edit Project' : 'Create New Project'}
+            </h1>
+            <RouterLink to="/">
+              <Button variant="ghost">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                <span className="hidden sm:inline">Back to Home</span>
               </Button>
+            </RouterLink>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+            {/* Image Upload */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Main Image</label>
+              <div className="flex items-center gap-4">
+                {formData.imagePreview && (
+                  <img
+                    src={formData.imagePreview}
+                    alt="Preview"
+                    className="w-32 h-32 object-cover rounded-lg"
+                  />
+                )}
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="flex-1"
+                />
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-              {/* Image Upload */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  Main Image
-                </label>
-                <div className="flex items-center gap-4">
-                  {formData.imagePreview && (
+            {/* Gallery Images */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Gallery Images</label>
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-2 overflow-x-auto pb-2">
+                  {formData.galleryPreviews?.map((preview, index) => (
                     <img
-                      src={formData.imagePreview}
-                      alt="Preview"
-                      className="w-32 h-32 object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+                      key={index}
+                      src={preview}
+                      alt={`Gallery preview ${index + 1}`}
+                      className="w-24 h-24 object-cover rounded-lg"
                     />
-                  )}
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="flex-1"
-                  />
+                  ))}
                 </div>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleGalleryImagesChange}
+                />
               </div>
+            </div>
 
-              {/* Gallery Images */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                  Gallery Images
-                </label>
-                <div className="flex flex-col gap-4">
-                  <div className="flex gap-2 overflow-x-auto pb-2">
-                    {formData.galleryPreviews?.map((preview, index) => (
-                      <img
-                        key={index}
-                        src={preview}
-                        alt={`Gallery preview ${index + 1}`}
-                        className="w-24 h-24 object-cover rounded-lg border border-gray-200 dark:border-gray-700"
-                      />
-                    ))}
-                  </div>
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleGalleryImagesChange}
-                  />
-                </div>
-              </div>
-
-              {/* Project Details */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Project Details */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="space-y-2 flex-1">
+                <label className="text-sm font-medium">Title</label>
                 <Input
                   name="title"
                   value={formData.title}
@@ -284,7 +279,10 @@ export const PortfolioAdminPage = () => {
                   placeholder="Project Title"
                   required
                 />
+              </div>
 
+              <div className="space-y-2 flex-1">
+                <label className="text-sm font-medium">Category</label>
                 <Select
                   value={formData.category}
                   onValueChange={handleCategoryChange}
@@ -301,129 +299,145 @@ export const PortfolioAdminPage = () => {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
 
-              <Textarea
-                name="description"
-                value={formData.description}
+            <Textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Project Description"
+              required
+              className="min-h-[100px]"
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input
+                name="client"
+                value={formData.client}
                 onChange={handleChange}
-                placeholder="Project Description"
-                required
-                className="min-h-[100px]"
+                placeholder="Client Name"
               />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Input
-                  name="client"
-                  value={formData.client}
-                  onChange={handleChange}
-                  placeholder="Client Name"
-                />
-
-                <Input
-                  name="link"
-                  value={formData.link}
-                  onChange={handleChange}
-                  placeholder="Project Link"
-                />
-              </div>
 
               <Input
-                name="tags"
-                value={formData.tags}
+                name="link"
+                value={formData.link}
                 onChange={handleChange}
-                placeholder="Tags (comma-separated)"
+                placeholder="Project Link"
               />
-
-              <Textarea
-                name="task"
-                value={formData.task}
-                onChange={handleChange}
-                placeholder="Project Task"
-                className="min-h-[100px]"
-              />
-
-              <Textarea
-                name="strategy"
-                value={formData.strategy}
-                onChange={handleChange}
-                placeholder="Project Strategy"
-                className="min-h-[100px]"
-              />
-
-              <Textarea
-                name="design"
-                value={formData.design}
-                onChange={handleChange}
-                placeholder="Design Approach"
-                className="min-h-[100px]"
-              />
-
-              <div className="flex gap-4">
-                <Button 
-                  type="submit" 
-                  disabled={isLoading}
-                  className="flex-1"
-                >
-                  {isLoading ? 'Saving...' : (selectedProject ? 'Update Project' : 'Create Project')}
-                </Button>
-                
-                {selectedProject && (
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    onClick={handleCancelEdit}
-                  >
-                    Cancel Edit
-                  </Button>
-                )}
-              </div>
-            </form>
-          </div>
-
-          {/* Projects List */}
-          <div className="w-full lg:w-80 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-            <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Projects</h2>
-            <div className="space-y-4">
-              {projects.map(project => (
-                <div 
-                  key={project.id} 
-                  className="bg-white dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600"
-                >
-                  {project.image && (
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-32 object-cover rounded-lg mb-2"
-                    />
-                  )}
-                  <h3 className="font-medium text-gray-900 dark:text-white">{project.title}</h3>
-                  <div className="flex items-center gap-2 mt-2">
-                    <button
-                      onClick={() => handleEdit(project)}
-                      className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 text-blue-500"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setProjectToDelete(project)}
-                      className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                    <RouterLink
-                      to={`/portfolio/${project.slug}`}
-                      className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
-                    >
-                      <Eye className="w-4 h-4" />
-                    </RouterLink>
-                  </div>
-                </div>
-              ))}
             </div>
+
+            <Input
+              name="tags"
+              value={formData.tags}
+              onChange={handleChange}
+              placeholder="Tags (comma-separated)"
+            />
+
+            <Textarea
+              name="task"
+              value={formData.task}
+              onChange={handleChange}
+              placeholder="Project Task"
+              className="min-h-[100px]"
+            />
+
+            <Textarea
+              name="strategy"
+              value={formData.strategy}
+              onChange={handleChange}
+              placeholder="Project Strategy"
+              className="min-h-[100px]"
+            />
+
+            <Textarea
+              name="design"
+              value={formData.design}
+              onChange={handleChange}
+              placeholder="Design Approach"
+              className="min-h-[100px]"
+            />
+
+            <div className="flex gap-4">
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+                className="flex-1"
+              >
+                {isLoading ? 'Saving...' : (selectedProject ? 'Update Project' : 'Create Project')}
+              </Button>
+              
+              {selectedProject && (
+                <Button 
+                  type="button" 
+                  variant="outline"
+                  onClick={handleCancelEdit}
+                >
+                  Cancel Edit
+                </Button>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {/* Sidebar */}
+      <div className="w-full md:w-80 h-screen overflow-y-auto bg-gray-50 dark:bg-gray-900">
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">Projects</h2>
+          </div>
+          
+          <div className="space-y-2">
+            {projects.map(project => (
+              <div 
+                key={project.id} 
+                className="p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
+              >
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-32 object-cover rounded-lg mb-2"
+                  />
+                )}
+                <h3 className="font-medium text-sm truncate">
+                  {project.title}
+                </h3>
+                <div className="flex items-center gap-1 md:gap-2 mt-2">
+                  <button
+                    onClick={() => handleEdit(project)}
+                    className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
+                    title="Edit"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setProjectToDelete(project)}
+                    className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
+                    title="Delete"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                  <RouterLink
+                    to={`/portfolio/${project.slug}`}
+                    className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
+                    title="View"
+                  >
+                    <Eye className="w-4 h-4" />
+                  </RouterLink>
+                </div>
+              </div>
+            ))}
+            {projects.length === 0 && (
+              <p className="text-gray-500 text-center py-4">
+                No projects found.
+              </p>
+            )}
           </div>
         </div>
       </div>
 
+      {/* Delete Modal */}
       <DeleteProjectModal
         isOpen={!!projectToDelete}
         onClose={() => setProjectToDelete(null)}

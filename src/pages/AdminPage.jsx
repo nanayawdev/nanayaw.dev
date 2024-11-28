@@ -362,23 +362,23 @@ export const AdminPage = () => {
   });
 
   return (
-    <div className="flex h-screen">
-      {/* Main Content - Now on the left */}
-      <div className="flex-1 overflow-y-auto border-r border-gray-200 dark:border-gray-800">
-        <div className="max-w-3xl mx-auto p-6">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">
+    <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
+      {/* Main Content - Add h-screen to ensure full height scrolling */}
+      <div className="flex-1 h-screen overflow-y-auto border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
+        <div className="max-w-3xl mx-auto p-4 md:p-6 pb-24 md:pb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold">
               {selectedPost ? 'Edit Post' : 'Create New Post'}
             </h1>
             <RouterLink to="/">
               <Button variant="ghost">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Home
+                <span className="hidden sm:inline">Back to Home</span>
               </Button>
             </RouterLink>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium">Title</label>
               <Input
@@ -477,30 +477,20 @@ export const AdminPage = () => {
         </div>
       </div>
 
-      {/* Sidebar - Now on the right */}
-      <div className="w-80 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+      {/* Sidebar - Add h-screen for consistent height */}
+      <div className="w-full md:w-80 h-screen overflow-y-auto bg-gray-50 dark:bg-gray-900">
         <div className="p-4">
-          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Posts</h2>
-          <div className="mb-4">
-            <Select
-              value={statusFilter}
-              onValueChange={setStatusFilter}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Filter by status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Posts</SelectItem>
-                <SelectItem value="published">Published</SelectItem>
-                <SelectItem value="draft">Draft</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Posts</h2>
+            {/* Optional: Add a collapse button for mobile */}
           </div>
+          
+          {/* Post cards - adjust for mobile */}
           <div className="space-y-2">
             {filteredPosts.map(post => (
               <div 
                 key={post.id} 
-                className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
+                className="p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
               >
                 <div className="flex justify-between items-start mb-1">
                   <h3 className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
@@ -520,7 +510,7 @@ export const AdminPage = () => {
                     ? format(new Date(post.published_at), 'MMM d, yyyy')
                     : format(new Date(post.created_at), 'MMM d, yyyy') + ' (Draft)'}
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 md:gap-2">
                   <button
                     onClick={() => handleEdit(post)}
                     className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
