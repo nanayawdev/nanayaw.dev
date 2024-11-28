@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import imageCompression from 'browser-image-compression';
 
 export const portfolioService = {
   async getAllProjects() {
@@ -82,13 +83,26 @@ export const portfolioService = {
 
   async uploadImage(file) {
     try {
+      // Image compression options
+      const options = {
+        maxSizeMB: 1, // Maximum size in MB
+        maxWidthOrHeight: 1920, // Max width/height
+        useWebWorker: true,
+        initialQuality: 0.8 // Initial compression quality
+      };
+
+      // Compress the image
+      const compressedFile = await imageCompression(file, options);
+
+      // Generate a random filename
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
+      // Upload the compressed image
       const { error: uploadError } = await supabase.storage
         .from('portfolio-images')
-        .upload(filePath, file);
+        .upload(filePath, compressedFile);
 
       if (uploadError) throw uploadError;
 
