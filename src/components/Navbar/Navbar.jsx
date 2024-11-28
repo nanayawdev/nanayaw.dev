@@ -17,10 +17,10 @@ export default function Navbar() {
 
   return (
     <nav className="hidden lg:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-md 
-      bg-gray-900/25 dark:bg-gray-800/25 
+      bg-rose-50/80 dark:bg-rose-950/80 
       backdrop-blur-md 
-      shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)]
-      border border-gray-200/20 dark:border-gray-700/20
+      shadow-[0_4px_6px_-1px_rgba(244,63,94,0.1),0_2px_4px_-2px_rgba(244,63,94,0.1)]
+      border border-rose-200/20 dark:border-rose-800/20
       z-50">
       <div className="flex items-center gap-8">
         <button onClick={() => scrollToSection('home')} className="flex items-center">
