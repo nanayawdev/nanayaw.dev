@@ -13,10 +13,10 @@ export const navigationConfig = [
   { path: '/', label: 'Home', icon: <House className="w-5 h-5" />, component: Home },
   { path: '/about', label: 'About', icon: <User className="w-5 h-5" />, component: About },
   { path: '/portfolio', label: 'Portfolio', icon: <FolderKanban className="w-5 h-5" />, component: Portfolio },
+  { path: '/services', label: 'Services', icon: <Video className="w-5 h-5" />, component: Services },
   { path: '/expertise', label: 'Expertise', icon: <Briefcase className="w-5 h-5" />, component: Expertise },
   { path: '/resume', label: 'Resume', icon: <FileText className="w-5 h-5" />, component: Resume },
-  { path: '/services', label: 'Services', icon: <Video className="w-5 h-5" />, component: Services },
-  { path: '/blog', label: 'Blog', icon: <BookOpen className="w-5 h-5" />, component: Blog },
   { path: '/testimonial', label: 'Testimonial', icon: <Star className="w-5 h-5" />, component: Testimonial },
+  { path: '/blog', label: 'Blog', icon: <BookOpen className="w-5 h-5" />, component: Blog },
   { path: '/contact', label: 'Contact', icon: <Mail className="w-5 h-5" />, component: Contact },
 ]; 

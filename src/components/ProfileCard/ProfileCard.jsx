@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Instagram, Twitter, Dribbble, Github, PenSquare, FolderPlus, LogOut, LogIn } from "lucide-react";
+import { 
+  PenSquare, 
+  FolderPlus, 
+  LogOut, 
+  LogIn, 
+  Github, 
+  Instagram, 
+  Twitter, 
+  Dribbble 
+} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import profileImage from '@/assets/images/ny.jpg';
 import { LetsTalkButton } from '@/components/ui/lets-talk-button';
