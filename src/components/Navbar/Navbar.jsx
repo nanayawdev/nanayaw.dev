@@ -16,11 +16,11 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="hidden lg:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-md 
-      bg-rose-50/80 dark:bg-rose-950/80 
+    <nav className="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-md 
+      bg-gray-900/25 dark:bg-gray-800/25 
       backdrop-blur-md 
-      shadow-[0_4px_6px_-1px_rgba(244,63,94,0.1),0_2px_4px_-2px_rgba(244,63,94,0.1)]
-      border border-rose-200/20 dark:border-rose-800/20
+      shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)]
+      border border-gray-200/20 dark:border-gray-700/20
       z-50">
       <div className="flex items-center gap-8">
         <button onClick={() => scrollToSection('home')} className="flex items-center">
@@ -34,9 +34,7 @@ export default function Navbar() {
                 <button
                   onClick={() => scrollToSection(sectionId)}
                   className={`relative flex items-center transition-colors ${
-                    location.pathname === item.path 
-                      ? 'text-rose-500 dark:text-rose-400' 
-                      : 'text-gray-950 dark:text-gray-50 hover:text-rose-500 dark:hover:text-rose-400'
+                    location.pathname === item.path ? 'text-riptide-700 dark:text-riptide-300' : 'text-gray-950 dark:text-gray-50 hover:text-riptide-500 dark:hover:text-riptide-300'
                   }`}
                   onMouseEnter={() => setHoveredItem(item.path)}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -45,7 +43,7 @@ export default function Navbar() {
                     className="relative flex items-center gap-2 px-3 py-2 rounded-md"
                     animate={{
                       backgroundColor: hoveredItem === item.path || location.pathname === item.path
-                        ? 'rgba(244, 63, 94, 0.1)' // rose-500 with opacity
+                        ? 'rgba(51, 206, 201, 0.1)'
                         : 'rgba(0, 0, 0, 0)',
                     }}
                     transition={{ duration: 0.2 }}
