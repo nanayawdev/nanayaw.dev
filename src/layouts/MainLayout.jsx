@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import Navbar from '../components/Navbar/Navbar';
-import MobileNavbar from '../components/Navbar/MobileNavbar';
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle';
 import ProfileCard from '../components/ProfileCard/ProfileCard';
 import Home from '../pages/Home';
@@ -23,7 +22,6 @@ const MainLayout = () => {
           <ThemeToggle />
         </div>
         <Navbar />
-        <MobileNavbar />
         
         <main className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row gap-8">

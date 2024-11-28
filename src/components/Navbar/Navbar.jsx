@@ -39,7 +39,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="hidden lg:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-md 
+    <nav className="hidden md:hidden lg:flex fixed bottom-4 left-1/2 -translate-x-1/2 items-center justify-between w-auto max-w-4xl px-6 py-3 rounded-md 
       bg-slate-800
       shadow-lg
       z-50">

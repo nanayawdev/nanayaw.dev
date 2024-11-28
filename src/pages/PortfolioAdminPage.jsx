@@ -198,8 +198,9 @@ export const PortfolioAdminPage = () => {
       await portfolioService.deleteProject(projectToDelete.id);
       toast.success('Project deleted successfully');
       setProjectToDelete(null);
-      loadProjects();
+      await loadProjects();
     } catch (error) {
+      console.error('Error deleting project:', error);
       toast.error('Error deleting project: ' + error.message);
     } finally {
       setIsLoading(false);
