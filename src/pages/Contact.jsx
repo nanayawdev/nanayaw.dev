@@ -118,29 +118,29 @@ const Contact = () => {
   };
 
   return (
-    <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-4xl mx-auto">
-      <Badge variant="outline" className="mb-6">
+    <div className="flex flex-col items-start justify-start pt-16 sm:pt-20 lg:pt-28 pb-8 px-4 max-w-4xl mx-auto">
+      <Badge variant="outline" className="mb-4 sm:mb-6">
         GET IN TOUCH
       </Badge>
 
-      <div className="space-y-6 w-full">
-        <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight">
+      <div className="space-y-4 sm:space-y-6 w-full">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight">
           Let's work <span className="text-riptide-500">together!</span>
         </h1>
-        <p className="text-gray-400">
+        <p className="text-gray-400 text-sm sm:text-base">
           Let us help you become even greater at what you do.
-          <br />
+          <br className="hidden sm:block" />
           Fill out the following form and we will get back to you in the next minute.
         </p>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 w-full mt-12">
-          <div className="grid grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 sm:gap-6 w-full mt-8 sm:mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-2">
-              <label htmlFor="name" className="text-gray-400">
+              <label htmlFor="name" className="text-sm sm:text-base text-gray-400">
                 What's your name? <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <User className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <User className="w-4 sm:w-5 h-4 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
                   type="text" 
                   id="name" 
@@ -153,11 +153,11 @@ const Contact = () => {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="email" className="text-gray-400">
+              <label htmlFor="email" className="text-sm sm:text-base text-gray-400">
                 What's your email address? <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <Mail className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Mail className="w-4 sm:w-5 h-4 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
                   type="email" 
                   id="email" 
@@ -170,13 +170,13 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-2">
-              <label htmlFor="phone" className="text-gray-400">
+              <label htmlFor="phone" className="text-sm sm:text-base text-gray-400">
                 What's your phone number? <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <Phone className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Phone className="w-4 sm:w-5 h-4 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
                   type="tel" 
                   id="phone" 
@@ -184,19 +184,20 @@ const Contact = () => {
                   className={inputClasses}
                   value={formData.phone}
                   onChange={handleChange}
-                  required
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="company" className="text-gray-400">What's your company/organization name?</label>
+              <label htmlFor="company" className="text-sm sm:text-base text-gray-400">
+                What's your company/organization name?
+              </label>
               <div className="relative">
-                <Building2 className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Building2 className="w-4 sm:w-5 h-4 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
                   type="text" 
                   id="company" 
-                  placeholder="Type your company/organization name" 
+                  placeholder="Type your company name" 
                   className={inputClasses}
                   value={formData.company}
                   onChange={handleChange}
@@ -205,23 +206,20 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-2">
-              <label className="text-gray-400">
+              <label className="text-sm sm:text-base text-gray-400">
                 What services are you looking for? <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <Wrench className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" />
+                <Wrench className="w-4 sm:w-5 h-4 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10" />
                 <Select value={formData.service} onValueChange={handleServiceChange}>
-                  <SelectTrigger className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none h-[46px] pl-10">
+                  <SelectTrigger className={inputClasses}>
                     <SelectValue placeholder="Choose from a list here" />
                   </SelectTrigger>
                   <SelectContent>
                     {SERVICES.map(service => (
-                      <SelectItem 
-                        key={service.value} 
-                        value={service.value}
-                      >
+                      <SelectItem key={service.value} value={service.value}>
                         {service.label}
                       </SelectItem>
                     ))}
@@ -231,14 +229,16 @@ const Contact = () => {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="project" className="text-gray-400">Tell us about your project</label>
+              <label htmlFor="project" className="text-sm sm:text-base text-gray-400">
+                Tell us about your project
+              </label>
               <div className="relative">
-                <MessageSquare className="w-5 h-5 absolute left-3 top-[14px] text-gray-400" />
+                <MessageSquare className="w-4 sm:w-5 h-4 sm:h-5 absolute left-3 top-[14px] text-gray-400" />
                 <textarea 
                   id="project" 
                   placeholder="Please type your project description"
                   rows="1"
-                  className="w-full px-4 py-3 rounded-lg border text-gray-600 dark:text-gray-50 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 focus:border-riptide-400 dark:focus:border-riptide-600 focus:outline-none resize-none min-h-[46px] pl-10"
+                  className={`${inputClasses} resize-none min-h-[46px]`}
                   value={formData.project}
                   onChange={handleChange}
                 ></textarea>
@@ -247,13 +247,13 @@ const Contact = () => {
           </div>
 
           {error && (
-            <p className="text-red-500 text-sm">{error}</p>
+            <p className="text-red-500 text-xs sm:text-sm">{error}</p>
           )}
 
           <button 
             type="submit" 
             disabled={isSubmitting}
-            className="px-8 py-3 bg-riptide-500 hover:bg-riptide-600 text-white rounded-lg font-medium transition-colors h-[46px] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 sm:px-8 py-3 bg-riptide-500 hover:bg-riptide-600 text-white rounded-lg font-medium transition-colors h-[46px] disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
           >
             {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
           </button>
@@ -265,7 +265,7 @@ const Contact = () => {
           <DialogHeader>
             <DialogTitle>Message Sent Successfully!</DialogTitle>
           </DialogHeader>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
             Thank you for reaching out. We'll get back to you shortly!
           </p>
         </DialogContent>

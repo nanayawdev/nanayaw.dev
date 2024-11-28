@@ -2,17 +2,17 @@ import { Badge } from "@/components/ui/badge";
 
 const About = () => {
   return (
-    <div id="about" className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-4xl mx-auto">
-      <Badge variant="outline" className="mb-6">
+    <div id="about" className="flex flex-col items-start justify-start pt-16 sm:pt-20 lg:pt-28 pb-8 px-4 max-w-4xl mx-auto">
+      <Badge variant="outline" className="mb-4 sm:mb-6">
         ABOUT ME
       </Badge>
       
-      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-8">
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-6 sm:mb-8">
         Crafting digital experiences that blend{' '}
         <span className="text-riptide-500">creativity</span>, innovation, and code
       </h1>
       
-      <div className="space-y-6 text-gray-400">
+      <div className="space-y-4 sm:space-y-6 text-gray-400 text-sm sm:text-base">
         <p>
           Hello! I'm NY, a passionate web developer specializing in React.js, Next.js, and Vue.js, 
           with a knack for crafting engaging and efficient digital experiences. With a strong 

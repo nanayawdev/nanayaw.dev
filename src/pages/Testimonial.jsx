@@ -67,33 +67,33 @@ const Testimonial = () => {
   };
 
   return (
-    <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-4xl mx-auto">
-      <Badge variant="outline" className="mb-4">
+    <div className="flex flex-col items-start justify-start pt-16 sm:pt-20 lg:pt-28 pb-8 px-4 max-w-4xl mx-auto">
+      <Badge variant="outline" className="mb-4 sm:mb-6">
         TESTIMONIAL
       </Badge>
       
-      <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-12">
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-8 sm:mb-12">
         Trusted by <span className="text-riptide-500">13+ Clients</span>
       </h1>
 
-      <div className="w-full rounded-2xl border border-gray-800 p-8 relative">
+      <div className="w-full rounded-2xl border border-gray-800 p-4 sm:p-6 lg:p-8 relative">
         <div 
           className={`
             transition-all duration-500 ease-in-out
             ${isAnimating ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'}
           `}
         >
-          <div className="flex items-start gap-4 mb-8">
+          <div className="flex items-start gap-3 sm:gap-4 mb-6 sm:mb-8">
             <img 
               src={testimonials[currentSlide].image} 
               alt={testimonials[currentSlide].name}
-              className="w-12 h-12 rounded-full object-cover"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
             />
             <div>
-              <h3 className="text-xl text-gray-900 dark:text-gray-100 font-semibold">
+              <h3 className="text-lg sm:text-xl text-gray-900 dark:text-gray-100 font-semibold">
                 {testimonials[currentSlide].name}
               </h3>
-              <p className="text-sm text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-400">
                 Director of <span className="text-riptide-500">
                   {testimonials[currentSlide].role}
                 </span>
@@ -101,32 +101,32 @@ const Testimonial = () => {
             </div>
           </div>
 
-          <p className="text-md text-gray-900 dark:text-gray-100 leading-relaxed mb-8">
+          <p className="text-sm sm:text-base text-gray-900 dark:text-gray-100 leading-relaxed mb-6 sm:mb-8">
             {testimonials[currentSlide].text}
           </p>
 
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">
+            <span className="text-xs sm:text-sm text-gray-500">
               {testimonials[currentSlide].project}
             </span>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <button 
                 onClick={prevSlide}
-                className="p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
+                className="p-1.5 sm:p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-900 dark:text-gray-100" />
+                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-900 dark:text-gray-100" />
               </button>
               
-              <span className="text-sm text-gray-900 dark:text-gray-100">
+              <span className="text-xs sm:text-sm text-gray-900 dark:text-gray-100">
                 {currentSlide + 1} / {totalSlides}
               </span>
               
               <button 
                 onClick={nextSlide}
-                className="p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
+                className="p-1.5 sm:p-2 rounded-full border border-gray-800 hover:border-riptide-500 transition-colors"
               >
-                <ChevronRight className="w-5 h-5 text-gray-900 dark:text-gray-100" />
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-900 dark:text-gray-100" />
               </button>
             </div>
           </div>

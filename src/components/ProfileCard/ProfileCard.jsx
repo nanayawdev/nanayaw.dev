@@ -95,10 +95,10 @@ export default function ProfileCard() {
   };
 
   return (
-    <div className="flex-grow flex items-center justify-center px-4 py-8">
-      <div className="max-w-[320px] w-full dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-6 rounded-xl">
-        <div className="flex items-center justify-between w-60 mx-auto">
-          <h1 className="text-3xl font-medium text-gray-900 dark:text-gray-100">
+    <div className="flex-grow flex items-start justify-center px-2 sm:px-4 py-4 sm:py-8 lg:pt-28">
+      <div className="w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[380px] xl:max-w-[320px] dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 p-4 sm:p-6 rounded-xl">
+        <div className="flex items-center justify-between w-full sm:w-60 mx-auto">
+          <h1 className="text-2xl sm:text-3xl font-medium text-gray-900 dark:text-gray-100">
             NY Dev
           </h1>
           <DropdownMenu>
@@ -148,20 +148,20 @@ export default function ProfileCard() {
           </DropdownMenu>
         </div>
 
-        <div className="my-6">
+        <div className="my-4 sm:my-6">
           <img
             src={profileImage}
             alt="Nana Yaw Dev's profile"
-            className="w-60 h-60 mx-auto rounded-lg object-cover"
+            className="w-40 h-40 sm:w-48 sm:h-48 lg:w-60 lg:h-60 mx-auto rounded-lg object-cover"
           />
         </div>
 
         <div className="text-center space-y-1">
-          <p className="text-gray-500 dark:text-gray-400">me@nanayaw.dev</p>
-          <p className="text-gray-500 dark:text-gray-400 text-xs">Based in Accra, GH</p>
+          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">me@nanayaw.dev</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Based in Accra, GH</p>
         </div>
 
-        <div className="flex justify-center space-x-4 mt-6">
+        <div className="flex justify-center space-x-3 sm:space-x-4 mt-4 sm:mt-6">
           {socialLinks.map((link) => (
             <a
               key={link.label}
@@ -176,11 +176,11 @@ export default function ProfileCard() {
           ))}
         </div>
 
-        <div className="mt-6 flex justify-center">
+        <div className="mt-4 sm:mt-6 flex justify-center">
           <LetsTalkButton />
         </div>
 
-        <div className="text-center text-xs mt-6 text-gray-500 dark:text-gray-400">
+        <div className="text-center text-xs mt-4 sm:mt-6 text-gray-500 dark:text-gray-400">
           <p>© {new Date().getFullYear()} All Rights Reserved</p>
         </div>
       </div>
