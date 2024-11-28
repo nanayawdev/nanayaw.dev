@@ -26,7 +26,7 @@ const Home = () => {
       </p>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-8 sm:gap-0">
-        <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
+        <div className="grid grid-cols-2 gap-6 sm:gap-12">
           <div>
             <h2 className="text-4xl sm:text-5xl font-medium text-riptide-500">10+</h2>
             <p className="text-gray-400 mt-2 text-sm sm:text-base">YEARS OF<br />EXPERIENCE</p>
