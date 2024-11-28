@@ -47,6 +47,19 @@ const socialLinks = [
   }
 ];
 
+const menuItems = [
+  {
+    icon: <NotebookPen className="w-4 h-4" />,
+    name: "Add Post",
+    link: '/admin'
+  },
+  {
+    icon: <FolderPlus className="w-4 h-4" />,
+    name: "Add Project",
+    link: '/portfolio-admin'
+  }
+];
+
 export default function ProfileCard() {
   const navigate = useNavigate();
   const [showLogoutWarning, setShowLogoutWarning] = useState(false);
@@ -115,17 +128,23 @@ export default function ProfileCard() {
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuContent align="end" className="w-64">
               {session ? (
                 <>
-                  <DropdownMenuItem onClick={(e) => checkAuth(e, '/admin')} className="cursor-pointer">
-                    <NotebookPen className="w-4 h-4 mr-2" />
-                    Add Post
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={(e) => checkAuth(e, '/portfolio-admin')} className="cursor-pointer">
-                    <FolderPlus className="w-4 h-4 mr-2" />
-                    Add Project
-                  </DropdownMenuItem>
+                  <div className="grid grid-cols-2 gap-2 p-2">
+                    {menuItems.map((item) => (
+                      <DropdownMenuItem
+                        key={item.name}
+                        onClick={(e) => checkAuth(e, item.link)}
+                        className="cursor-pointer flex flex-col items-center justify-center p-2 h-24"
+                      >
+                        <div className="h-8 w-8 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg mb-2">
+                          {item.icon}
+                        </div>
+                        <span className="text-xs text-center">{item.name}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem 
                     onClick={handleLogoutClick} 
