@@ -94,14 +94,14 @@ const MainLayout = () => {
                 <section id="portfolio">
                   <Portfolio />
                 </section>
+                <section id="services">
+                  <Services />
+                </section>
                 <section id="expertise">
                   <Expertise />
                 </section>
                 <section id="resume">
                   <Resume />
-                </section>
-                <section id="services">
-                  <Services />
                 </section>
                 <section id="testimonial">
                   <Testimonial />
