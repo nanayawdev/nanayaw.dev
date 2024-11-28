@@ -1,41 +1,46 @@
 import { Badge } from "@/components/ui/badge";
-import { Briefcase, Code, Users, Palette, Building2 } from "lucide-react";
+import { BriefcaseBusiness, Code, Users, Palette, Camera, TvMinimal } from "lucide-react";
 import ScrollingBanner from "@/components/ui/ScrollingBanner";
 
 const Resume = () => {
   const experiences = [
     {
-      period: "2022 - Present",
+      period: "2023 - Present",
       active: true,
       roles: [
         {
-          title: "UI/UX Designer & Developer",
+          title: "UI/UX Designer",
           company: "Krontiva Africa",
           icon: <Code className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
         },
         {
-          title: "Front-End Developer",
+          title: "Full Stack Developer",
           company: "Krontiva Africa",
-          icon: <Briefcase className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
+          icon: <BriefcaseBusiness className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
+        },
+        {
+          title: "Digital Platform Administrator",
+          company: "Krontiva Africa",
+          icon: <TvMinimal className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
         }
       ]
     },
     {
-      period: "2020 - 2022",
+      period: "2018 - 2022",
       active: false,
       roles: [
         {
           title: "Graphic Designer",
           company: "Freelance",
-          icon: <Building2 className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
+          icon: <Palette className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
         },
         {
           title: "Photographer",
           company: "Freelance",
-          icon: <Palette className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
+          icon: <Camera className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
         },
         {
-          title: "Front-End Developer",
+          title: "Full Stack Developer",
           company: "ABS Digital Agency",
           icon: <Users className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900 dark:text-gray-100" />
         }
@@ -53,11 +58,7 @@ const Resume = () => {
         Work & <span className="text-riptide-500">Experience</span>
       </h1>
       
-      <ScrollingBanner 
-        items={["UI/UX DESIGN", "FRONT-END DEVELOPMENT", "GRAPHIC DESIGN", "PHOTOGRAPHY"]}
-        speed={25}
-        className="mb-8 sm:mb-12 -mx-4"
-      />
+      <ScrollingBanner className="mb-8 sm:mb-12 -mx-4" />
       
       <div className="relative w-full max-w-2xl">
         {experiences.map((exp) => (

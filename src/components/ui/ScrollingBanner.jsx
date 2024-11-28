@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { motion } from "framer-motion"
 
 export default function ScrollingBanner({
-  items = ["UI/UX DESIGN", "DEVELOPMENT", "ICON DESIGN", "LOGO BRANDING"],
+  items = ["UI/UX DESIGN", "DEVELOPMENT", "DIGITAL MARKETING", "BRAND IDENTITY"],
   speed = 30,
   bgColor = "#000000", // Neon green color
   textColor = "#ffffff",
