@@ -28,7 +28,7 @@ const Expertise = () => {
           Tech Stack I <span className="text-riptide-500">Work With</span>
         </h1>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {skills.map((skill) => (
             <div 
               key={skill.name} 
