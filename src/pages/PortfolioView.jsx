@@ -33,30 +33,30 @@ const PortfolioView = () => {
   if (!project) return <div className="flex justify-center items-center min-h-screen">Project not found</div>;
 
   return (
-    <div className="flex flex-col items-start justify-start pt-20 pb-8 px-4 max-w-6xl mx-auto">
-      <div className="w-full mb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="flex flex-col items-start justify-start pt-16 sm:pt-20 pb-8 px-4 max-w-6xl mx-auto">
+      <div className="w-full mb-8 sm:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12">
           <div>
             <Badge variant="outline" className="mb-2">
               {project.tags[0].toUpperCase()}
             </Badge>
             
-            <h1 className="text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-3">
+            <h1 className="text-4xl sm:text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-3">
               {project.title}
             </h1>
 
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
               {project.description}
             </p>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             <div>
               <h3 className="text-lg font-medium mb-2">Task</h3>
               <p className="text-gray-600 dark:text-gray-300">{project.task}</p>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <h3 className="text-lg font-medium mb-2">Strategy</h3>
                 <p className="text-gray-600 dark:text-gray-300">{project.strategy}</p>
@@ -85,19 +85,19 @@ const PortfolioView = () => {
           </div>
         </div>
 
-        <div className="mt-16">
+        <div className="mt-8 sm:mt-16">
           <div className="mb-4">
             <img
               src={project.image}
               alt="Project showcase"
-              className="w-full h-[500px] object-cover rounded-xl"
+              className="w-full h-[300px] sm:h-[500px] object-cover rounded-xl"
               onError={(e) => {
                 console.error('Error loading main image:', e);
               }}
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {project.gallery_images && project.gallery_images.map((img, index) => (
               <div 
                 key={index}
@@ -118,11 +118,11 @@ const PortfolioView = () => {
       </div>
 
       {/* Collaboration Section */}
-      <div className="w-full mt-12 border-t pt-16">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+      <div className="w-full mt-8 sm:mt-12 border-t pt-8 sm:pt-16">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 sm:mb-8">
           <div>
             <p className="text-sm font-medium mb-2">LET'S COLLABORATE</p>
-            <h2 className="text-5xl font-medium">Got a project?</h2>
+            <h2 className="text-3xl sm:text-5xl font-medium">Got a project?</h2>
           </div>
           
           <button
@@ -146,7 +146,7 @@ const PortfolioView = () => {
           </button>
         </div>
 
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
+        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
           I'm a passionate creative and developer who is excited about unique ideas and help companies to{' '}
           <span className="font-medium text-gray-900 dark:text-gray-100">
             create amazing identities and experiences
