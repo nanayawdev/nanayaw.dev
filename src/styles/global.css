@@ -1,10 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import './fonts.css';
 @import './base/reset.css';
 @import './utilities/index.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Custom CSS variables */
 :root {
