@@ -100,33 +100,47 @@ const AllBlogPostsPage = () => {
             to={`/blog/${post.slug}`}
             className="group block"
           >
-            <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-6 transition-colors hover:border-riptide-500 dark:hover:border-riptide-500">
-              <Badge variant="outline" className="w-fit mb-4">
-                {post.category}
-              </Badge>
-              <h2 className="text-2xl font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 mb-3">
-                {post.title}
-              </h2>
-              <p className="text-gray-500 dark:text-gray-400 text-lg mb-4">
-                {post.excerpt || post.content.substring(0, 150)}...
-              </p>
-              <div className="flex items-center gap-6 text-gray-500 dark:text-gray-400">
-                <span className="text-sm">
-                  {new Date(post.created_at).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </span>
-                <div className="flex items-center gap-2">
-                  <ThumbsUp className="h-4 w-4" />
-                  <span className="text-sm">{post.like_count || 0}</span>
+            <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden transition-colors hover:border-riptide-500 dark:hover:border-riptide-500">
+              {post.image_url && (
+                <div className="aspect-[16/9] w-full overflow-hidden">
+                  <img
+                    src={post.image_url}
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
                 </div>
-                <div className="flex items-center gap-2">
-                  <MessageCircle className="h-4 w-4" />
+              )}
+              <div className="p-6">
+                <Badge variant="outline" className="w-fit mb-4">
+                  {post.category}
+                </Badge>
+                <h2 className="text-2xl font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 mb-3">
+                  {post.title}
+                </h2>
+                <p className="text-gray-500 dark:text-gray-400 text-lg mb-4">
+                  {post.excerpt || post.content.substring(0, 150)}...
+                </p>
+                <div className="flex items-center gap-6 text-gray-500 dark:text-gray-400">
                   <span className="text-sm">
-                    {post.comment_count || 0} {(post.comment_count || 0) === 1 ? 'comment' : 'comments'}
+                    {new Date(post.created_at).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
                   </span>
+                  <div className="flex items-center gap-2">
+                    <ThumbsUp className="h-4 w-4" />
+                    <span className="text-sm">{post.like_count || 0}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MessageCircle className="h-4 w-4" />
+                    <span className="text-sm">
+                      {post.comment_count || 0} {(post.comment_count || 0) === 1 ? 'comment' : 'comments'}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

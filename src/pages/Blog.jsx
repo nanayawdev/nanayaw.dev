@@ -75,6 +75,7 @@ const Blog = () => {
               excerpt={post.excerpt}
               slug={post.slug}
               date={post.created_at}
+              imageUrl={post.image_url}
             />
           ))}
         </div>

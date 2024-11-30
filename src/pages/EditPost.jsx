@@ -10,7 +10,8 @@ const EditPost = () => {
     title: '',
     content: '',
     category: '',
-    slug: ''
+    slug: '',
+    image_url: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -26,7 +27,8 @@ const EditPost = () => {
           title: post.title,
           content: post.content,
           category: post.category,
-          slug: post.slug
+          slug: post.slug,
+          image_url: post.image_url
         });
       } else {
         // Create new post
@@ -34,7 +36,8 @@ const EditPost = () => {
           title: post.title,
           content: post.content,
           category: post.category,
-          slug: post.slug
+          slug: post.slug,
+          image_url: post.image_url
         });
       }
 

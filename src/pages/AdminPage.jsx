@@ -161,7 +161,8 @@ export const AdminPage = () => {
     excerpt: '',
     published: false,
     status: 'draft',
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    image_url: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
@@ -442,6 +443,16 @@ export const AdminPage = () => {
                 <EditorMenuBar editor={editor} />
                 <EditorContent editor={editor} className="p-4 min-h-[300px]" />
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Image URL</label>
+              <Input
+                name="image_url"
+                value={formData.image_url}
+                onChange={handleChange}
+                placeholder="https://example.com/image.jpg"
+              />
             </div>
 
             <div className="flex items-center space-x-2">

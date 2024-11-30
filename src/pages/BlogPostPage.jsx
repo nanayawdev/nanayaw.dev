@@ -225,6 +225,17 @@ const BlogPostPage = () => {
 
         <BlogContent content={post.content} />
 
+        {post.image_url && (
+          <img
+            src={post.image_url}
+            alt={post.title}
+            className="w-full h-[300px] sm:h-[400px] object-cover rounded-xl mb-8"
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
+          />
+        )}
+
         {relatedPosts.length > 0 && (
           <div className="mt-12 sm:mt-16 w-full not-prose">
             <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gray-900 dark:text-gray-100">
@@ -237,6 +248,16 @@ const BlogPostPage = () => {
                   to={`/blog/${relatedPost.slug}`}
                   className="group block"
                 >
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-xl mb-4">
+                    <img
+                      src={relatedPost.image_url}
+                      alt={relatedPost.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
                   <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 sm:p-6 transition-colors hover:border-riptide-500 dark:hover:border-riptide-500 h-[120px] sm:h-[150px] flex flex-col">
                     <Badge variant="outline" className="w-fit mb-2">
                       {relatedPost.category}
