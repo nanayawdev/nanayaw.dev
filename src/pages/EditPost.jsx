@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { blogService } from '@/services/blogService';
@@ -14,10 +14,17 @@ const EditPost = () => {
     content: '',
     category: '',
     slug: '',
-    image: null
+    image: null,
+    image_path: null
   });
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (post.image_path) {
+      setPreviewUrl(blogService.getImageUrl(post.image_path));
+    }
+  }, [post.image_path]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

@@ -162,7 +162,8 @@ export const AdminPage = () => {
     published: false,
     status: 'draft',
     created_at: new Date().toISOString(),
-    image: null
+    image: null,
+    image_path: null
   });
   const [isLoading, setIsLoading] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
@@ -239,7 +240,9 @@ export const AdminPage = () => {
     setFormData({
       ...post,
       published: post.status === 'published',
-      content: post.content || ''
+      content: post.content || '',
+      image: null,
+      image_path: post.image_path
     });
     editor?.commands.setContent(post.content || '');
   };
@@ -472,10 +475,13 @@ export const AdminPage = () => {
                   className="hidden"
                 />
               </div>
-              {formData.image && (
+              {(formData.image_path || formData.image) && (
                 <div className="mt-4">
                   <img
-                    src={URL.createObjectURL(formData.image)}
+                    src={formData.image 
+                      ? URL.createObjectURL(formData.image)
+                      : blogService.getImageUrl(formData.image_path)
+                    }
                     alt="Preview"
                     className="w-full max-w-md h-48 object-cover rounded-lg"
                   />
