@@ -283,11 +283,16 @@ export const AdminPage = () => {
     setIsLoading(true);
 
     try {
+      // Create a clean postData object with all required fields
       const postData = {
-        ...formData,
+        title: formData.title,
+        slug: formData.slug,
+        content: formData.content,
+        excerpt: formData.excerpt,
+        category: formData.category,
         status: formData.published ? 'published' : 'draft',
         published_at: formData.published ? new Date().toISOString() : null,
-        image: formData.image
+        image: formData.image // This will be handled by blogService
       };
 
       let result;
@@ -296,6 +301,8 @@ export const AdminPage = () => {
       } else {
         result = await blogService.createPost(postData);
       }
+
+      console.log('Post saved:', result); // Add this for debugging
 
       // Refresh the posts list
       await loadPosts();
@@ -308,7 +315,7 @@ export const AdminPage = () => {
 
       if (formData.published) {
         navigate(`/blog/${formData.slug}`);
-      } else if (!selectedPost) {
+      } else {
         handleCancelEdit();
       }
     } catch (error) {
