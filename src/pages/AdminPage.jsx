@@ -287,6 +287,7 @@ export const AdminPage = () => {
         ...formData,
         status: formData.published ? 'published' : 'draft',
         published_at: formData.published ? new Date().toISOString() : null,
+        image: formData.image
       };
 
       let result;
