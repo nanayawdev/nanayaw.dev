@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import CodeBlock from '@tiptap/extension-code-block';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import { supabase } from '@/lib/supabase';
@@ -171,8 +170,11 @@ export const AdminPage = () => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
-      CodeBlock,
+      StarterKit.configure({
+        codeBlock: {
+          // Your configuration options
+        }
+      }),
       Image,
       Link
     ],
