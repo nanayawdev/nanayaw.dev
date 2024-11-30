@@ -158,8 +158,8 @@ export const AdminPage = () => {
     content: '',
     category: '',
     excerpt: '',
-    published: false,
-    status: 'draft',
+    published: true,
+    status: 'published',
     created_at: new Date().toISOString(),
     image: null,
     image_path: null
@@ -274,9 +274,6 @@ export const AdminPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!await checkAuth()) return;
-    
     setIsLoading(true);
 
     try {
@@ -293,7 +290,7 @@ export const AdminPage = () => {
         category: formData.category || 'Uncategorized',
         status: formData.published ? 'published' : 'draft',
         published_at: formData.published ? new Date().toISOString() : null,
-        image: formData.image
+        image: formData.image || null
       };
 
       let result;
@@ -315,7 +312,7 @@ export const AdminPage = () => {
 
     } catch (error) {
       console.error('Error saving post:', error);
-      toast.error(`Error saving post: ${error.message}`);
+      toast.error(error.message || 'Error saving post');
     } finally {
       setIsLoading(false);
     }
@@ -356,9 +353,11 @@ export const AdminPage = () => {
       content: '',
       category: '',
       excerpt: '',
-      published: false,
-      status: 'draft',
-      created_at: new Date().toISOString()
+      published: true,
+      status: 'published',
+      created_at: new Date().toISOString(),
+      image: null,
+      image_path: null
     });
     editor?.commands.setContent('');
   };
@@ -490,16 +489,6 @@ export const AdminPage = () => {
                   />
                 </div>
               )}
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Switch
-                checked={formData.published}
-                onCheckedChange={handleSwitchChange}
-              />
-              <label className="text-sm font-medium">
-                {formData.published ? 'Publish immediately' : 'Save as draft'}
-              </label>
             </div>
 
             <div className="flex gap-4">

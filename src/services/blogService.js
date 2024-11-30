@@ -169,11 +169,9 @@ export const blogService = {
       let imagePath = oldPost.image_path;
 
       if (postData.image) {
-        // Delete old image if it exists
         if (oldPost.image_path) {
           await this.deleteImage(oldPost.image_path);
         }
-        // Upload new image
         imagePath = await this.uploadImage(postData.image);
       }
 
@@ -185,8 +183,8 @@ export const blogService = {
           content: postData.content,
           excerpt: postData.excerpt,
           category: postData.category,
-          status: postData.status,
-          published_at: postData.published_at,
+          status: 'published',
+          published_at: new Date().toISOString(),
           image_path: imagePath
         })
         .eq('id', id)
@@ -203,38 +201,39 @@ export const blogService = {
 
   async createPost(postData) {
     try {
-      console.log('Creating post with data:', postData);
-      
       let imagePath = null;
       if (postData.image) {
         imagePath = await this.uploadImage(postData.image);
-        console.log('Image uploaded, path:', imagePath);
       }
 
+      const now = new Date().toISOString();
+      
       const { data, error } = await supabase
         .from('posts')
         .insert([{
           title: postData.title,
           slug: postData.slug,
           content: postData.content,
-          excerpt: postData.excerpt,
-          category: postData.category,
-          status: postData.status,
-          published_at: postData.published_at,
+          excerpt: postData.excerpt || '',
+          category: postData.category || 'Uncategorized',
+          status: 'published',
+          published_at: now,
           image_path: imagePath,
-          created_at: new Date().toISOString()
+          created_at: now
         }])
         .select()
         .single();
 
       if (error) {
-        console.error('Database error:', error);
+        if (imagePath) {
+          await this.deleteImage(imagePath).catch(console.error);
+        }
         throw error;
       }
 
       return data;
     } catch (error) {
-      console.error('Error creating post:', error);
+      console.error('Error in createPost:', error);
       throw error;
     }
   },
@@ -292,24 +291,32 @@ export const blogService = {
         .from('posts')
         .upload(filePath, file);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        throw uploadError;
+      }
 
       return filePath;
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('Error in uploadImage:', error);
       throw error;
     }
   },
 
   async deleteImage(filePath) {
+    if (!filePath) return;
+    
     try {
       const { error } = await supabase.storage
         .from('posts')
         .remove([filePath]);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Delete error:', error);
+        throw error;
+      }
     } catch (error) {
-      console.error('Error deleting image:', error);
+      console.error('Error in deleteImage:', error);
       throw error;
     }
   },
