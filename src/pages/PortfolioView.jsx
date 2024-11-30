@@ -9,25 +9,32 @@ import { ChevronRight } from "lucide-react";
 const PortfolioView = () => {
   const { slug } = useParams();
   const [project, setProject] = useState(null);
+  const [allProjects, setAllProjects] = useState([]);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProject = async () => {
+    const fetchData = async () => {
       try {
-        const data = await portfolioService.getProjectBySlug(slug);
-        if (data) {
-          setProject(data);
-        }
+        const [projectData, allProjectsData] = await Promise.all([
+          portfolioService.getProjectBySlug(slug),
+          portfolioService.getAllProjects()
+        ]);
+        
+        setProject(projectData);
+        setAllProjects(allProjectsData);
       } catch (error) {
-        console.error('Error fetching project:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProject();
+    fetchData();
   }, [slug]);
+
+  // Filter out the current project from all projects
+  const otherProjects = allProjects.filter(p => p.slug !== slug);
 
   if (isLoading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   if (!project) return <div className="flex justify-center items-center min-h-screen">Project not found</div>;
@@ -114,6 +121,39 @@ const PortfolioView = () => {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Other Projects Section */}
+      <div className="w-full mt-8 sm:mt-12 border-t pt-8 sm:pt-16">
+        <div className="mb-8">
+          <p className="text-sm font-medium mb-2">EXPLORE MORE</p>
+          <h2 className="text-3xl sm:text-5xl font-medium">Other Projects</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {otherProjects.map((otherProject) => (
+            <Link
+              key={otherProject.slug}
+              to={`/portfolio/${otherProject.slug}`}
+              className="group block"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl mb-4">
+                <img
+                  src={otherProject.image}
+                  alt={otherProject.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <Badge variant="outline" className="mb-2">
+                {otherProject.tags[0].toUpperCase()}
+              </Badge>
+              <h3 className="text-xl font-medium mb-2">{otherProject.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300 line-clamp-2">
+                {otherProject.description}
+              </p>
+            </Link>
+          ))}
         </div>
       </div>
 
