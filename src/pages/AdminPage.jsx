@@ -15,6 +15,18 @@ import { DeletePostModal } from "@/components/DeletePostModal";
 import { toast } from 'sonner';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { blogService } from '@/services/blogService';
+import { lowlight } from 'lowlight/lib/core'
+import css from 'highlight.js/lib/languages/css'
+import js from 'highlight.js/lib/languages/javascript'
+import ts from 'highlight.js/lib/languages/typescript'
+import html from 'highlight.js/lib/languages/xml'
+
+// Register the languages
+lowlight.registerLanguage('html', html)
+lowlight.registerLanguage('css', css)
+lowlight.registerLanguage('js', js)
+lowlight.registerLanguage('javascript', js)
+lowlight.registerLanguage('typescript', ts)
 
 const EditorMenuBar = ({ editor }) => {
   if (!editor) return null;
@@ -172,7 +184,10 @@ export const AdminPage = () => {
     extensions: [
       StarterKit.configure({
         codeBlock: {
-          // Your configuration options
+          lowlight,
+          HTMLAttributes: {
+            class: 'block p-4 rounded-lg bg-zinc-900 text-white font-mono text-sm',
+          },
         }
       }),
       Image,

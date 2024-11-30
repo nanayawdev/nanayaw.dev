@@ -32,6 +32,8 @@
     "framer-motion": "^11.11.17",
     "gsap": "^3.12.5",
     "heroicons": "^2.2.0",
+    "highlight.js": "^11.10.0",
+    "lowlight": "^3.2.0",
     "lucide-react": "^0.460.0",
     "prosemirror-commands": "^1.6.2",
     "prosemirror-state": "^1.4.3",
