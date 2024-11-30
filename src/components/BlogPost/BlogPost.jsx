@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
+const BlogPost = ({ category, title, slug, imageUrl }) => {
   return (
     <Link to={`/blog/${slug}`} className="group block">
       <article className="relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
@@ -24,13 +24,9 @@ const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
               {category}
             </Badge>
 
-            <h2 className="text-xl font-semibold text-white mb-2 line-clamp-2">
+            <h2 className="text-xl font-semibold text-white line-clamp-2">
               {title}
             </h2>
-            
-            <p className="text-gray-200 text-sm line-clamp-2">
-              {excerpt}
-            </p>
           </div>
         </div>
       </article>
@@ -41,7 +37,6 @@ const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
 BlogPost.propTypes = {
   category: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  excerpt: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   imageUrl: PropTypes.string
 };
