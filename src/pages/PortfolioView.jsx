@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Contact from "./Contact";
 import { portfolioService } from '@/services/portfolioService';
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ExternalLink } from "lucide-react";
 
 const PortfolioView = () => {
   const { slug } = useParams();
@@ -12,6 +12,7 @@ const PortfolioView = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isProjectOpen, setIsProjectOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,15 +81,13 @@ const PortfolioView = () => {
               </div>
             </div>
 
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setIsProjectOpen(true)}
               className="inline-flex items-center px-6 py-3 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity"
             >
               View Project
               <ChevronRight className="ml-2 w-4 h-4" />
-            </a>
+            </button>
           </div>
         </div>
 
@@ -199,6 +198,53 @@ const PortfolioView = () => {
       <Dialog open={isContactOpen} onOpenChange={setIsContactOpen}>
         <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
           <Contact />
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Project Lightbox Dialog */}
+      <Dialog open={isProjectOpen} onOpenChange={setIsProjectOpen}>
+        <DialogContent className="sm:max-w-[900px] h-[90vh]">
+          <div className="h-full flex flex-col">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-medium">{project.title}</h2>
+              <a 
+                href={project.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-4 py-2 mr-8 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              >
+                Open in new tab
+                <ExternalLink className="ml-2 w-4 h-4" />
+              </a>
+            </div>
+            
+            <div className="flex-grow relative">
+              <iframe
+                src={project.link}
+                className="w-full h-full absolute inset-0"
+                title={project.title}
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-forms"
+                onError={(e) => {
+                  // Handle iframe loading error
+                  const container = e.target.parentNode;
+                  container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full">
+                      <p class="text-gray-600 mb-4">This website cannot be displayed in preview.</p>
+                      <a 
+                        href="${project.link}" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="px-6 py-3 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity"
+                      >
+                        Visit Website
+                      </a>
+                    </div>
+                  `;
+                }}
+              />
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
