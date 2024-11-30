@@ -22,28 +22,40 @@ const BlogPostPage = () => {
   const [comments, setComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const loadPost = async () => {
       try {
         setIsLoading(true);
+        setError(null);
+        setNotFound(false);
+        
         const postData = await blogService.getPostBySlug(slug);
+        
+        if (!postData) {
+          setNotFound(true);
+          return;
+        }
+
         setPost(postData);
         setLikeCount(postData.like_count || 0);
         
-        if (postData) {
-          const liked = await blogService.hasUserLikedPost(postData.id);
-          setHasLiked(liked);
-          
-          const relatedPostsData = await blogService.getRelatedPosts(
-            postData.category, 
-            slug
-          );
-          console.log('Related Posts:', relatedPostsData);
-          setRelatedPosts(relatedPostsData);
-        }
+        const liked = await blogService.hasUserLikedPost(postData.id);
+        setHasLiked(liked);
+        
+        const relatedPostsData = await blogService.getRelatedPosts(
+          postData.category, 
+          slug
+        );
+        setRelatedPosts(relatedPostsData);
+
       } catch (err) {
-        setError(err.message);
+        if (err.message?.includes('no rows returned')) {
+          setNotFound(true);
+        } else {
+          setError(err.message);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -147,8 +159,50 @@ const BlogPostPage = () => {
     );
   }
 
+  if (notFound) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] px-4">
+        <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          Post Not Found
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
+          The blog post you're looking for has been removed or doesn't exist.
+        </p>
+        <Link to="/allposts">
+          <Button variant="default">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to All Posts
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] px-4">
+        <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          Oops! Something went wrong
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
+          We encountered an error while loading this post. Please try again later.
+        </p>
+        <div className="flex gap-4">
+          <Button 
+            variant="outline" 
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </Button>
+          <Link to="/allposts">
+            <Button variant="default">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to All Posts
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   if (!post) {
