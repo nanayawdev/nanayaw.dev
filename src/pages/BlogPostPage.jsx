@@ -224,8 +224,6 @@ const BlogPostPage = () => {
           </div>
         </div>
 
-        <BlogContent content={post.content} />
-
         {post.image_url && (
           <img
             src={post.image_url}
@@ -237,6 +235,8 @@ const BlogPostPage = () => {
           />
         )}
 
+        <BlogContent content={post.content} />
+
         {relatedPosts.length > 0 && (
           <div className="mt-12 sm:mt-16 w-full not-prose">
             <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gray-900 dark:text-gray-100">
@@ -247,32 +247,38 @@ const BlogPostPage = () => {
                 <Link 
                   key={relatedPost.slug}
                   to={`/blog/${relatedPost.slug}`}
-                  className="group block"
+                  className="relative group overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-xl mb-4">
+                  <div className="relative aspect-[16/9] w-full">
                     <img
-                      src={relatedPost.image_url}
+                      src={blogService.getImageUrl(relatedPost.image_path)}
                       alt={relatedPost.title}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       onError={(e) => {
                         e.target.style.display = 'none';
                       }}
                     />
-                  </div>
-                  <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 sm:p-6 transition-colors hover:border-riptide-500 dark:hover:border-riptide-500 h-[120px] sm:h-[150px] flex flex-col">
-                    <Badge variant="outline" className="w-fit mb-2">
-                      {relatedPost.category}
-                    </Badge>
-                    <h3 className="text-base sm:text-[20px] font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 mb-2">
-                      {relatedPost.title}
-                    </h3>
-                    <span className="text-sm text-gray-500 dark:text-gray-400 mt-auto">
-                      {new Date(relatedPost.created_at).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </span>
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transition-colors duration-300 group-hover:from-riptide-900/80 group-hover:via-riptide-800/50" />
+                    
+                    {/* Content overlay */}
+                    <div className="absolute inset-0 p-4 sm:p-6 flex flex-col justify-end">
+                      <Badge variant="outline" className="w-fit mb-2 bg-white/10 text-white backdrop-blur-sm border-none">
+                        {relatedPost.category}
+                      </Badge>
+                      
+                      <h3 className="text-lg font-semibold text-white group-hover:text-white mb-2 line-clamp-2">
+                        {relatedPost.title}
+                      </h3>
+                      
+                      <span className="text-sm text-gray-200">
+                        {new Date(relatedPost.created_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </span>
+                    </div>
                   </div>
                 </Link>
               ))}

@@ -67,7 +67,12 @@ export const blogService = {
       .limit(2)
 
     if (error) throw error
-    return data
+    
+    // Transform the data to include image URLs
+    return data.map(post => ({
+      ...post,
+      image_url: this.getImageUrl(post.image_path)
+    }))
   },
 
   async likePost(postId) {

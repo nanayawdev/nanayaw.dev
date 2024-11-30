@@ -11,41 +11,41 @@ const BlogPost = ({ category, title, excerpt, slug, date, imageUrl }) => {
 
   return (
     <Link to={`/blog/${slug}`} className="group block">
-      <article className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden transition-colors hover:border-riptide-500 dark:hover:border-riptide-500">
-        {imageUrl && (
-          <div className="aspect-[16/9] w-full overflow-hidden">
-            <img 
-              src={imageUrl} 
-              alt={title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
-          </div>
-        )}
-        
-        <div className="p-6 flex flex-col h-[250px]">
-          <Badge variant="outline" className="w-fit mb-4">
-            {category}
-          </Badge>
+      <article className="relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+        <div className="relative w-full h-[300px]">
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent transition-colors duration-300 group-hover:from-riptide-900/80 group-hover:via-riptide-800/50" />
+          
+          {/* Content overlay */}
+          <div className="absolute inset-0 p-6 flex flex-col justify-end">
+            <Badge variant="outline" className="w-fit mb-4 bg-white/10 text-white backdrop-blur-sm border-none">
+              {category}
+            </Badge>
 
-          <div className="flex-grow space-y-2">
-            <h2 className="text-[20px] font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 line-clamp-2">
+            <h2 className="text-xl font-semibold text-white mb-2 line-clamp-2">
               {title}
             </h2>
-            <p className="text-gray-500 dark:text-gray-400 line-clamp-2">
+            
+            <p className="text-gray-200 text-sm mb-4 line-clamp-2">
               {excerpt}
             </p>
-          </div>
 
-          <div className="flex items-center justify-between mt-4">
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {formattedDate}
-            </span>
-            <span className="text-sm font-medium text-riptide-500 group-hover:text-riptide-400">
-              Read More
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-200">
+                {formattedDate}
+              </span>
+              <span className="text-sm font-medium text-riptide-400">
+                Read More
+              </span>
+            </div>
           </div>
         </div>
       </article>
