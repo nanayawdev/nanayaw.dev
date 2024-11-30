@@ -196,19 +196,11 @@ export const AdminPage = () => {
     const { data: { session }, error } = await supabase.auth.getSession();
     
     if (error || !session) {
-      toast.error('Your session has expired. Please sign in again.');
+      toast.error('Please sign in to access this page');
       navigate('/signin');
-      return;
+      return false;
     }
-    
-    // Optional: Refresh session if it's close to expiring
-    const { data: { session: refreshedSession }, error: refreshError } = 
-      await supabase.auth.refreshSession();
-    
-    if (refreshError) {
-      toast.error('Unable to refresh session. Please sign in again.');
-      navigate('/signin');
-    }
+    return true;
   };
 
   const loadPosts = async () => {
@@ -282,6 +274,9 @@ export const AdminPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!await checkAuth()) return;
+    
     setIsLoading(true);
 
     try {
