@@ -30,15 +30,30 @@ export const blogService = {
   },
 
   async getPostBySlug(slug) {
-    const { data, error } = await supabase
-      .from('posts')
-      .select('*')
-      .eq('slug', slug)
-      .eq('status', 'published')
-      .single()
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .select(`
+          *,
+          like_count,
+          comments:post_comments(count)
+        `)
+        .eq('slug', slug)
+        .single();
 
-    if (error) throw error
-    return data
+      if (error) throw error;
+
+      // Transform the data
+      return {
+        ...data,
+        like_count: data.like_count || 0,
+        comment_count: data.comments?.[0]?.count || 0,
+        image_url: this.getImageUrl(data.image_path)
+      };
+    } catch (error) {
+      console.error('Error fetching post:', error);
+      throw error;
+    }
   },
 
   async getRelatedPosts(category, currentSlug) {
@@ -57,15 +72,13 @@ export const blogService = {
 
   async likePost(postId) {
     try {
-      // First, try to insert a like
+      // First insert the like record
       const { error: insertError } = await supabase
         .from('post_likes')
-        .insert([
-          { 
-            post_id: postId,
-            user_ip: await this.getUserIP() 
-          }
-        ]);
+        .insert([{ 
+          post_id: postId,
+          user_ip: await this.getUserIP() 
+        }]);
 
       if (insertError) {
         if (insertError.code === '23505') { // Unique violation
@@ -75,15 +88,14 @@ export const blogService = {
       }
 
       // Then increment the like count
-      const { data, error: updateError } = await supabase.rpc('increment_like_count', {
-        post_id: postId
-      });
+      const { data, error: updateError } = await supabase
+        .rpc('increment_like_count', { post_id: postId });
 
       if (updateError) throw updateError;
 
       return { 
         success: true, 
-        newCount: data.like_count 
+        newCount: data[0].like_count 
       };
     } catch (error) {
       console.error('Error liking post:', error);

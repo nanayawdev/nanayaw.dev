@@ -32,6 +32,9 @@ const BlogPostPage = () => {
         setLikeCount(postData.like_count || 0);
         
         if (postData) {
+          const liked = await blogService.hasUserLikedPost(postData.id);
+          setHasLiked(liked);
+          
           const relatedPostsData = await blogService.getRelatedPosts(
             postData.category, 
             slug
@@ -39,10 +42,6 @@ const BlogPostPage = () => {
           console.log('Related Posts:', relatedPostsData);
           setRelatedPosts(relatedPostsData);
         }
-        
-        // Check if user has liked this post
-        const liked = await blogService.hasUserLikedPost(postData.id);
-        setHasLiked(liked);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -73,12 +72,14 @@ const BlogPostPage = () => {
 
     try {
       setIsLiking(true);
-      const { success, newCount } = await blogService.likePost(post.id);
+      const { success, newCount, message } = await blogService.likePost(post.id);
       
       if (success) {
         setLikeCount(newCount);
         setHasLiked(true);
         toast.success('Thanks for liking!');
+      } else {
+        toast.error(message || 'Unable to like post');
       }
     } catch (err) {
       console.error('Error liking post:', err);
