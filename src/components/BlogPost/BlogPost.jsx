@@ -2,13 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const BlogPost = ({ category, title, excerpt, slug, date, imageUrl }) => {
-  const formattedDate = new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-
+const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
   return (
     <Link to={`/blog/${slug}`} className="group block">
       <article className="relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
@@ -34,18 +28,9 @@ const BlogPost = ({ category, title, excerpt, slug, date, imageUrl }) => {
               {title}
             </h2>
             
-            <p className="text-gray-200 text-sm mb-4 line-clamp-2">
+            <p className="text-gray-200 text-sm line-clamp-2">
               {excerpt}
             </p>
-
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-200">
-                {formattedDate}
-              </span>
-              <span className="text-sm font-medium text-riptide-400">
-                Read More
-              </span>
-            </div>
           </div>
         </div>
       </article>
@@ -58,7 +43,6 @@ BlogPost.propTypes = {
   title: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
   imageUrl: PropTypes.string
 };
 
