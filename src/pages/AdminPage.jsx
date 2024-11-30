@@ -162,7 +162,7 @@ export const AdminPage = () => {
     published: false,
     status: 'draft',
     created_at: new Date().toISOString(),
-    image_url: ''
+    image: null
   });
   const [isLoading, setIsLoading] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
@@ -362,6 +362,13 @@ export const AdminPage = () => {
     return post.status === statusFilter.toLowerCase();
   });
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, image: file }));
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
       {/* Main Content - Add h-screen to ensure full height scrolling */}
@@ -446,13 +453,34 @@ export const AdminPage = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Image URL</label>
-              <Input
-                name="image_url"
-                value={formData.image_url}
-                onChange={handleChange}
-                placeholder="https://example.com/image.jpg"
-              />
+              <label className="text-sm font-medium">Post Image</label>
+              <div className="flex items-center gap-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => document.getElementById('admin-image-upload').click()}
+                  className="flex items-center gap-2"
+                >
+                  <ImageIcon className="w-4 h-4" />
+                  {formData.image ? 'Change Image' : 'Add Image'}
+                </Button>
+                <Input
+                  id="admin-image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </div>
+              {formData.image && (
+                <div className="mt-4">
+                  <img
+                    src={URL.createObjectURL(formData.image)}
+                    alt="Preview"
+                    className="w-full max-w-md h-48 object-cover rounded-lg"
+                  />
+                </div>
+              )}
             </div>
 
             <div className="flex items-center space-x-2">
