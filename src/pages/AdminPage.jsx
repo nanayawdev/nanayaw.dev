@@ -287,13 +287,16 @@ export const AdminPage = () => {
       const postData = {
         title: formData.title,
         slug: formData.slug,
-        content: formData.content,
+        content: editor.getHTML(), // Get content from editor
         excerpt: formData.excerpt,
         category: formData.category,
         status: formData.published ? 'published' : 'draft',
         published_at: formData.published ? new Date().toISOString() : null,
         image: formData.image // This will be handled by blogService
       };
+
+      // Log the data being sent
+      console.log('Submitting post data:', postData);
 
       let result;
       if (selectedPost) {
@@ -302,7 +305,7 @@ export const AdminPage = () => {
         result = await blogService.createPost(postData);
       }
 
-      console.log('Post saved:', result); // Add this for debugging
+      console.log('Post saved:', result);
 
       // Refresh the posts list
       await loadPosts();

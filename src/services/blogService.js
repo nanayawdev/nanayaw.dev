@@ -198,23 +198,37 @@ export const blogService = {
 
   async createPost(postData) {
     try {
+      console.log('Creating post with data:', postData); // Debug log
+      
       let imagePath = null;
-
       if (postData.image) {
         imagePath = await this.uploadImage(postData.image);
+        console.log('Image uploaded, path:', imagePath);
       }
 
+      // Create the database record
       const { data, error } = await supabase
         .from('posts')
         .insert([{
-          ...postData,
+          title: postData.title,
+          slug: postData.slug,
+          content: postData.content,
+          excerpt: postData.excerpt,
+          category: postData.category,
+          status: postData.status,
+          published_at: postData.published_at,
           image_path: imagePath,
           created_at: new Date().toISOString()
         }])
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Database error:', error);
+        throw error;
+      }
+
+      console.log('Post created successfully:', data);
       return data;
     } catch (error) {
       console.error('Error creating post:', error);
