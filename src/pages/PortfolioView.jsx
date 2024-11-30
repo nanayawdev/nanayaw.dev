@@ -211,10 +211,10 @@ const PortfolioView = () => {
                 href={project.link} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 mr-8 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                className="inline-flex items-center px-3 sm:px-4 py-2 mr-8 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
               >
-                Open in new tab
-                <ExternalLink className="ml-2 w-4 h-4" />
+                <span className="hidden sm:inline mr-2">Open in new tab</span>
+                <ExternalLink className="w-4 h-4" />
               </a>
             </div>
             
