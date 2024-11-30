@@ -180,9 +180,14 @@ export const blogService = {
       const { data, error } = await supabase
         .from('posts')
         .update({
-          ...postData,
-          image_path: imagePath,
-          updated_at: new Date().toISOString()
+          title: postData.title,
+          slug: postData.slug,
+          content: postData.content,
+          excerpt: postData.excerpt,
+          category: postData.category,
+          status: postData.status,
+          published_at: postData.published_at,
+          image_path: imagePath
         })
         .eq('id', id)
         .select()
@@ -198,7 +203,7 @@ export const blogService = {
 
   async createPost(postData) {
     try {
-      console.log('Creating post with data:', postData); // Debug log
+      console.log('Creating post with data:', postData);
       
       let imagePath = null;
       if (postData.image) {
@@ -206,7 +211,6 @@ export const blogService = {
         console.log('Image uploaded, path:', imagePath);
       }
 
-      // Create the database record
       const { data, error } = await supabase
         .from('posts')
         .insert([{
@@ -228,7 +232,6 @@ export const blogService = {
         throw error;
       }
 
-      console.log('Post created successfully:', data);
       return data;
     } catch (error) {
       console.error('Error creating post:', error);

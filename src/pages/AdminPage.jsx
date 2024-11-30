@@ -285,20 +285,21 @@ export const AdminPage = () => {
     setIsLoading(true);
 
     try {
-      // Create a clean postData object with all required fields
+      if (!formData.title || !formData.slug || !editor.getHTML()) {
+        toast.error('Title, slug, and content are required');
+        return;
+      }
+
       const postData = {
         title: formData.title,
         slug: formData.slug,
-        content: editor.getHTML(), // Get content from editor
-        excerpt: formData.excerpt,
-        category: formData.category,
+        content: editor.getHTML(),
+        excerpt: formData.excerpt || '',
+        category: formData.category || 'Uncategorized',
         status: formData.published ? 'published' : 'draft',
         published_at: formData.published ? new Date().toISOString() : null,
-        image: formData.image // This will be handled by blogService
+        image: formData.image
       };
-
-      // Log the data being sent
-      console.log('Submitting post data:', postData);
 
       let result;
       if (selectedPost) {
@@ -307,24 +308,18 @@ export const AdminPage = () => {
         result = await blogService.createPost(postData);
       }
 
-      console.log('Post saved:', result);
-
-      // Refresh the posts list
-      await loadPosts();
-      
       toast.success(
-        selectedPost
-          ? (formData.published ? 'Post updated and published!' : 'Draft updated successfully!')
-          : (formData.published ? 'New post published!' : 'New draft saved!')
+        selectedPost 
+          ? 'Post updated successfully!' 
+          : 'Post created successfully!'
       );
 
-      if (formData.published) {
-        navigate(`/blog/${formData.slug}`);
-      } else {
-        handleCancelEdit();
-      }
+      // Reset form and reload posts
+      handleCancelEdit();
+      await loadPosts();
+
     } catch (error) {
-      console.error('Save error:', error);
+      console.error('Error saving post:', error);
       toast.error(`Error saving post: ${error.message}`);
     } finally {
       setIsLoading(false);
