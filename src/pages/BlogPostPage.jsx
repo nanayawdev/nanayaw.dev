@@ -161,45 +161,52 @@ const BlogPostPage = () => {
 
   if (notFound) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] px-4">
-        <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          Post Not Found
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
-          The blog post you're looking for has been removed or doesn't exist.
-        </p>
-        <Link to="/allposts">
-          <Button variant="default">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to All Posts
-          </Button>
-        </Link>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] px-4">
-        <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          Oops! Something went wrong
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
-          We encountered an error while loading this post. Please try again later.
-        </p>
-        <div className="flex gap-4">
-          <Button 
-            variant="outline" 
-            onClick={() => window.location.reload()}
-          >
-            Try Again
-          </Button>
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <div className="text-center max-w-lg">
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            Post Not Found
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            This post may have been deleted or is temporarily unavailable.
+          </p>
+          <p className="text-gray-500 dark:text-gray-500 text-sm mb-8">
+            Please check the URL or try accessing the post through the blog listing.
+          </p>
           <Link to="/allposts">
             <Button variant="default">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to All Posts
             </Button>
           </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <div className="text-center max-w-lg">
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            Oops! Something went wrong
+          </h1>
+          <p className="text-gray-500 dark:text-gray-500 text-sm mb-8">
+          We encountered an error while loading this post. The post might have been deleted or is temporarily unavailable.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Button 
+              variant="outline" 
+              onClick={() => window.location.reload()}
+            >
+              Try Again
+            </Button>
+            <Link to="/allposts">
+              <Button variant="default">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to All Posts
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     );
