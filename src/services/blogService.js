@@ -164,18 +164,28 @@ export const blogService = {
 
   async updatePost(id, postData) {
     try {
+      const oldPost = await this.getPostById(id);
+      let imagePath = oldPost.image_path;
+      let imageUrl = oldPost.image_url;
+
+      if (postData.image) {
+        // Delete old image if it exists
+        if (oldPost.image_path) {
+          await this.deleteImage(oldPost.image_path);
+        }
+        // Upload new image
+        const { filePath, publicUrl } = await this.uploadImage(postData.image);
+        imagePath = filePath;
+        imageUrl = publicUrl;
+      }
+
       const { data, error } = await supabase
         .from('posts')
         .update({
-          title: postData.title,
-          slug: postData.slug,
-          content: postData.content,
-          excerpt: postData.excerpt,
-          category: postData.category,
-          status: postData.status,
-          published_at: postData.published_at,
-          updated_at: new Date().toISOString(),
-          image_url: postData.image_url
+          ...postData,
+          image_path: imagePath,
+          image_url: imageUrl,
+          updated_at: new Date().toISOString()
         })
         .eq('id', id)
         .select()
@@ -191,18 +201,22 @@ export const blogService = {
 
   async createPost(postData) {
     try {
+      let imagePath = null;
+      let imageUrl = null;
+
+      if (postData.image) {
+        const { filePath, publicUrl } = await this.uploadImage(postData.image);
+        imagePath = filePath;
+        imageUrl = publicUrl;
+      }
+
       const { data, error } = await supabase
         .from('posts')
         .insert([{
-          title: postData.title,
-          slug: postData.slug,
-          content: postData.content,
-          excerpt: postData.excerpt,
-          category: postData.category,
-          status: postData.status,
-          published_at: postData.published_at,
-          created_at: new Date().toISOString(),
-          image_url: postData.image_url
+          ...postData,
+          image_path: imagePath,
+          image_url: imageUrl,
+          created_at: new Date().toISOString()
         }])
         .select()
         .single();
@@ -255,5 +269,41 @@ export const blogService = {
 
     console.log('Fetched recent posts:', transformedData)
     return transformedData
+  },
+
+  async uploadImage(file) {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `blog-images/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('posts')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('posts')
+        .getPublicUrl(filePath);
+
+      return { filePath, publicUrl };
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
+  },
+
+  async deleteImage(filePath) {
+    try {
+      const { error } = await supabase.storage
+        .from('posts')
+        .remove([filePath]);
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error deleting image:', error);
+      throw error;
+    }
   }
 } 
