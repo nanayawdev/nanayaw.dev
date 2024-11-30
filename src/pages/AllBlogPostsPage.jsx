@@ -40,15 +40,68 @@ const AllBlogPostsPage = () => {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8 mt-20 max-w-3xl">
-        {[...Array(3)].map((_, i) => (
-          <Skeleton key={i} className="h-[200px] w-full mb-6" />
-        ))}
+        <h1 className="text-3xl font-bold mb-8">All Blog Posts</h1>
+        <div className="space-y-6">
+          {[...Array(3)].map((_, i) => (
+            <Skeleton key={i} className="h-[200px] w-full rounded-lg" />
+          ))}
+        </div>
       </div>
     );
   }
 
   if (error) {
-    return <div className="mt-20">Error: {error}</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <div className="text-center max-w-lg">
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            Unable to Load Posts
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            We're having trouble connecting to our servers.
+          </p>
+          <p className="text-gray-500 dark:text-gray-500 text-sm mb-8">
+            Please check your internet connection and try again.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Button 
+              variant="outline" 
+              onClick={() => window.location.reload()}
+              className="flex items-center gap-2"
+            >
+              Try Again
+            </Button>
+            <Link to="/">
+              <Button variant="default" className="flex items-center gap-2">
+                Back to Home
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (posts.length === 0) {
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <div className="text-center max-w-lg">
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            No Posts Found
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-8">
+            There are currently no blog posts available.
+          </p>
+          <Button 
+            variant="outline" 
+            onClick={() => window.location.reload()}
+            className="flex items-center gap-2"
+          >
+            Refresh Page
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   return (
