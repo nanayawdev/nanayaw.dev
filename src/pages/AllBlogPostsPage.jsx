@@ -100,29 +100,37 @@ const AllBlogPostsPage = () => {
             to={`/blog/${post.slug}`}
             className="group block"
           >
-            <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden transition-colors hover:border-riptide-500 dark:hover:border-riptide-500">
+            <div className="flex flex-col sm:flex-row border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden transition-colors hover:border-riptide-500 dark:hover:border-riptide-500">
+              {/* Image container - left side */}
               {post.image_url && (
-                <div className="aspect-[16/9] w-full overflow-hidden">
-                  <img
-                    src={post.image_url}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                    }}
-                  />
+                <div className="sm:w-72 md:w-80 flex-shrink-0">
+                  <div className="aspect-[4/3] sm:h-full w-full overflow-hidden">
+                    <img
+                      src={post.image_url}
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
                 </div>
               )}
-              <div className="p-6">
+              
+              {/* Content container - right side */}
+              <div className="flex-1 p-6">
                 <Badge variant="outline" className="w-fit mb-4">
                   {post.category}
                 </Badge>
-                <h2 className="text-2xl font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 mb-3">
+                
+                <h2 className="text-xl sm:text-2xl font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400 mb-3">
                   {post.title}
                 </h2>
-                <p className="text-gray-500 dark:text-gray-400 text-lg mb-4">
+                
+                <p className="text-gray-500 dark:text-gray-400 text-base mb-4 line-clamp-2">
                   {post.excerpt || post.content.substring(0, 150)}...
                 </p>
+                
                 <div className="flex items-center gap-6 text-gray-500 dark:text-gray-400">
                   <span className="text-sm">
                     {new Date(post.created_at).toLocaleDateString('en-US', {
