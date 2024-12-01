@@ -84,16 +84,21 @@ const BlogPostPage = () => {
 
     try {
       setIsLiking(true);
+      setHasLiked(true);
+      setLikeCount(prev => prev + 1);
+      
       const result = await blogService.likePost(post.id);
       
-      if (result.success) {
-        setLikeCount(result.newCount);
-        setHasLiked(true);
-        toast.success('Thanks for liking!');
-      } else {
+      if (!result.success) {
+        setHasLiked(false);
+        setLikeCount(prev => prev - 1);
         toast.error(result.message || 'Unable to like post');
+      } else {
+        toast.success('Thanks for liking!');
       }
     } catch (err) {
+      setHasLiked(false);
+      setLikeCount(prev => prev - 1);
       console.error('Error liking post:', err);
       toast.error('Unable to like post. Please try again.');
     } finally {
@@ -250,12 +255,16 @@ const BlogPostPage = () => {
               <button 
                 onClick={handleLike}
                 disabled={isLiking || hasLiked}
-                className={`flex items-center gap-2 text-gray-700 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-200 transition-colors ${
-                  hasLiked ? 'text-gray-500 hover:text-riptide-600' : ''
-                } ${isLiking ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`flex items-center gap-2 ${
+                  hasLiked 
+                    ? 'text-riptide-500 dark:text-riptide-400' 
+                    : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
+                } transition-colors`}
               >
                 <ThumbsUp className={`h-5 w-5 ${hasLiked ? 'fill-current' : ''}`} />
-                <span className="text-sm">{likeCount}</span>
+                <span className="text-sm font-medium">
+                  {likeCount} {likeCount === 1 ? 'like' : 'likes'}
+                </span>
               </button>
               
               <button 
