@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { blogService } from '@/services/blogService';
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ThumbsUp, MessageCircle } from "lucide-react";
+import { ThumbsUp, MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const AllBlogPostsPage = () => {
@@ -143,6 +143,13 @@ const AllBlogPostsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 mt-20 max-w-3xl">
+      <Link 
+        to="/" 
+        className="fixed top-8 left-8 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-50"
+      >
+        <X className="w-5 h-5" />
+      </Link>
+
       <h1 className="text-3xl font-bold mb-8">All Blog Posts</h1>
       
       {/* Sticky Category Filter with Horizontal Scroll */}
