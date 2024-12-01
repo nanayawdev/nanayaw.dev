@@ -37,6 +37,10 @@ export const BlogContent = ({ content }) => {
         delete el.dataset.highlighted;
       }
       
+      // Store original content for copying
+      const originalContent = el.textContent;
+      
+      // Let highlight.js handle the escaping
       hljs.highlightElement(el);
       
       const pre = el.parentElement;
@@ -67,7 +71,7 @@ export const BlogContent = ({ content }) => {
         button.appendChild(buttonContent);
         
         button.addEventListener('click', () => {
-          navigator.clipboard.writeText(el.textContent);
+          navigator.clipboard.writeText(originalContent); // Use original content
           text.textContent = 'Copied!';
           path.setAttribute('d', 'M5 13l4 4L19 7');
           
