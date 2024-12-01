@@ -25,6 +25,7 @@ const BlogPostPage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [nextPost, setNextPost] = useState(null);
+  const [previousPost, setPreviousPost] = useState(null);
 
   useEffect(() => {
     const loadPost = async () => {
@@ -54,6 +55,9 @@ const BlogPostPage = () => {
 
         const nextPostData = await blogService.getNextPost(slug);
         setNextPost(nextPostData);
+
+        const previousPostData = await blogService.getPreviousPost(slug);
+        setPreviousPost(previousPostData);
 
       } catch (err) {
         if (err.message?.includes('no rows returned')) {
@@ -374,6 +378,7 @@ const BlogPostPage = () => {
       <ProjectNav 
         type="blog"
         nextItem={nextPost}
+        previousItem={previousPost}
       />
     </div>
   );
