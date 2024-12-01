@@ -78,10 +78,10 @@ const PortfolioView = () => {
             {project?.link && (
               <button
                 onClick={() => setIsProjectOpen(true)}
-                className="inline-flex items-center px-6 py-3 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity self-start"
+                className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity self-start"
               >
-                View Project
-                <ChevronRight className="ml-2 w-4 h-4" />
+                <span>View Project</span>
+                <ChevronRight className="ml-2 w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             )}
           </div>
