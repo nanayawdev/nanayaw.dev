@@ -111,12 +111,14 @@ export const blogService = {
   async hasUserLikedPost(postId) {
     try {
       const userIp = await this.getUserIp();
+      if (!userIp) return false;
+
       const { data, error } = await supabase
         .from('post_likes')
         .select('id')
         .eq('post_id', postId)
         .eq('user_ip', userIp)
-        .single();
+        .maybeSingle();
 
       if (error && error.code !== 'PGRST116') {
         console.error('Error checking like status:', error);
@@ -133,6 +135,7 @@ export const blogService = {
   async getUserIp() {
     try {
       const response = await fetch('https://api.ipify.org?format=json');
+      if (!response.ok) throw new Error('Failed to fetch IP');
       const data = await response.json();
       return data.ip;
     } catch (err) {
@@ -348,5 +351,34 @@ export const blogService = {
       .from('posts')
       .getPublicUrl(imagePath)
       .data.publicUrl;
+  },
+
+  async deletePost(postId) {
+    try {
+      // First get the post to get its image path
+      const { data: post, error: fetchError } = await supabase
+        .from('posts')
+        .select('image_path')
+        .eq('id', postId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // If post has an image, delete it from storage
+      if (post?.image_path) {
+        await this.deleteImage(post.image_path);
+      }
+
+      // Then delete the post
+      const { error: deleteError } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postId);
+
+      if (deleteError) throw deleteError;
+    } catch (error) {
+      console.error('Error in deletePost:', error);
+      throw error;
+    }
   }
 } 
