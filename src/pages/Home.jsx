@@ -11,7 +11,7 @@ const Home = () => {
       
       <div className="mb-4 sm:mb-6">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight">
-          Hi, folks I'm <span className="text-riptide-400 dark:text-[#2bfd5f]">NY</span>,{' '}
+          Hi, 👋 I'm <span className="text-riptide-400 dark:text-[#2bfd5f]">NY</span>,{' '}
           <br />
           UI/UX Designer
           <br />
