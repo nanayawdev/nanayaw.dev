@@ -39,35 +39,35 @@ export const BlogContent = ({ content }) => {
         const button = document.createElement('button');
         button.className = 'copy-button absolute hidden group-hover:flex items-center gap-1 right-2 top-2 px-1.5 py-1 text-xs rounded bg-white/10 hover:bg-white/20 text-white transition-colors';
         
-        const copyIconSvg = `
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-        `;
-
-        const checkIconSvg = `
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        `;
-
-        button.innerHTML = `
-          ${copyIconSvg}
-          <span>Copy</span>
-        `;
+        // Create text content separately
+        const buttonText = document.createElement('span');
+        buttonText.textContent = 'Copy';
+        
+        // Create icon using a safer approach
+        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        icon.setAttribute('class', 'w-3.5 h-3.5');
+        icon.setAttribute('viewBox', '0 0 24 24');
+        icon.setAttribute('fill', 'none');
+        icon.setAttribute('stroke', 'currentColor');
+        icon.setAttribute('stroke-width', '2');
+        
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', 'M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3');
+        
+        icon.appendChild(path);
+        button.appendChild(icon);
+        button.appendChild(buttonText);
         
         button.onclick = () => {
           navigator.clipboard.writeText(el.textContent);
-          button.innerHTML = `
-            ${checkIconSvg}
-            <span>Copied!</span>
-          `;
+          buttonText.textContent = 'Copied!';
+          
+          // Update icon to checkmark
+          path.setAttribute('d', 'M5 13l4 4L19 7');
+          
           setTimeout(() => {
-            button.innerHTML = `
-              ${copyIconSvg}
-              <span>Copy</span>
-            `;
+            buttonText.textContent = 'Copy';
+            path.setAttribute('d', 'M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3');
           }, 2000);
         };
         
