@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Mail, Lock } from 'lucide-react';
-import { toast } from 'sonner';
+import { useToast } from "@/hooks/use-toast";
 
 export const SignInPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,14 +24,25 @@ export const SignInPage = () => {
       });
 
       if (error) {
-        toast.error(error.message);
+        toast({
+          variant: "destructive",
+          title: "Error signing in",
+          description: error.message,
+        });
         return;
       }
 
-      toast.success("Signed in successfully!");
+      toast({
+        title: "Success",
+        description: "Signed in successfully!",
+      });
       navigate('/admin');
     } catch (error) {
-      toast.error(error?.message || "An error occurred during sign in");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error?.message || "An error occurred during sign in",
+      });
     } finally {
       setLoading(false);
     }

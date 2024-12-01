@@ -9,14 +9,14 @@ import SignInPage from '@/pages/SignInPage';
 import AllBlogPostsPage from './pages/AllBlogPostsPage';
 import PortfolioView from './pages/PortfolioView';
 import PortfolioAdminPage from '@/pages/PortfolioAdminPage';
-import { Toaster } from 'sonner';
+import { Toaster } from "@/components/ui/toaster"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
-      <Toaster position="top-center" richColors />
+      <Toaster />
       <BrowserRouter>
         <ThemeProvider>
           <Routes>
