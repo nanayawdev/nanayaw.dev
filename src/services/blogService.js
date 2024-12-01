@@ -110,30 +110,34 @@ export const blogService = {
 
   async hasUserLikedPost(postId) {
     try {
-      const userIP = await this.getUserIP();
+      const userIp = await this.getUserIp();
       const { data, error } = await supabase
         .from('post_likes')
         .select('id')
         .eq('post_id', postId)
-        .eq('user_ip', userIP)
+        .eq('user_ip', userIp)
         .single();
 
-      if (error && error.code !== 'PGRST116') throw error;
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error checking like status:', error);
+        return false;
+      }
+
       return !!data;
-    } catch (error) {
-      console.error('Error checking like status:', error);
+    } catch (err) {
+      console.error('Error checking like status:', err);
       return false;
     }
   },
 
-  async getUserIP() {
+  async getUserIp() {
     try {
       const response = await fetch('https://api.ipify.org?format=json');
       const data = await response.json();
       return data.ip;
-    } catch (error) {
-      console.error('Error getting IP:', error);
-      return 'unknown';
+    } catch (err) {
+      console.error('Error getting IP:', err);
+      return null;
     }
   },
 
