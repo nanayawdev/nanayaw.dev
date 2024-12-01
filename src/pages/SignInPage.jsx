@@ -3,19 +3,18 @@ import { supabase } from '@/lib/supabase';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Mail, Lock } from 'lucide-react';
+import { toast } from 'sonner';
 
 export const SignInPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -25,17 +24,17 @@ export const SignInPage = () => {
 
       if (error) throw error;
 
-      // Redirect to admin page after successful sign in
+      toast.success("Signed in successfully");
       navigate('/admin');
     } catch (error) {
-      setError(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+    <div className="h-[100vh] flex items-center justify-center p-4 fixed inset-0">
       <div className="w-full max-w-md space-y-8">
         <div className="flex justify-between items-center">
           <Link to="/">
@@ -53,33 +52,35 @@ export const SignInPage = () => {
           </p>
         </div>
 
-        {error && (
-          <div className="p-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-900 dark:text-red-300">
-            {error}
-          </div>
-        )}
-
         <form onSubmit={handleSignIn} className="space-y-6">
           <div className="space-y-2">
             <label className="text-sm font-medium">Email</label>
-            <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="your@email.com"
-            />
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="your@email.com"
+                className="pl-10"
+              />
+            </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Password</label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="••••••••"
-            />
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="••••••••"
+                className="pl-10"
+              />
+            </div>
           </div>
 
           <Button 
