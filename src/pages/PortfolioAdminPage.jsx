@@ -195,6 +195,18 @@ export const PortfolioAdminPage = () => {
 
     setIsLoading(true);
     try {
+      // Delete the main image and gallery images from storage
+      if (projectToDelete.image) {
+        await portfolioService.deleteImage(projectToDelete.image);
+      }
+      
+      if (projectToDelete.gallery_images && projectToDelete.gallery_images.length > 0) {
+        for (const imageUrl of projectToDelete.gallery_images) {
+          await portfolioService.deleteImage(imageUrl);
+        }
+      }
+
+      // Delete the project from the database
       await portfolioService.deleteProject(projectToDelete.id);
       toast.success('Project deleted successfully');
       setProjectToDelete(null);

@@ -120,5 +120,33 @@ export const portfolioService = {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)+/g, '');
-  }
+  },
+
+  async deleteImage(imageUrl) {
+    try {
+      const path = imageUrl.split('/').pop();
+      const { error } = await supabase.storage
+        .from('portfolio-images')
+        .remove([path]);
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error deleting image:', error);
+      throw error;
+    }
+  },
+
+  async deleteProject(id) {
+    try {
+      const { error } = await supabase
+        .from('portfolio_projects')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      throw error;
+    }
+  },
 }; 
