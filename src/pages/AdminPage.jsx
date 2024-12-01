@@ -15,18 +15,30 @@ import { DeletePostModal } from "@/components/DeletePostModal";
 import { toast } from 'sonner';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { blogService } from '@/services/blogService';
-import { lowlight } from 'lowlight/lib/core'
-import css from 'highlight.js/lib/languages/css'
-import js from 'highlight.js/lib/languages/javascript'
-import ts from 'highlight.js/lib/languages/typescript'
-import html from 'highlight.js/lib/languages/xml'
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+import typescript from 'highlight.js/lib/languages/typescript';
+import css from 'highlight.js/lib/languages/css';
+import xml from 'highlight.js/lib/languages/xml';
+import jsx from 'highlight.js/lib/languages/javascript';  // for JSX
+import bash from 'highlight.js/lib/languages/bash';
+import json from 'highlight.js/lib/languages/json';
+import python from 'highlight.js/lib/languages/python';
+import sql from 'highlight.js/lib/languages/sql';
+import markdown from 'highlight.js/lib/languages/markdown';
+import 'highlight.js/styles/github-dark.css';
 
-// Register the languages
-lowlight.registerLanguage('html', html)
-lowlight.registerLanguage('css', css)
-lowlight.registerLanguage('js', js)
-lowlight.registerLanguage('javascript', js)
-lowlight.registerLanguage('typescript', ts)
+// Register all languages
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('html', xml);
+hljs.registerLanguage('jsx', jsx);
+hljs.registerLanguage('bash', bash);
+hljs.registerLanguage('json', json);
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('sql', sql);
+hljs.registerLanguage('markdown', markdown);
 
 const EditorMenuBar = ({ editor }) => {
   if (!editor) return null;
@@ -184,10 +196,25 @@ export const AdminPage = () => {
     extensions: [
       StarterKit.configure({
         codeBlock: {
-          lowlight,
           HTMLAttributes: {
-            class: 'block p-4 rounded-lg bg-zinc-900 text-white font-mono text-sm',
+            class: 'block p-4 rounded-lg bg-zinc-900 font-mono text-sm overflow-x-auto hljs',
           },
+          transformPastedText: (text) => {
+            try {
+              return hljs.highlightAuto(text).value;
+            } catch (e) {
+              return text;
+            }
+          },
+          renderHTML({ node }) {
+            const content = node.textContent || '';
+            try {
+              const highlighted = hljs.highlightAuto(content).value;
+              return `<pre class="hljs"><code class="hljs">${highlighted}</code></pre>`;
+            } catch (e) {
+              return `<pre class="hljs"><code class="hljs">${content}</code></pre>`;
+            }
+          }
         }
       }),
       Image,

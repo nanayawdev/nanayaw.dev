@@ -14,6 +14,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
+    include: ['lowlight'],
     exclude: ['problematic-dependency-name']
   }
 })

@@ -1,26 +1,29 @@
-import React from 'react';
+import { useEffect } from 'react';
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+import typescript from 'highlight.js/lib/languages/typescript';
+import css from 'highlight.js/lib/languages/css';
+import xml from 'highlight.js/lib/languages/xml';
+import 'highlight.js/styles/atom-one-dark.css';
+
+// Register the languages
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('html', xml);
 
 export const BlogContent = ({ content }) => {
+  useEffect(() => {
+    // Highlight all code blocks after the component mounts
+    document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  }, [content]);
+
   return (
     <div 
-      className="prose prose-lg dark:prose-invert max-w-none
-        prose-headings:font-medium
-        prose-h1:text-3xl
-        prose-h2:text-2xl
-        prose-h3:text-xl
-        prose-h4:text-lg
-        prose-p:text-gray-800 dark:prose-p:text-gray-200
-        prose-blockquote:border-l-4 prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-700
-        prose-blockquote:pl-4 prose-blockquote:italic
-        prose-code:bg-gray-100 dark:prose-code:bg-gray-800
-        prose-code:p-1 prose-code:rounded
-        prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800
-        prose-pre:p-4 prose-pre:rounded-lg
-        prose-ol:list-decimal prose-ul:list-disc
-        prose-li:my-1
-        prose-strong:font-semibold
-        prose-strong:text-gray-900 dark:prose-strong:text-gray-100"
-      dangerouslySetInnerHTML={{ __html: content }}
+      className="blog-content"
+      dangerouslySetInnerHTML={{ __html: content }} 
     />
   );
 }; 
