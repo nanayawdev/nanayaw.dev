@@ -7,7 +7,6 @@ import { supabase } from '@/lib/supabase';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { ArrowLeft, Bold, Italic, Code, List, ListOrdered, Link as LinkIcon, Image as ImageIcon, AlignLeft, AlignCenter, AlignRight, Trash2, Edit, Eye, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
@@ -197,22 +196,34 @@ export const AdminPage = () => {
       StarterKit.configure({
         codeBlock: {
           HTMLAttributes: {
-            class: 'block p-4 rounded-lg bg-zinc-900 font-mono text-sm overflow-x-auto hljs',
-          },
-          transformPastedText: (text) => {
-            try {
-              return hljs.highlightAuto(text).value;
-            } catch (e) {
-              return text;
-            }
+            class: 'relative block p-4 rounded-lg bg-zinc-900 font-mono text-sm overflow-x-auto hljs group',
           },
           renderHTML({ node }) {
             const content = node.textContent || '';
             try {
-              const highlighted = hljs.highlightAuto(content).value;
-              return `<pre class="hljs"><code class="hljs">${highlighted}</code></pre>`;
+              const highlighted = hljs.highlight(content, { language: 'javascript', ignoreIllegals: true }).value;
+              return `
+                <pre class="relative group">
+                  <button 
+                    class="absolute hidden group-hover:flex items-center right-2 top-2 px-2 py-1 text-xs rounded bg-white/10 hover:bg-white/20 text-white transition-colors" 
+                    onclick="(() => {
+                      navigator.clipboard.writeText(this.parentElement.querySelector('code').textContent);
+                      this.innerHTML = '<svg class=\'w-4 h-4 mr-1\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\'><path d=\'M5 13l4 4L19 7\'/></svg>Copied!';
+                      setTimeout(() => {
+                        this.innerHTML = '<svg class=\'w-4 h-4 mr-1\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\'><path d=\'M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3\'/></svg>Copy';
+                      }, 2000);
+                    })()"
+                  >
+                    <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                    </svg>
+                    Copy
+                  </button>
+                  <code>${highlighted}</code>
+                </pre>
+              `;
             } catch (e) {
-              return `<pre class="hljs"><code class="hljs">${content}</code></pre>`;
+              return `<pre><code>${content}</code></pre>`;
             }
           }
         }
