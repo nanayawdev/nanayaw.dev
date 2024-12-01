@@ -10,12 +10,13 @@ import AllBlogPostsPage from './pages/AllBlogPostsPage';
 import PortfolioView from './pages/PortfolioView';
 import PortfolioAdminPage from '@/pages/PortfolioAdminPage';
 import { Toaster } from "@/components/ui/toaster"
+import { HelmetProvider } from 'react-helmet-async';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <>
+    <HelmetProvider>
       <Toaster />
       <BrowserRouter>
         <ThemeProvider>
@@ -40,7 +41,7 @@ function App() {
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
-    </>
+    </HelmetProvider>
   );
 }
 

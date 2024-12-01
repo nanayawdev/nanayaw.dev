@@ -26,6 +26,7 @@ import python from 'highlight.js/lib/languages/python';
 import sql from 'highlight.js/lib/languages/sql';
 import markdown from 'highlight.js/lib/languages/markdown';
 import 'highlight.js/styles/github-dark.css';
+import { Helmet } from 'react-helmet-async';
 
 // Register all languages
 hljs.registerLanguage('javascript', javascript);
@@ -449,221 +450,230 @@ export const AdminPage = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
-      {/* Main Content - Add h-screen to ensure full height scrolling */}
-      <div className="flex-1 h-screen overflow-y-auto border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-        <div className="max-w-3xl mx-auto p-4 md:p-6 pb-24 md:pb-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <h1 className="text-2xl md:text-3xl font-bold">
-              {selectedPost ? 'Edit Post' : 'Create New Post'}
-            </h1>
-            <RouterLink to="/">
-              <Button variant="ghost">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                <span className="hidden sm:inline">Back to Home</span>
-              </Button>
-            </RouterLink>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Title</label>
-              <Input
-                name="title"
-                value={formData.title}
-                onChange={handleTitleChange}
-                required
-                placeholder="Post title"
-              />
-            </div>
+    <>
+      <Helmet>
+        <title>Admin Dashboard | Your Site Name</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
+        <meta name="description" content="Admin dashboard for managing blog posts and content." />
+      </Helmet>
 
-            <div className="flex gap-4">
-              <div className="space-y-2 flex-1">
-                <label className="text-sm font-medium">Slug</label>
-                <Input
-                  name="slug"
-                  value={formData.slug}
-                  onChange={handleChange}
-                  required
-                  placeholder="post-url-slug"
-                />
-              </div>
-
-              <div className="space-y-2 flex-1">
-                <label className="text-sm font-medium">Category</label>
-                <Select
-                  value={formData.category}
-                  onValueChange={(value) => 
-                    setFormData(prev => ({ ...prev, category: value }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORIES.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Excerpt</label>
-              <Textarea
-                name="excerpt"
-                value={formData.excerpt}
-                onChange={handleChange}
-                required
-                placeholder="Brief description of the post"
-                rows={3}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Content</label>
-              <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
-                <EditorMenuBar editor={editor} />
-                <EditorContent editor={editor} className="p-4 min-h-[300px]" />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Post Image</label>
-              <div className="flex items-center gap-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => document.getElementById('admin-image-upload').click()}
-                  className="flex items-center gap-2"
-                >
-                  <ImageIcon className="w-4 h-4" />
-                  {formData.image ? 'Change Image' : 'Add Image'}
+      <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
+        {/* Main Content - Add h-screen to ensure full height scrolling */}
+        <div className="flex-1 h-screen overflow-y-auto border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
+          <div className="max-w-3xl mx-auto p-4 md:p-6 pb-24 md:pb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold">
+                {selectedPost ? 'Edit Post' : 'Create New Post'}
+              </h1>
+              <RouterLink to="/">
+                <Button variant="ghost">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">Back to Home</span>
                 </Button>
+              </RouterLink>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Title</label>
                 <Input
-                  id="admin-image-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleTitleChange}
+                  required
+                  placeholder="Post title"
                 />
               </div>
-              {(formData.image_path || formData.image) && (
-                <div className="mt-4">
-                  <img
-                    src={formData.image 
-                      ? URL.createObjectURL(formData.image)
-                      : blogService.getImageUrl(formData.image_path)
-                    }
-                    alt="Preview"
-                    className="w-full max-w-md h-48 object-cover rounded-lg"
+
+              <div className="flex gap-4">
+                <div className="space-y-2 flex-1">
+                  <label className="text-sm font-medium">Slug</label>
+                  <Input
+                    name="slug"
+                    value={formData.slug}
+                    onChange={handleChange}
+                    required
+                    placeholder="post-url-slug"
                   />
                 </div>
-              )}
-            </div>
 
-            <div className="flex gap-4">
-              <Button 
-                type="submit" 
-                disabled={isLoading}
-                className="flex-1"
-              >
-                {isLoading ? 'Saving...' : (selectedPost ? 'Update Post' : 'Create Post')}
-              </Button>
-              
-              {selectedPost && (
-                <Button 
-                  type="button" 
-                  variant="outline"
-                  onClick={handleCancelEdit}
-                >
-                  Cancel Edit
-                </Button>
-              )}
-            </div>
-          </form>
-        </div>
-      </div>
-
-      {/* Sidebar - Add h-screen for consistent height */}
-      <div className="w-full md:w-80 h-screen overflow-y-auto bg-gray-50 dark:bg-gray-900">
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Posts</h2>
-            {/* Optional: Add a collapse button for mobile */}
-          </div>
-          
-          {/* Post cards - adjust for mobile */}
-          <div className="space-y-2">
-            {filteredPosts.map(post => (
-              <div 
-                key={post.id} 
-                className="p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
-              >
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
-                    {post.title}
-                  </h3>
-                  <span className={`text-xs px-2 py-1 rounded-full ${
-                    post.status === 'published' 
-                      ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                      : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                  }`}>
-                    {post.status === 'published' ? 'Published' : 'Draft'}
-                  </span>
-                </div>
-                <div className="flex items-center text-xs text-gray-500 mb-2">
-                  <Calendar className="w-3 h-3 mr-1" />
-                  {post.published_at 
-                    ? format(new Date(post.published_at), 'MMM d, yyyy')
-                    : format(new Date(post.created_at), 'MMM d, yyyy') + ' (Draft)'}
-                </div>
-                <div className="flex items-center gap-1 md:gap-2">
-                  <button
-                    onClick={() => handleEdit(post)}
-                    className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
-                    title="Edit"
+                <div className="space-y-2 flex-1">
+                  <label className="text-sm font-medium">Category</label>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) => 
+                      setFormData(prev => ({ ...prev, category: value }))
+                    }
                   >
-                    <Edit className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setPostToDelete(post)}
-                    className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
-                    title="Delete"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                  <RouterLink
-                    to={`/blog/${post.slug}`}
-                    className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
-                    title="View"
-                  >
-                    <Eye className="w-4 h-4" />
-                  </RouterLink>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {CATEGORIES.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
-            ))}
-            {filteredPosts.length === 0 && (
-              <p className="text-gray-500 text-center py-4">
-                No posts found for the selected filter.
-              </p>
-            )}
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Excerpt</label>
+                <Textarea
+                  name="excerpt"
+                  value={formData.excerpt}
+                  onChange={handleChange}
+                  required
+                  placeholder="Brief description of the post"
+                  rows={3}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Content</label>
+                <div className="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+                  <EditorMenuBar editor={editor} />
+                  <EditorContent editor={editor} className="p-4 min-h-[300px]" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Post Image</label>
+                <div className="flex items-center gap-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => document.getElementById('admin-image-upload').click()}
+                    className="flex items-center gap-2"
+                  >
+                    <ImageIcon className="w-4 h-4" />
+                    {formData.image ? 'Change Image' : 'Add Image'}
+                  </Button>
+                  <Input
+                    id="admin-image-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </div>
+                {(formData.image_path || formData.image) && (
+                  <div className="mt-4">
+                    <img
+                      src={formData.image 
+                        ? URL.createObjectURL(formData.image)
+                        : blogService.getImageUrl(formData.image_path)
+                      }
+                      alt="Preview"
+                      className="w-full max-w-md h-48 object-cover rounded-lg"
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="flex gap-4">
+                <Button 
+                  type="submit" 
+                  disabled={isLoading}
+                  className="flex-1"
+                >
+                  {isLoading ? 'Saving...' : (selectedPost ? 'Update Post' : 'Create Post')}
+                </Button>
+                
+                {selectedPost && (
+                  <Button 
+                    type="button" 
+                    variant="outline"
+                    onClick={handleCancelEdit}
+                  >
+                    Cancel Edit
+                  </Button>
+                )}
+              </div>
+            </form>
           </div>
         </div>
-      </div>
 
-      {/* Delete Modal */}
-      <DeletePostModal
-        isOpen={!!postToDelete}
-        onClose={() => setPostToDelete(null)}
-        onConfirm={handleDeleteConfirm}
-        postTitle={postToDelete?.title}
-        isLoading={isLoading}
-      />
-    </div>
+        {/* Sidebar - Add h-screen for consistent height */}
+        <div className="w-full md:w-80 h-screen overflow-y-auto bg-gray-50 dark:bg-gray-900">
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Posts</h2>
+              {/* Optional: Add a collapse button for mobile */}
+            </div>
+            
+            {/* Post cards - adjust for mobile */}
+            <div className="space-y-2">
+              {filteredPosts.map(post => (
+                <div 
+                  key={post.id} 
+                  className="p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-riptide-500 dark:hover:border-riptide-500 transition-colors bg-white dark:bg-gray-800"
+                >
+                  <div className="flex justify-between items-start mb-1">
+                    <h3 className="font-medium text-sm truncate text-gray-900 dark:text-gray-100">
+                      {post.title}
+                    </h3>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      post.status === 'published' 
+                        ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                        : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                    }`}>
+                      {post.status === 'published' ? 'Published' : 'Draft'}
+                    </span>
+                  </div>
+                  <div className="flex items-center text-xs text-gray-500 mb-2">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    {post.published_at 
+                      ? format(new Date(post.published_at), 'MMM d, yyyy')
+                      : format(new Date(post.created_at), 'MMM d, yyyy') + ' (Draft)'}
+                  </div>
+                  <div className="flex items-center gap-1 md:gap-2">
+                    <button
+                      onClick={() => handleEdit(post)}
+                      className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
+                      title="Edit"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setPostToDelete(post)}
+                      className="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                    <RouterLink
+                      to={`/blog/${post.slug}`}
+                      className="p-1.5 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 text-green-500 ml-auto"
+                      title="View"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </RouterLink>
+                  </div>
+                </div>
+              ))}
+              {filteredPosts.length === 0 && (
+                <p className="text-gray-500 text-center py-4">
+                  No posts found for the selected filter.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Delete Modal */}
+        <DeletePostModal
+          isOpen={!!postToDelete}
+          onClose={() => setPostToDelete(null)}
+          onConfirm={handleDeleteConfirm}
+          postTitle={postToDelete?.title}
+          isLoading={isLoading}
+        />
+      </div>
+    </>
   );
 };
 
