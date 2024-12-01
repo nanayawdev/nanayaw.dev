@@ -35,7 +35,7 @@ export const blogService = {
         .from('posts')
         .select(`
           *,
-          like_count,
+          like_count:post_likes(count),
           comments:post_comments(count)
         `)
         .eq('slug', slug)
@@ -43,11 +43,11 @@ export const blogService = {
 
       if (error) throw error;
 
-      // Transform the data
+      // Transform the data correctly
       return {
         ...data,
-        like_count: data.like_count || 0,
-        comment_count: data.comments?.[0]?.count || 0,
+        like_count: data.like_count[0]?.count || 0,
+        comment_count: data.comments[0]?.count || 0,
         image_url: this.getImageUrl(data.image_path)
       };
     } catch (error) {
@@ -110,7 +110,7 @@ export const blogService = {
 
   async hasUserLikedPost(postId) {
     try {
-      const userIp = await this.getUserIp();
+      const userIp = await this.getUserIP();
       if (!userIp) return false;
 
       const { data, error } = await supabase
@@ -132,7 +132,7 @@ export const blogService = {
     }
   },
 
-  async getUserIp() {
+  async getUserIP() {
     try {
       const response = await fetch('https://api.ipify.org?format=json');
       if (!response.ok) throw new Error('Failed to fetch IP');

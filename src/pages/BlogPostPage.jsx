@@ -84,14 +84,14 @@ const BlogPostPage = () => {
 
     try {
       setIsLiking(true);
-      const { success, newCount, message } = await blogService.likePost(post.id);
+      const result = await blogService.likePost(post.id);
       
-      if (success) {
-        setLikeCount(newCount);
+      if (result.success) {
+        setLikeCount(result.newCount);
         setHasLiked(true);
         toast.success('Thanks for liking!');
       } else {
-        toast.error(message || 'Unable to like post');
+        toast.error(result.message || 'Unable to like post');
       }
     } catch (err) {
       console.error('Error liking post:', err);
