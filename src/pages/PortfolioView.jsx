@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Contact from "./Contact";
 import { portfolioService } from '@/services/portfolioService';
-import { ChevronRight, ExternalLink } from "lucide-react";
+import { ChevronRight, ExternalLink, Target, Lightbulb, Palette, X } from "lucide-react";
 
 const PortfolioView = () => {
   const { slug } = useParams();
@@ -42,6 +42,13 @@ const PortfolioView = () => {
 
   return (
     <div className="flex flex-col items-start justify-start pt-16 sm:pt-24 pb-8 px-4 max-w-7xl mx-auto">
+      <Link 
+        to="/" 
+        className="fixed top-8 left-8 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-50"
+      >
+        <X className="w-5 h-5" />
+      </Link>
+
       {/* Hero Section */}
       <div className="w-full mb-16 sm:mb-24">
         {/* Title and Description */}
@@ -90,17 +97,26 @@ const PortfolioView = () => {
         {/* Project Details */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
           <div>
-            <h3 className="text-lg font-medium mb-3">Task</h3>
+            <div className="flex items-center gap-2 mb-3">
+              <Target className="w-5 h-5" />
+              <h3 className="text-lg font-medium">Task</h3>
+            </div>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{project?.task}</p>
           </div>
           
           <div>
-            <h3 className="text-lg font-medium mb-3">Strategy</h3>
+            <div className="flex items-center gap-2 mb-3">
+              <Lightbulb className="w-5 h-5" />
+              <h3 className="text-lg font-medium">Strategy</h3>
+            </div>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{project?.strategy}</p>
           </div>
           
           <div>
-            <h3 className="text-lg font-medium mb-3">Design Approach</h3>
+            <div className="flex items-center gap-2 mb-3">
+              <Palette className="w-5 h-5" />
+              <h3 className="text-lg font-medium">Design Approach</h3>
+            </div>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{project?.design}</p>
           </div>
         </div>
