@@ -5,6 +5,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Contact from "./Contact";
 import { portfolioService } from '@/services/portfolioService';
 import { ChevronRight, ExternalLink, Target, Lightbulb, Palette, X } from "lucide-react";
+import ProjectNav from '@/components/navigation/ProjectNav';
 
 const PortfolioView = () => {
   const { slug } = useParams();
@@ -36,6 +37,9 @@ const PortfolioView = () => {
 
   // Filter out the current project from all projects
   const otherProjects = allProjects.filter(p => p.slug !== slug);
+
+  const currentIndex = allProjects.findIndex(p => p.slug === slug);
+  const nextProject = allProjects[currentIndex + 1] || null;
 
   if (isLoading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   if (!project) return <div className="flex justify-center items-center min-h-screen">Project not found</div>;
@@ -235,6 +239,11 @@ const PortfolioView = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      <ProjectNav 
+        type="project"
+        nextItem={nextProject}
+      />
     </div>
   );
 };
