@@ -7,7 +7,7 @@ const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
   return (
     <>
       <Helmet>
-        <title>{title} | Your Site Name</title>
+        <title>{title} | NanaYaw.Dev</title>
         <meta name="description" content={excerpt} />
         
         {/* Open Graph / Facebook */}
@@ -35,7 +35,7 @@ const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
             "description": excerpt,
             "author": {
               "@type": "Person",
-              "name": "Your Name"
+              "name": "Nana Yaw"
             },
             "datePublished": "YYYY-MM-DD",
             "mainEntityOfPage": {
@@ -47,12 +47,12 @@ const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
 
         {/* Article specific metadata */}
         <meta property="article:published_time" content="YYYY-MM-DD" />
-        <meta property="article:author" content="Your Name" />
+        <meta property="article:author" content="Nana Yaw" />
         <meta property="article:section" content={category} />
         
         {/* Additional social media tags */}
-        <meta property="og:site_name" content="Your Site Name" />
-        <meta name="twitter:creator" content="@yourtwitter" />
+        <meta property="og:site_name" content="NanaYaw.Dev" />
+        <meta name="twitter:creator" content="@nana_yaw" />
       </Helmet>
 
       <Link to={`/blog/${slug}`} className="group block">
