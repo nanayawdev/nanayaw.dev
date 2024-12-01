@@ -376,23 +376,16 @@ export const AdminPage = () => {
     
     try {
       setIsLoading(true);
-      const { error } = await supabase
-        .from('posts')
-        .delete()
-        .eq('id', postToDelete.id);
       
-      if (error) throw error;
+      // Delete the post and its image
+      await blogService.deletePost(postToDelete.id);
       
-      // Remove the post from local state
-      setPosts(posts.filter(post => post.id !== postToDelete.id));
+      toast.success('Post deleted successfully');
       setPostToDelete(null);
-      
-      // Replace alert with toast
-      toast.success('Post deleted successfully!');
-      
-    } catch (err) {
-      console.error('Delete error:', err);
-      toast.error('Error deleting post: ' + err.message);
+      loadPosts();
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      toast.error('Error deleting post');
     } finally {
       setIsLoading(false);
     }
