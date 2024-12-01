@@ -44,20 +44,53 @@ const PortfolioView = () => {
     <div className="flex flex-col items-start justify-start pt-16 sm:pt-24 pb-8 px-4 max-w-7xl mx-auto">
       {/* Hero Section */}
       <div className="w-full mb-16 sm:mb-24">
-        <div className="max-w-4xl mb-12">
-          <Badge variant="outline" className="mb-6">
-            {project?.tags[0].toUpperCase()}
-          </Badge>
-          
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-8">
-            {project?.title}
-          </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          {/* Left side - Title and Description */}
+          <div className="lg:col-span-2">
+            <Badge variant="outline" className="mb-6">
+              {project?.tags[0].toUpperCase()}
+            </Badge>
+            
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-8">
+              {project?.title}
+            </h1>
 
-          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-            {project?.description}
-          </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+              {project?.description}
+            </p>
+          </div>
+
+          {/* Right side - Client and View Project */}
+          <div className="flex flex-col justify-start gap-8">
+            <div>
+              <h3 className="text-sm font-medium text-gray-500 mb-1">Client</h3>
+              <p className="text-base font-medium">{project?.client}</p>
+            </div>
+            {project?.link && (
+              <button
+                onClick={() => setIsProjectOpen(true)}
+                className="inline-flex items-center px-6 py-3 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity"
+              >
+                View Project
+                <ChevronRight className="ml-2 w-4 h-4" />
+              </button>
+            )}
+          </div>
         </div>
 
+        {/* Main Project Image - Moved up */}
+        <div className="w-full mb-12">
+          <img
+            src={project?.image}
+            alt="Project showcase"
+            className="w-full h-auto max-h-[700px] object-cover rounded-2xl"
+            onError={(e) => {
+              console.error('Error loading main image:', e);
+            }}
+          />
+        </div>
+
+        {/* Project Details */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
           <div>
             <h3 className="text-lg font-medium mb-3">Task</h3>
@@ -74,38 +107,6 @@ const PortfolioView = () => {
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{project?.design}</p>
           </div>
         </div>
-
-        <div className="mt-12">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div>
-                <h3 className="text-sm font-medium text-gray-500 mb-1">Client</h3>
-                <p className="text-base font-medium">{project?.client}</p>
-              </div>
-              {project?.link && (
-                <button
-                  onClick={() => setIsProjectOpen(true)}
-                  className="inline-flex items-center px-6 py-3 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity"
-                >
-                  View Project
-                  <ChevronRight className="ml-2 w-4 h-4" />
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Project Image */}
-      <div className="w-full mb-12">
-        <img
-          src={project?.image}
-          alt="Project showcase"
-          className="w-full h-auto max-h-[700px] object-cover rounded-2xl"
-          onError={(e) => {
-            console.error('Error loading main image:', e);
-          }}
-        />
       </div>
 
       {/* Gallery Grid */}
