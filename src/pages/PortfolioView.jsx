@@ -40,6 +40,7 @@ const PortfolioView = () => {
 
   const currentIndex = allProjects.findIndex(p => p.slug === slug);
   const nextProject = allProjects[currentIndex + 1] || null;
+  const previousProject = allProjects[currentIndex - 1] || null;
 
   if (isLoading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   if (!project) return <div className="flex justify-center items-center min-h-screen">Project not found</div>;
@@ -243,6 +244,7 @@ const PortfolioView = () => {
       <ProjectNav 
         type="project"
         nextItem={nextProject}
+        previousItem={previousProject}
       />
     </div>
   );
