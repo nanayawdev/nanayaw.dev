@@ -145,9 +145,9 @@ const AllBlogPostsPage = () => {
     <div className="container mx-auto px-4 py-8 mt-20 max-w-3xl">
       <Link 
         to="/" 
-        className="fixed top-8 left-8 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-50"
+        className="fixed top-4 sm:top-8 left-4 sm:left-8 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-50"
       >
-        <X className="w-5 h-5" />
+        <X className="w-4 h-4 sm:w-5 sm:h-5" />
       </Link>
 
       <h1 className="text-3xl font-bold mb-8">All Blog Posts</h1>

@@ -49,9 +49,9 @@ const PortfolioView = () => {
     <div className="flex flex-col items-start justify-start pt-16 sm:pt-24 pb-8 px-4 max-w-7xl mx-auto">
       <Link 
         to="/" 
-        className="fixed top-8 left-8 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-50"
+        className="fixed top-4 sm:top-8 left-4 sm:left-8 p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-50"
       >
-        <X className="w-5 h-5" />
+        <X className="w-4 h-4 sm:w-5 sm:h-5" />
       </Link>
 
       {/* Hero Section */}
