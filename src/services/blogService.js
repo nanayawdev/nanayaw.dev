@@ -409,5 +409,16 @@ export const blogService = {
       console.error('Error getting next post:', error);
       return null;
     }
+  },
+
+  async getPreviousPost(currentSlug) {
+    try {
+      const posts = await this.getAllPosts();
+      const currentIndex = posts.findIndex(post => post.slug === currentSlug);
+      return posts[currentIndex - 1] || null;
+    } catch (error) {
+      console.error('Error getting previous post:', error);
+      return null;
+    }
   }
 } 
