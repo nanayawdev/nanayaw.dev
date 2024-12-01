@@ -9,6 +9,7 @@ import { BlogContent } from '@/components/BlogContent/BlogContent';
 import { toast } from 'sonner';
 import { CommentDrawer } from '@/components/Comments/CommentDrawer';
 import { Skeleton } from "@/components/ui/skeleton";
+import ProjectNav from '@/components/navigation/ProjectNav';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -23,6 +24,7 @@ const BlogPostPage = () => {
   const [commentCount, setCommentCount] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [nextPost, setNextPost] = useState(null);
 
   useEffect(() => {
     const loadPost = async () => {
@@ -49,6 +51,9 @@ const BlogPostPage = () => {
           slug
         );
         setRelatedPosts(relatedPostsData);
+
+        const nextPostData = await blogService.getNextPost(slug);
+        setNextPost(nextPostData);
 
       } catch (err) {
         if (err.message?.includes('no rows returned')) {
@@ -364,6 +369,11 @@ const BlogPostPage = () => {
         comments={comments}
         onCommentAdded={handleCommentAdded}
         commentCount={commentCount}
+      />
+
+      <ProjectNav 
+        type="blog"
+        nextItem={nextPost}
       />
     </div>
   );
