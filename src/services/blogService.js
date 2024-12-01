@@ -215,7 +215,8 @@ export const blogService = {
           category: postData.category,
           status: 'published',
           published_at: new Date().toISOString(),
-          image_path: imagePath
+          image_path: imagePath,
+          keywords: postData.keywords || []
         })
         .eq('id', id)
         .select()
@@ -249,7 +250,8 @@ export const blogService = {
           status: 'published',
           published_at: now,
           image_path: imagePath,
-          created_at: now
+          created_at: now,
+          keywords: postData.keywords || []
         }])
         .select()
         .single();

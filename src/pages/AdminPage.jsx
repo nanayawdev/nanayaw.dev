@@ -186,7 +186,8 @@ export const AdminPage = () => {
     status: 'published',
     created_at: new Date().toISOString(),
     image: null,
-    image_path: null
+    image_path: null,
+    keywords: [],
   });
   const [isLoading, setIsLoading] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
@@ -449,10 +450,18 @@ export const AdminPage = () => {
     }
   };
 
+  const handleKeywordsChange = (e) => {
+    const keywords = e.target.value.split(',').map(k => k.trim());
+    setFormData(prev => ({
+      ...prev,
+      keywords
+    }));
+  };
+
   return (
     <>
       <Helmet>
-        <title>Admin Dashboard | Your Site Name</title>
+        <title>Admin Dashboard | NanaYaw.Dev</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
         <meta name="description" content="Admin dashboard for managing blog posts and content." />
@@ -572,6 +581,20 @@ export const AdminPage = () => {
                     />
                   </div>
                 )}
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Keywords (comma-separated)</label>
+                <Textarea
+                  name="keywords"
+                  value={formData.keywords.join(', ')}
+                  onChange={handleKeywordsChange}
+                  placeholder="react, javascript, web development"
+                  className="h-20"
+                />
+                <p className="text-sm text-gray-500">
+                  Add relevant keywords separated by commas
+                </p>
               </div>
 
               <div className="flex gap-4">

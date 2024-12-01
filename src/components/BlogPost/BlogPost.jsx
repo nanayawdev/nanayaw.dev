@@ -3,7 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
+const BlogPost = ({ category, title, excerpt, slug, imageUrl, keywords = [] }) => {
+  const keywordsString = keywords?.length > 0 
+    ? keywords.join(', ') 
+    : `${category}, blog, web development`;
+
   return (
     <>
       <Helmet>
@@ -23,7 +27,7 @@ const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
         <meta name="twitter:image" content={imageUrl} />
 
         {/* Additional SEO tags */}
-        <meta name="keywords" content={`${category}, blog, your-keywords`} />
+        <meta name="keywords" content={keywordsString} />
         <link rel="canonical" href={`${window.location.origin}/blog/${slug}`} />
 
         <script type="application/ld+json">
@@ -33,6 +37,7 @@ const BlogPost = ({ category, title, excerpt, slug, imageUrl }) => {
             "headline": title,
             "image": imageUrl,
             "description": excerpt,
+            "keywords": keywordsString,
             "author": {
               "@type": "Person",
               "name": "Nana Yaw"
@@ -95,7 +100,8 @@ BlogPost.propTypes = {
   title: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string
+  imageUrl: PropTypes.string,
+  keywords: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default BlogPost; 
