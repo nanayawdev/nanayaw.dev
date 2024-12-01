@@ -373,7 +373,8 @@ export const AdminPage = () => {
         category: formData.category || 'Uncategorized',
         status: formData.published ? 'published' : 'draft',
         published_at: formData.published ? new Date().toISOString() : null,
-        image: formData.image || null
+        image: formData.image || null,
+        keywords: formData.keywords || [],
       };
 
       let result;
@@ -433,7 +434,8 @@ export const AdminPage = () => {
       status: 'published',
       created_at: new Date().toISOString(),
       image: null,
-      image_path: null
+      image_path: null,
+      keywords: [],
     });
     editor?.commands.setContent('');
   };
@@ -587,7 +589,7 @@ export const AdminPage = () => {
                 <label className="text-sm font-medium">Keywords (comma-separated)</label>
                 <Textarea
                   name="keywords"
-                  value={formData.keywords.join(', ')}
+                  value={formData.keywords?.join(', ') || ''}
                   onChange={handleKeywordsChange}
                   placeholder="react, javascript, web development"
                   className="h-20"
