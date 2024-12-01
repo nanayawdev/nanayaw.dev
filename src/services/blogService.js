@@ -92,15 +92,21 @@ export const blogService = {
         throw insertError;
       }
 
-      // Then increment the like count
-      const { data, error: updateError } = await supabase
-        .rpc('increment_like_count', { post_id: postId });
+      // Update the like_count in posts table
+      const { data: updateData, error: updateError } = await supabase
+        .from('posts')
+        .update({ 
+          like_count: await this.getLikeCount(postId) 
+        })
+        .eq('id', postId)
+        .select('like_count')
+        .single();
 
       if (updateError) throw updateError;
 
       return { 
         success: true, 
-        newCount: data[0].like_count 
+        newCount: updateData.like_count
       };
     } catch (error) {
       console.error('Error liking post:', error);
@@ -380,5 +386,15 @@ export const blogService = {
       console.error('Error in deletePost:', error);
       throw error;
     }
+  },
+
+  async getLikeCount(postId) {
+    const { count, error } = await supabase
+      .from('post_likes')
+      .select('*', { count: 'exact' })
+      .eq('post_id', postId);
+
+    if (error) throw error;
+    return count;
   }
 } 
