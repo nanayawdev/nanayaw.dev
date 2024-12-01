@@ -22,12 +22,15 @@ export const SignInPage = () => {
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
 
-      toast.success("Signed in successfully");
+      toast.success("Signed in successfully!");
       navigate('/admin');
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error?.message || "An error occurred during sign in");
     } finally {
       setLoading(false);
     }
