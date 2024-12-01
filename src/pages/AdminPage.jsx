@@ -201,29 +201,50 @@ export const AdminPage = () => {
           renderHTML({ node }) {
             const content = node.textContent || '';
             try {
-              const highlighted = hljs.highlight(content, { language: 'javascript', ignoreIllegals: true }).value;
-              return `
-                <pre class="relative group">
-                  <button 
-                    class="absolute hidden group-hover:flex items-center right-2 top-2 px-2 py-1 text-xs rounded bg-white/10 hover:bg-white/20 text-white transition-colors" 
-                    onclick="(() => {
-                      navigator.clipboard.writeText(this.parentElement.querySelector('code').textContent);
-                      this.innerHTML = '<svg class=\'w-4 h-4 mr-1\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\'><path d=\'M5 13l4 4L19 7\'/></svg>Copied!';
-                      setTimeout(() => {
-                        this.innerHTML = '<svg class=\'w-4 h-4 mr-1\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\'><path d=\'M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3\'/></svg>Copy';
-                      }, 2000);
-                    })()"
-                  >
-                    <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                    </svg>
-                    Copy
-                  </button>
-                  <code>${highlighted}</code>
-                </pre>
+              // Create elements safely
+              const pre = document.createElement('pre');
+              pre.className = 'relative group';
+              
+              const code = document.createElement('code');
+              code.textContent = content;
+              pre.appendChild(code);
+              
+              // Highlight the code
+              hljs.highlightElement(code);
+              
+              // Add copy button
+              const button = document.createElement('button');
+              button.className = 'absolute hidden group-hover:flex items-center right-2 top-2 px-2 py-1 text-xs rounded bg-white/10 hover:bg-white/20 text-white transition-colors';
+              button.innerHTML = `
+                <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                </svg>
+                Copy
               `;
+              
+              button.addEventListener('click', () => {
+                navigator.clipboard.writeText(code.textContent);
+                const originalHTML = button.innerHTML;
+                button.innerHTML = `
+                  <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                  Copied!
+                `;
+                setTimeout(() => {
+                  button.innerHTML = originalHTML;
+                }, 2000);
+              });
+              
+              pre.appendChild(button);
+              return pre;
             } catch (e) {
-              return `<pre><code>${content}</code></pre>`;
+              console.error('Error rendering code block:', e);
+              const pre = document.createElement('pre');
+              const code = document.createElement('code');
+              code.textContent = content;
+              pre.appendChild(code);
+              return pre;
             }
           }
         }
