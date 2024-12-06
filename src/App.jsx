@@ -10,13 +10,16 @@ import AllBlogPostsPage from './pages/AllBlogPostsPage';
 import PortfolioView from './pages/PortfolioView';
 import PortfolioAdminPage from '@/pages/PortfolioAdminPage';
 import { Toaster } from "@/components/ui/toaster"
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
     <HelmetProvider>
+      <Helmet>
+        <title>nanayaw.dev | Homepage</title>
+      </Helmet>
       <Toaster />
       <BrowserRouter>
         <ThemeProvider>
