@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-import defaultTheme from '@tailwindcss/defaultTheme'
-import animate from 'tailwindcss-animate'
-import typography from '@tailwindcss/typography'
-import scrollbar from 'tailwind-scrollbar'
+const defaultTheme = require('@tailwindcss/defaultTheme')
+const animate = require('tailwindcss-animate')
+const typography = require('@tailwindcss/typography')
+const scrollbar = require('tailwind-scrollbar')
 
-export default {
+module.exports = {
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   darkMode: 'class',
   theme: {
