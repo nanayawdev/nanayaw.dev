@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 import defaultTheme from '@tailwindcss/defaultTheme'
+import animate from 'tailwindcss-animate'
+import typography from '@tailwindcss/typography'
+import scrollbar from 'tailwind-scrollbar'
 
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
@@ -93,9 +96,9 @@ export default {
   	}
   },
   plugins: [
-    (await import('tailwindcss-animate')).default,
-    (await import('@tailwindcss/typography')).default,
-    (await import('tailwind-scrollbar')).default({ nocompatible: true })
+    animate,
+    typography,
+    scrollbar({ nocompatible: true })
   ],
 }
 
