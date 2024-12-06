@@ -20,12 +20,12 @@
 
   /* Global font settings */
   html {
-    font-family: 'Satoshi', sans-serif;
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
 
   /* Heading styles */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Lufga', sans-serif;
+    font-family: 'Lufga', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
 
   h1 {
