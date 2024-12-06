@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from '@tailwindcss/defaultTheme'
+
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   darkMode: 'class',
@@ -90,6 +92,10 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography'),require('tailwind-scrollbar')({ nocompatible: true })],
+  plugins: [
+    (await import('tailwindcss-animate')).default,
+    (await import('@tailwindcss/typography')).default,
+    (await import('tailwind-scrollbar')).default({ nocompatible: true })
+  ],
 }
 
