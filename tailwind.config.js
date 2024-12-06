@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('@tailwindcss/defaultTheme')
 const animate = require('tailwindcss-animate')
 const typography = require('@tailwindcss/typography')
 const scrollbar = require('tailwind-scrollbar')
