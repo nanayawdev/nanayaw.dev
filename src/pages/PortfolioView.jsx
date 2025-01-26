@@ -13,7 +13,6 @@ const PortfolioView = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isProjectOpen, setIsProjectOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,13 +75,15 @@ const PortfolioView = () => {
               <p className="text-base font-medium">{project?.client}</p>
             </div>
             {project?.link && (
-              <button
-                onClick={() => setIsProjectOpen(true)}
+              <a
+                href={project?.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center px-4 sm:px-4 py-2 sm:py-3 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity self-start"
               >
-                <span>View Project</span>
+                <span>Live Preview</span>
                 <ChevronRight className="ml-2 w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              </button>
+              </a>
             )}
           </div>
         </div>
@@ -209,35 +210,6 @@ const PortfolioView = () => {
       <Dialog open={isContactOpen} onOpenChange={setIsContactOpen}>
         <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
           <Contact />
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={isProjectOpen} onOpenChange={setIsProjectOpen}>
-        <DialogContent className="sm:max-w-[900px] h-[90vh]">
-          <div className="h-full flex flex-col">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-medium">{project?.title}</h2>
-              <a 
-                href={project?.link} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              >
-                <span className="mr-2">Open in new tab</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
-            
-            <div className="flex-grow relative">
-              <iframe
-                src={project?.link}
-                className="w-full h-full absolute inset-0"
-                title={project?.title}
-                loading="lazy"
-                sandbox="allow-scripts allow-same-origin allow-forms"
-              />
-            </div>
-          </div>
         </DialogContent>
       </Dialog>
 
