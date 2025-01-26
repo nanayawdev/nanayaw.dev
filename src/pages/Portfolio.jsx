@@ -26,6 +26,14 @@ const Portfolio = () => {
 
   return (
     <div className="flex flex-col items-start justify-start py-16 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <Badge variant="outline" className="mb-4 sm:mb-6">
+        PORTFOLIO
+      </Badge>
+
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 dark:text-gray-100 font-medium leading-tight mb-12">
+        Collection of <span className="text-riptide-500">projects</span> I've worked on
+      </h1>
+
       <p className="text-base text-gray-600 dark:text-gray-400 mb-8">
         Charging solutions for
       </p>
