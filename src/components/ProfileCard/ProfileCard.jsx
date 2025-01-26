@@ -7,7 +7,8 @@ import {
   Github, 
   Instagram, 
   Twitter, 
-  Dribbble 
+  Dribbble, 
+  Linkedin
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import profileImage from '@/assets/images/ny.jpg';
@@ -27,22 +28,22 @@ import { toast } from "sonner";
 const socialLinks = [
   {
     icon: <Instagram className="w-5 h-5" />,
-    href: "https://instagram.com",
+    href: "https://instagram.com/nanayawdev",
     label: "Instagram"
   },
   {
     icon: <Twitter className="w-5 h-5" />,
-    href: "https://twitter.com",
+    href: "https://twitter.com/nycre8ivestudio",
     label: "Twitter"
   },
   {
-    icon: <Dribbble className="w-5 h-5" />,
-    href: "https://dribbble.com",
-    label: "Dribbble"
+    icon: <Linkedin className="w-5 h-5" />,
+    href: "https://linkedin.com/in/nanayawisrael",
+    label: "LinkedIn"
   },
   {
     icon: <Github className="w-5 h-5" />,
-    href: "https://github.com",
+    href: "https://github.com/nanayawdev",
     label: "Github"
   }
 ];
@@ -176,7 +177,7 @@ export default function ProfileCard() {
         </div>
 
         <div className="text-center space-y-1">
-          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">me@nanayaw.dev</p>
+          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">nanayawisrael@gmail.com</p>
           <p className="text-xs text-gray-500 dark:text-gray-400">Based in Accra, GH</p>
         </div>
 
