@@ -28,7 +28,7 @@ import { toast } from "sonner";
 const socialLinks = [
   {
     icon: <Instagram className="w-5 h-5" />,
-    href: "https://instagram.com/nanayawdev",
+    href: "https://instagram.com/nanayaw.dev",
     label: "Instagram"
   },
   {
