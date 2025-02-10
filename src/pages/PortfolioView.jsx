@@ -81,7 +81,7 @@ const PortfolioView = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-4 sm:px-4 py-2 sm:py-3 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-full hover:opacity-90 transition-opacity self-start"
               >
-                <span>Live Preview</span>
+                <span>Preview</span>
                 <ChevronRight className="ml-2 w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </a>
             )}
